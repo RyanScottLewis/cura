@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    cura (0.0.0)
+      version (~> 1.0.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (10.4.2)
+    version (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cura!
+  rake (~> 10.4.2)
