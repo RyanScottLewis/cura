@@ -1,3 +1,8 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_ancestry'
+  require 'cura/event/handler'
+end
+
 module Cura
   module Attributes
     

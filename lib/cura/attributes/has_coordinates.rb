@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+end
+
 module Cura
   module Attributes
     
@@ -13,22 +17,28 @@ module Cura
       end
       
       # Get the X coordinate of this object.
+      # 
+      # @return [Integer]
       attr_reader :x
       
       # Set the X coordinate of this object.
+      # 
+      # @param [#to_i] value
+      # @return [Integer]
       def x=(value)
-        raise ArgumentError, 'x must respond to :to_i' unless value.respond_to?(:to_i)
-        
         @x = value.to_i
       end
       
       # Get the Y coordinate of this object.
+      # 
+      # @return [Integer]
       attr_reader :y
       
       # Set the Y coordinate of this object.
+      # 
+      # @param [#to_i] value
+      # @return [Integer]
       def y=(value)
-        raise ArgumentError, 'y must respond to :to_i' unless value.respond_to?(:to_i)
-        
         @y = value.to_i
       end
       

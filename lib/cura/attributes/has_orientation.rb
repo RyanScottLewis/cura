@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+end
+
 module Cura
   module Attributes
     
@@ -13,12 +17,16 @@ module Cura
       end
       
       # Get the orientation of this object.
+      # 
+      # @return [Symbol]
       attr_reader :orientation
       
       # Set the orientation of this object.
       # Must be :vertical or :horizontal.
+      # 
+      # @param [#to_sym] value
+      # @return [Symbol]
       def orientation=(value)
-        raise TypeError, 'orientation must respond to :to_sym' unless value.respond_to?(:to_sym)
         value = value.to_sym
         raise ArgumentError, 'orientation must be one of :vertical or :horizontal' unless [:vertical, :horizontal].include?(value)
         
@@ -26,11 +34,15 @@ module Cura
       end
       
       # Check if this object's orientation is set to :horizontal.
+      # 
+      # @return [Boolean]
       def horizontal?
         orientation == :horizontal
       end
       
       # Check if this object's orientation is set to :vertical.
+      # 
+      # @return [Boolean]
       def vertical?
         orientation == :vertical
       end

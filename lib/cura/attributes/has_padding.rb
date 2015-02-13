@@ -1,3 +1,8 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+  require 'cura/padding'
+end
+
 module Cura
   module Attributes
     
@@ -9,8 +14,6 @@ module Cura
       
       def initialize(attributes={})
         attributes[:padding] ||= {}
-    
-        raise TypeError, ':padding option must respond to #to_hash or #to_h' unless attributes[:padding].respond_to?(:to_hash) || attributes[:padding].respond_to?(:to_h)
         attributes[:padding] = attributes[:padding].to_hash rescue attributes[:padding].to_h
         
         @padding = Padding.new( attributes[:padding] )
@@ -19,14 +22,15 @@ module Cura
       end
       
       # Get the padding of this object.
+      # 
+      # @return [Padding]
       attr_reader :padding
       
       # Set the padding of this object.
       # 
-      # @param value [Padding] The new Padding instance.
+      # @param [Padding, #to_hash, #to_h] value
+      # @return [Padding]
       def padding=(value)
-        raise TypeError, ':padding option must be a Padding instance or respond to #to_hash or #to_h' unless value.respond_to?(:to_hash) || value.respond_to?(:to_h)
-        
         @padding = if value.is_a?(Padding)
           value
         else

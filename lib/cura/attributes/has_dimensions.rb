@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+end
+
 module Cura
   module Attributes
     
@@ -13,12 +17,15 @@ module Cura
       end
       
       # Get the width dimension of this object.
+      # 
+      # @param [#to_i] value
+      # @return [Integer]
       attr_reader :width
       
       # Set the width dimension of this object.
+      # 
+      # @return [Integer]
       def width=(value)
-        raise ArgumentError, 'width must respond to :to_i' unless value.respond_to?(:to_i)
-        
         value = value.to_i
         value = 0 if value < 0
         
@@ -26,12 +33,15 @@ module Cura
       end
       
       # Get the height dimension of this object.
+      # 
+      # @return [Integer]
       attr_reader :height
       
       # Set the height dimension of this object.
+      # 
+      # @param [#to_i] value
+      # @return [Integer]
       def height=(value)
-        raise ArgumentError, 'height must respond to :to_i' unless value.respond_to?(:to_i)
-        
         value = value.to_i
         value = 0 if value < 0
         

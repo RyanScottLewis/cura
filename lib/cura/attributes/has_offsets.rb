@@ -1,3 +1,10 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_borders'
+  require 'cura/attributes/has_margins'
+  require 'cura/attributes/has_padding'
+  require 'cura/offsets'
+end
+
 module Cura
   module Attributes
     

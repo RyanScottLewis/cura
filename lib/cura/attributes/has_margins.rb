@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/margins'
+end
+
 module Cura
   module Attributes
     
@@ -9,8 +13,6 @@ module Cura
       
       def initialize(attributes={})
         attributes[:margins] ||= {}
-    
-        raise TypeError, ':margins option must respond to #to_hash or #to_h' unless attributes[:margins].respond_to?(:to_hash) || attributes[:margins].respond_to?(:to_h)
         attributes[:margins] = attributes[:margins].to_hash rescue attributes[:margins].to_h
         
         @margins = Margins.new( attributes[:margins] )
@@ -19,14 +21,15 @@ module Cura
       end
       
       # Get the margins of this object.
+      # 
+      # @return [Margins]
       attr_reader :margins
       
       # Set the margins of this object.
       # 
-      # @param value [Margins] The new Margins instance.
+      # @param [Margins, #to_hash, #to_h] value
+      # @return [Margins]
       def margins=(value)
-        raise TypeError, ':margins option must be a Margins instance or respond to #to_hash or #to_h' unless value.respond_to?(:to_hash) || value.respond_to?(:to_h)
-        
         @margins = if value.is_a?(Margins)
           value
         else

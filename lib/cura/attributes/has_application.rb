@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/application'
+end
+
 module Cura
   module Attributes
     
