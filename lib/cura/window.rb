@@ -1,5 +1,6 @@
 if Kernel.respond_to?(:require)
   require 'cura/attributes/has_application'
+  require 'cura/attributes/has_children'
   require 'cura/attributes/has_coordinates'
   require 'cura/attributes/has_dimensions'
 end
@@ -10,6 +11,7 @@ module Cura
   class Window
     
     include Attributes::HasApplication
+    include Attributes::HasChildren
     include Attributes::HasCoordinates
     include Attributes::HasDimensions
     
@@ -17,7 +19,7 @@ module Cura
     # 
     # @return [Application] This application.
     def update
-      @root.update
+      update_children
       
       self
     end
@@ -28,7 +30,7 @@ module Cura
     def draw
       adapter.clear
       
-      @root.draw
+      draw_children
       # @application.cursor.draw # TODO
       
       adapter.present
