@@ -7,25 +7,25 @@ module Cura
     include Attributes::HasCoordinates
     include Attributes::HasDimensions
     
-    # Update this application.
+    # Update this window's components.
     # 
     # @return [Application] This application.
     def update
-      update_children
+      @root.update
       
       self
     end
     
-    # Draw this application.
+    # Draw this window's children.
     # 
     # @return [Application] This application.
     def draw
-      Termbox.clear
+      adapter.clear
       
-      draw_children
-      cursor.draw
+      @root.draw
+      # @application.cursor.draw # TODO
       
-      Termbox.present
+      adapter.present
       
       @redraw = false
       

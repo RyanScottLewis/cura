@@ -13,6 +13,7 @@ module Cura
         
         @application = value
         
+        # TODO: Why is it HasApplication's responsibilty to set teh application of it's *possible* children? 
         children.each { |child| child.application = value if child.respond_to?(:application=) } if respond_to?(:children)
         
         @application

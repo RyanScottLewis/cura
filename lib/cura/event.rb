@@ -1,6 +1,6 @@
 module Cura
   
-  # The container for Event::Base subclasses.
+  # The container for Event::Base and it's subclasses.
   module Event
     class << self
       

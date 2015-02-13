@@ -1,7 +1,7 @@
 module Cura
   module Event
     
-    # Dispatched when a widget is selected.
+    # Dispatched when a component is selected.
     class Selected < Base
       
     end

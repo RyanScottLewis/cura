@@ -4,7 +4,7 @@ module Cura
     # Adds the `absolute_x` and `absolute_y` attributes, which are relative to it's parent.
     module HasRelativeCoordinates
       
-      include Attributes::HasParent
+      include Attributes::HasAncestry
       include Attributes::HasCoordinates
       
       def initialize(attributes={})
@@ -13,14 +13,14 @@ module Cura
         super
       end
       
-      # Get the absolute X coordinate of this widget.
+      # Get the absolute X coordinate of this object.
       # 
       # @return [Integer]
       def absolute_x
         ancestors.collect(&:x).inject(&:+)
       end
       
-      # Get the absolute Y coordinate of this widget.
+      # Get the absolute Y coordinate of this object.
       # 
       # @return [Integer]
       def absolute_y

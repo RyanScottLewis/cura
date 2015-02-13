@@ -3,7 +3,7 @@ module Cura
   # The text cursor controller.
   # 
   # Should only ever have one single Cursor instance at one time.
-  # Has to be created after Termbox has been initialized. # TODO: Fix this
+  # TODO: Rename Cursor::Text, need Cursor::Mouse
   class Cursor
     
     include Attributes::HasApplication
@@ -50,11 +50,9 @@ module Cura
       application.redraw
     end
     
-    # Draw/hide the cursor.
+    # Draw (set) the cursor.
     def draw
-      cursor_x, cursor_y = hidden? ? [ Termbox::HIDE_CURSOR, Termbox::HIDE_CURSOR ] : [ x, y ]
-      
-      Termbox.set_cursor( cursor_x, cursor_y ) # TODO: Segfaults unless Termbox is intialized
+      adapter.set_cursor( cursor_x, cursor_y )
     end
     
   end

@@ -1,6 +1,22 @@
-* Case-insensitive search for "term".
-* /attributes/*.rb files should all be wrapped in `module Attributes ... end`
-* /widget/*.rb files should all be wrapped in `module Widget ... end`
-* /widget/widget.rb should be `class Base` and renamed in all /widget/*.rb files
-* Gemfile
 * Tests
+* See if XUL (or HTML... why not?) can be used as document structure, if not:
+* * CCML Cura Component Markup Language specification (CCML). XML extension?
+* * Parser which parses CCML into Cura Component AST (CC-AST)
+* * TreeTransformer which transforms CC-AST into a Cura Component Tree
+* Ability to use CSS so document structure and presentation are separate
+* Smart & fast redraw aglorithm
+* Clipping & Z order
+* Double buffering? Or will this be handled by the adapters?
+* Event translator. Before dispatching events (or before they are added to the queue?), see if they can be translated into 
+  higher-level events such as a MouseDown then a MouseUp could translate to a MouseClick.  
+  Have this be optional per Component.
+* Event loop separation? Maybe Event::Loop? See Application.run
+* Event::Propagator? Right now, Event::Handler#delegate_event does this but look how much it has to know about it's `host`.  
+  It would be better to be able to `host.propagate_event(event)` rather than `host.parent.event_handler.handle(event) if ...`
+* Event "consumption" configuration.  
+  The event stops propagating automatically (because some component handles it) or manual (keeps going unless explicitly stopped).
+  Automatic by default, but should be able to be set to manual.
+* RIght now, events propagate up the tree from the target to the root (bubbling).  
+  W3C defines propagation as going down from the root to the target (capturing) first, then 
+  back up from the target to the root. http://www.w3.org/TR/DOM-Level-3-Events/#h3_event-flow
+* Todo example application

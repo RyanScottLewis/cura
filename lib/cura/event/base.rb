@@ -6,13 +6,11 @@ module Cura
       
       class << self
         
-        # Get the name of this event class as a symbol.
+        # Get the name of this class as a symbol.
         # For example, `SomeAction` would be `:some_action`.
         # 
         # @return [Symbol]
         def name
-          # to_s.gsub( 'Cura::Event::', '').gsub(/::/, ?_).gsub(/([a-z])([A-Z])/, '\1_\2').downcase.to_sym
-          
           to_s.split(/::/).last.gsub(/([a-z])([A-Z])/, '\1_\2').downcase.to_sym
         end
         
@@ -33,17 +31,20 @@ module Cura
         self.class.name
       end
       
-      # Get the widget or application this event was dispatched to.
+      # Get the target this event was dispatched to.
+      # TODO: Rename to source.
+      #       The source is the component the event was originally sent to.
+      #       The target is the component the event is currently being handled by. <- Needed?
       # 
-      # @return [Cura::Application, Cura::Widget::Base]
+      # @return [Cura::Attributes::HasEvents]
       attr_reader :target
       
-      # Set the widget or application this event was dispatched to.
+      # Set the target this event was dispatched to.
       # 
-      # @param [Cura::Application, Cura::Widget::Base] value
-      # @return [Cura::Application, Cura::Widget::Base]
+      # @param [Cura::Attributes::HasEvents] value
+      # @return [Cura::Attributes::HasEvents]
       def target=(value)
-        raise TypeError, 'target must be a Cura::Application or Cura::Widget::Base' unless value.is_a?(Cura::Application) || value.is_a?(Cura::Widget::Base)
+        raise TypeError, 'target must be a Cura::Attributes::HasEvents' unless value.is_a?(Cura::Attributes::HasEvents)
         
         @target = value
       end

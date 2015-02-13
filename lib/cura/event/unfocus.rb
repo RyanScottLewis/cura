@@ -1,7 +1,7 @@
 module Cura
   module Event
     
-    # Dispatched when a widget is unfocused.
+    # Dispatched when a component is unfocused.
     class Unfocus < Base
       
     end

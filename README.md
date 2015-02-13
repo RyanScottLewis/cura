@@ -85,7 +85,7 @@ class MainWindow < Cura::Window
       padding: 3
     )
     
-    add_child(@label)
+    add_child( @label ) # Will mixin any adapter methods for Label
   end
   
 end
@@ -98,6 +98,7 @@ class Application < Cura::Application
     super
     
     @window = MainWindow.new
+    
     add_window( @window )
     
     @window.show # Note that in TUIs, only one window can be shown at once.

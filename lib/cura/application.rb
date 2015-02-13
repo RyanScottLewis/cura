@@ -12,7 +12,7 @@ module Cura
     end
     
     include Attributes::HasAttributes
-    include Attributes::HasChildren
+    include Attributes::HasWindows
     include Attributes::HasEvents
     
     def initialize(attributes={})
@@ -25,7 +25,7 @@ module Cura
       @wait_time = 10
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
-      @event_dispatcher = Event::Dispatcher.new( application: self )
+      @event_dispatcher = Event::Dispatcher.new( self )
     end
     
     # Get the text cursor.
@@ -44,12 +44,14 @@ module Cura
     attr_reader :event_dispatcher
     
     # Get the time to wait for events in milliseconds.
+    # TODO: Should be on dispatcher?
     # 
     # @return [Integer]
     attr_reader :wait_time
     
     # Set the time to wait for events in milliseconds.
     # Set to 0 to wait forever.
+    # TODO: Should be on dispatcher?
     # 
     # @param [#to_i] value The new value.
     # @return [Integer]
@@ -86,7 +88,7 @@ module Cura
       
       self
     ensure
-      Termbox.shutdown
+      adapter.cleanup
       
       self
     end
@@ -100,48 +102,31 @@ module Cura
       self
     end
     
-    # Add a child to this application.
-    # 
-    # @param [Widget] widget The child to add.
-    # @return [Widget] The added widget.
-    def add_child(widget)
-      super
-      
-      widget.application = self
-      widget.parent = self
-      
-      widget
-    end
-    
-    # Get the currently focused widget.
+    # Get the currently focused component.
     attr_reader :focused
     
-    # Set focus to a widget.
+    # Set focus to a component.
     # 
-    # There can only be one widget focused at a time within an application, if any.
-    # All dispatched events are sent to the currently focused widget, or the application if no widget is focused.
-    def focus(widget)
-      raise TypeError, 'widget must be nil or be a Cura::Widget' unless widget.nil? || widget.is_a?(Cura::Widget)
+    # There can only be one component focused at a time within an application, if any.
+    # All dispatched events are sent to the currently focused component, or the application if no component is focused.
+    def focus(component)
+      raise TypeError, 'component must be nil or be a Cura::Component' unless component.nil? || component.is_a?(Cura::Component)
       
       dispatch_event( :unfocus )
       
-      @focused = widget
+      event_dispatcher.target = component.nil? ? self : component
+      @focused = component
       
-      dispatch_event( :focus, target: widget )
+      dispatch_event( :focus, target: component )
       
-      widget
+      component
     end
     
     # Dispatch an event.
     # 
     # @param [#to_sym] name The name of the event class to create an instance of.
-    # @param [#to_hash, #to_h] options
-    # @option options [Event::Base] :target The object to set as the target of the event dispatcher to.
     # @return [Event::Base] The dispatched event.
-    def dispatch_event( event_name, options={})
-      options = options.to_hash rescue options.to_h
-      
-      event_dispatcher.target = options[:target] if options.has_key?(:target)
+    def dispatch_event(event_name)
       event = Event.new_from_name(event_name) # TODO: If an Event is passed, send it right through
       
       event_dispatcher.dispatch_event(event)

@@ -12,10 +12,10 @@ module Cura
         super
       end
       
-      # Get the orientation of this widget.
+      # Get the orientation of this object.
       attr_reader :orientation
       
-      # Set the orientation of this widget.
+      # Set the orientation of this object.
       # Must be :vertical or :horizontal.
       def orientation=(value)
         raise TypeError, 'orientation must respond to :to_sym' unless value.respond_to?(:to_sym)
@@ -25,12 +25,12 @@ module Cura
         @orientation = value
       end
       
-      # Check if this widget's orientation is set to :horizontal.
+      # Check if this object's orientation is set to :horizontal.
       def horizontal?
         orientation == :horizontal
       end
       
-      # Check if this widget's orientation is set to :vertical.
+      # Check if this object's orientation is set to :vertical.
       def vertical?
         orientation == :vertical
       end

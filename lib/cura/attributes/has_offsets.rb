@@ -11,10 +11,10 @@ module Cura
       def initialize(attributes={})
         super
         
-        @offsets = Offsets.new( widget: self )
+        @offsets = Offsets.new( component: self )
       end
       
-      # Get the offsets of this widget.
+      # Get the offsets of this object.
       # 
       # @return [Offsets]
       attr_reader :offsets
