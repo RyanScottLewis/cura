@@ -1,3 +1,11 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_application'
+  require 'cura/attributes/has_dimensions'
+  require 'cura/attributes/has_events'
+  require 'cura/attributes/has_offsets'
+  require 'cura/attributes/has_relative_coordinates'
+end
+
 module Cura
   module Component
     
@@ -10,7 +18,7 @@ module Cura
       include Attributes::HasApplication
       include Attributes::HasDimensions
       include Attributes::HasEvents
-      include Attributes::HasForegroundAndBackground
+      # include Attributes::HasForegroundAndBackground
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
       

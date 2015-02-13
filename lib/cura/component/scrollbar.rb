@@ -1,3 +1,9 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_orientation'
+  require 'cura/component/group'
+  require 'cura/component/button'
+end
+
 module Cura
   module Component
     

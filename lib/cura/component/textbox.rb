@@ -1,3 +1,8 @@
+if Kernel.respond_to?(:require)
+  require 'cura/component/label'
+  require 'cura/key'
+end
+
 module Cura
   module Component
     

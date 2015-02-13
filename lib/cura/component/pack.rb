@@ -1,3 +1,8 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_orientation'
+  require 'cura/component/group'
+end
+
 module Cura
   module Component
     
@@ -85,8 +90,6 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def spacing=(value)
-        raise TypeError, 'spacing must respond to #to_i' unless value.respond_to?(:to_i)
-        
         value = value.to_i
         value = 0 if value < 0
         
