@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/event/base'
+end
+
 module Cura
   module Event
     

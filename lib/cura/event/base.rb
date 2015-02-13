@@ -1,3 +1,9 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+  require 'cura/attributes/has_events'
+  require 'cura/event'
+end
+
 module Cura
   module Event
     
