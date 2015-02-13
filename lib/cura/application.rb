@@ -1,3 +1,14 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+  require 'cura/attributes/has_windows'
+  require 'cura/attributes/has_events'
+  require 'cura/component/base'
+  require 'cura/event/dispatcher'
+  require 'cura/event'
+  require 'cura/cursor'
+  require 'cura/pencil'
+end
+
 module Cura
   
   # An application.
@@ -103,14 +114,19 @@ module Cura
     end
     
     # Get the currently focused component.
+    # 
+    # @return [Component::Base]
     attr_reader :focused
     
     # Set focus to a component.
     # 
     # There can only be one component focused at a time within an application, if any.
     # All dispatched events are sent to the currently focused component, or the application if no component is focused.
+    # 
+    # @param [nil, Component::Base] component
+    # @return [Component::Base]
     def focus(component)
-      raise TypeError, 'component must be nil or be a Cura::Component' unless component.nil? || component.is_a?(Cura::Component)
+      raise TypeError, 'component must be nil or be a Cura::Component::Base' unless component.nil? || component.is_a?(Cura::Component::Base)
       
       dispatch_event( :unfocus )
       

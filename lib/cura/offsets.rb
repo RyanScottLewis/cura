@@ -1,3 +1,10 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+  require 'cura/attributes/has_borders'
+  require 'cura/attributes/has_margins'
+  require 'cura/component/base'
+end
+
 module Cura
   
   class Offsets
@@ -22,7 +29,7 @@ module Cura
     # @param [Component] value
     # @return [Component]
     def component=(value)
-      raise TypeError, 'value must be a Component' unless value.is_a?(Component)
+      raise TypeError, 'value must be a Cura::Component::Base' unless value.is_a?(Cura::Component::Base)
       
       @component = value
     end

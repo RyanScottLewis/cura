@@ -1,3 +1,9 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_application'
+  require 'cura/attributes/has_coordinates'
+  require 'cura/attributes/has_dimensions'
+end
+
 module Cura
   
   # A window containing a drawing area.

@@ -1,3 +1,7 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_side_attributes'
+end
+
 module Cura
   
   class Borders
@@ -23,7 +27,7 @@ module Cura
     end
     
     include Attributes::HasSideAttributes
-    include Attributes::HasForegroundAndBackground
+    # include Attributes::HasForegroundAndBackground
     
     def initialize(attributes={})
       @top_character,    @top_right_character    = ?-, ?+
