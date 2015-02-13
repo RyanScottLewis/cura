@@ -13,10 +13,10 @@ module Cura
       on_event(:unfocus) { |event| selected_child.switch_foreground_and_background }
       
       on_event(:key_down) do |event|
-        self.selected_index -= 1 if event.key == Key.arrow_up && selected_index != 0
-        self.selected_index += 1 if event.key == Key.arrow_down && selected_index != children.count-1
+        self.selected_index -= 1 if event.key_code == Key.code_from_name(:up) && selected_index != 0
+        self.selected_index += 1 if event.key_code == Key.code_from_name(:down) && selected_index != children.count-1
         
-        if event.key == Key.enter
+        if event.key_code == Key.code_from_name(:enter)
           application.dispatch_event( :selected )
           
           false

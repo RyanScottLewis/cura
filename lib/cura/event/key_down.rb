@@ -8,20 +8,17 @@ module Cura
     # Dispatched when is key's state changes from up to down.
     class KeyDown < Base
       
-      # Get the key sequence.
-      attr_reader :key
+      # Get the key code.
+      # 
+      # @return [Integer]
+      attr_reader :key_code
       
-      # Set the key sequence.
+      # Set the key code.
+      # 
+      # @param [#to_i] value
+      # @return [Integer]
       def key=(value)
         @key = value.to_i
-      end
-      
-      # Get the character of this key press.
-      attr_reader :character
-      
-      # Set the character of this key press.
-      def character=(value)
-        @character = value.to_s
       end
       
     end
