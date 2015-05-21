@@ -8,7 +8,7 @@ module Cura
     # Adds the `orientation` attribute to objects, which can be :vertical or :horizontal.
     module HasOrientation
       
-      include Attributes::HasAttributes
+      include HasAttributes
       
       def initialize(attributes={})
         @orientation = :vertical

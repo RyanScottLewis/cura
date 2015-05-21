@@ -9,7 +9,7 @@ module Cura
     # TODO: Lots of repeated code in HasMargins, HasPadding, and HasBorders
     module HasMargins
       
-      include Attributes::HasAttributes
+      include HasAttributes
       
       def initialize(attributes={})
         attributes[:margins] ||= {}

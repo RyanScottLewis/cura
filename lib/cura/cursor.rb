@@ -1,4 +1,5 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_application'
   require 'cura/attributes/has_coordinates'
 end
@@ -11,6 +12,7 @@ module Cura
   # TODO: Rename Cursor::Text, need Cursor::Mouse
   class Cursor
     
+    include Attributes::HasInitialize
     include Attributes::HasApplication
     include Attributes::HasCoordinates
     

@@ -9,8 +9,8 @@ module Cura
     # Adds the `absolute_x` and `absolute_y` attributes, which are relative to it's parent.
     module HasRelativeCoordinates
       
-      include Attributes::HasAncestry
-      include Attributes::HasCoordinates
+      include HasAncestry
+      include HasCoordinates
       
       def initialize(attributes={})
         @absolute_x, @absolute_y = 0, 0

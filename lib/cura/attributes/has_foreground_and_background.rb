@@ -1,3 +1,9 @@
+if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_attributes'
+  
+  require 'cura/color'
+end
+
 module Cura
   module Attributes
     
@@ -5,7 +11,7 @@ module Cura
     # TODO: Should be color and background... HasBackground and HasColor
     module HasForegroundAndBackground
       
-      include Attributes::HasAttributes
+      include HasAttributes
       
       def initialize(attributes={})
         @foreground, @background = Cura::Color.default, Cura::Color.default

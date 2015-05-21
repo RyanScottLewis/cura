@@ -42,7 +42,6 @@ module Cura
         component = super
         
         component.parent = self
-        component.application = application
         
         component
       end
@@ -55,7 +54,6 @@ module Cura
         component = super
         
         component.parent = nil
-        component.application = nil
         
         component
       end

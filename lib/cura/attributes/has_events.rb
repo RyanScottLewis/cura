@@ -51,8 +51,6 @@ module Cura
         
       end
       
-      include Attributes::HasAncestry
-      
       def initialize(attributes={})
         @event_handler = Event::Handler.new(self)
         register_class_callbacks

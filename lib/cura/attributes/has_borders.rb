@@ -10,8 +10,6 @@ module Cura
     # TODO: Lots of repeated code in HasMargins, HasPadding, and HasBorders
     module HasBorders
       
-      include Attributes::HasAttributes
-      
       def initialize(attributes={})
         attributes[:borders] ||= {}
         attributes[:borders] = attributes[:borders].to_hash rescue attributes[:borders].to_h

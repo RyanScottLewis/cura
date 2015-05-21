@@ -1,4 +1,7 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
+  require 'cura/attributes/has_attributes'
+  require 'cura/attributes/has_application'
   require 'cura/attributes/has_events'
   require 'cura/event/base'
 end
@@ -9,9 +12,15 @@ module Cura
     # Polls or peeks for events since the last execution and dispatches them to the appropriate component.
     class Dispatcher
       
-      # @param Cura::Attributes::HasEvents] target
-      def initialize(target)
-        self.target = target
+      include Attributes::HasInitialize
+      include Attributes::HasAttributes
+      include Attributes::HasApplication
+      
+      def initialize(attributes={})
+        super
+        
+        raise ArgumentError, 'application must be set' if @application.nil?
+        @target = @application if @target.nil?
       end
       
       # Get the object with an event handler to dispatch events to.
@@ -24,7 +33,7 @@ module Cura
       # @param [Cura::Attributes::HasEvents] value
       # @return [Cura::Attributes::HasEvents]
       def target=(value)
-        raise TypeError, 'target must be a Cura::Attributes::HasEvents' unless target.is_a?(Attributes::HasEvents)
+        raise TypeError, 'target must be a Cura::Attributes::HasEvents' unless value.is_a?(Attributes::HasEvents)
         
         @target = value
       end
@@ -33,7 +42,7 @@ module Cura
       # 
       # @return [Event::Base] The event
       def poll
-        event = adapter.poll_event
+        event = @application.adapter.poll_event
         
         dispatch_event(event)
       end
@@ -43,7 +52,7 @@ module Cura
       # @param [#to_i] milliseconds The amount of time to wait in milliseconds.
       # @return [nil, Event::Base] The event, if handled.
       def peek(milliseconds=100)
-        event = adapter.peek_event( milliseconds.to_i )
+        event = @application.adapter.peek_event( milliseconds.to_i )
         
         dispatch_event(event) unless event.nil?
       end
@@ -56,7 +65,7 @@ module Cura
         raise TypeError, 'event must be an Event::Base' unless event.is_a?(Event::Base)
         
         event.target = @target
-        @target.event_handler.handle( event )
+        @target.event_handler.handle(event)
         
         event
       end

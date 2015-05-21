@@ -21,11 +21,16 @@ module Cura
       
       on_event(:key_down) do |event|
         if event.target == self
-          self.text = text[0..-2] if event.key_code == Key.code_from_name(:back_space)
-          self.text << " " if event.key_code == Key.code_from_name(:space)
-          # self.text << "\n" if event.key == Key.code_from_name(:enter) # TODO: if multiline?
-          self.text << event.character unless event.character.nil?
-          
+          if event.key_name == :backspace
+            self.text = text[0..-2]
+          elsif event.key_name == :space
+            self.text << ' '
+          elsif event.key_name == :return # TODO: if multiline?
+            # self.text << "\n"
+          elsif !event.control_key?
+            self.text << event.character
+          end
+
           set_cursor_position
         end
       end

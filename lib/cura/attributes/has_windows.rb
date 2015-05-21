@@ -18,7 +18,7 @@ module Cura
       # Get the windows of this object.
       attr_reader :windows
       
-      # Add a window to this group.
+      # Add a window to this object.
       # 
       # @param [Window] window
       # @return [Window]
@@ -52,6 +52,16 @@ module Cura
       # Remove all windows.
       def delete_windows
         (0...@windows.count).to_a.reverse.each { |index| delete_window_at(index) }
+      end
+      
+      protected # TODO: These should be protected?
+      
+      def update_windows
+        windows.each(&:update)
+      end
+      
+      def draw_windows
+        windows.each(&:draw)
       end
       
     end

@@ -2,9 +2,18 @@ if Kernel.respond_to?(:require)
   require 'cura/attributes/has_attributes'
   require 'cura/attributes/has_windows'
   require 'cura/attributes/has_events'
+  require 'cura/attributes/has_initialize'
+  
   require 'cura/component/base'
+  
   require 'cura/event/dispatcher'
-  require 'cura/event'
+  require 'cura/event/focus'
+  require 'cura/event/unfocus'
+  require 'cura/event/handler'
+  require 'cura/event/key_down'
+  require 'cura/event/resize'
+  require 'cura/event/selected'
+    
   require 'cura/cursor'
   require 'cura/pencil'
 end
@@ -16,12 +25,13 @@ module Cura
     
     class << self
       
-      def run
-        new.run
+      def run(attributes={})
+        new(attributes).run
       end
       
     end
     
+    include Attributes::HasInitialize
     include Attributes::HasAttributes
     include Attributes::HasWindows
     include Attributes::HasEvents
@@ -29,14 +39,30 @@ module Cura
     def initialize(attributes={})
       super
       
-      adapter.setup
+      @adapter.setup
       
       @running = false
       @redraw = true
-      @wait_time = 10
+      @wait_time = 0
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
-      @event_dispatcher = Event::Dispatcher.new( self )
+      @event_dispatcher = Event::Dispatcher.new( application: self )
+    end
+    
+    # Get the adapter used for running this application.
+    # 
+    # @return [Adapter]
+    attr_reader :adapter
+    
+    # Set the adapter used for running this application.
+    # This cannot be set after #run is used.
+    # 
+    # @param [Adapter] value The new adapter.
+    # @return [Adapter]
+    def adapter=(value)
+      raise TypeError, 'adapter must be a Cura::Adapter' unless value.is_a?(Cura::Adapter)
+      
+      @adapter = value
     end
     
     # Get the text cursor.
@@ -89,19 +115,15 @@ module Cura
       is_polling = wait_time == 0 ? true : false
       
       while @running
-        update
-        
-        # TODO: Should send to a "draw" queue?
-        draw if redraw?
+        update_windows
+        draw_windows
         
         is_polling ? event_dispatcher.poll : event_dispatcher.peek(wait_time)
       end
       
       self
     ensure
-      adapter.cleanup
-      
-      self
+      @adapter.cleanup
     end
     
     # Stop the application.
@@ -142,10 +164,34 @@ module Cura
     # 
     # @param [#to_sym] name The name of the event class to create an instance of.
     # @return [Event::Base] The dispatched event.
-    def dispatch_event(event_name)
-      event = Event.new_from_name(event_name) # TODO: If an Event is passed, send it right through
+    def dispatch_event( event_name, options={})
+      options = options.to_hash rescue options.to_h
+      
+      event_dispatcher.target = options[:target] if options.has_key?(:target)
+      event = Event.new_from_name(event_name)
       
       event_dispatcher.dispatch_event(event)
+    end
+    
+    # Add a window to this application.
+    # 
+    # @param [Window] window
+    # @return [Window]
+    def add_window(window)
+      super
+      
+      window.application = self
+      
+      window
+    end
+    
+    # Redraw all windows.
+    # 
+    # @return [Application]
+    def redraw
+      windows.each(&:redraw)
+      
+      self
     end
     
   end

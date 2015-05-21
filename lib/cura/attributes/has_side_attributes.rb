@@ -9,7 +9,7 @@ module Cura
     # TODO: Some helper class like .attr_writer_integer(*names)
     module HasSideAttributes
       
-      include Attributes::HasAttributes
+      include HasAttributes
       
       def initialize(attributes={})
         @top, @right, @bottom, @left = 0, 0, 0, 0

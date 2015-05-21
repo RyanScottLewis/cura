@@ -7,6 +7,10 @@ module Cura
     
     class Label < Base
       
+      # Note that you can pass the following:
+      #   alignment: { horizontal: true, vertical: true }
+      # instead of:
+      #   horizontal_alignment: true, vertical_alignment: true
       def initialize(attributes={})
         @horizontal_alignment, @vertical_alignment = :left, :top
         @bold, @underline = false, false
@@ -167,7 +171,7 @@ module Cura
             
             y_offset += 1
           else
-            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), color: foreground_and_flags, bold: bold?, underline: underlined? )
+            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), color: foreground, bold: bold?, underline: underlined? )
             pencil.draw_text( options )
             
             x_offset += 1
@@ -189,6 +193,23 @@ module Cura
           when :center then ( ( text_height-height ).abs/2 ).to_i
           when :bottom then ( text_height-height ).abs
         end
+      end
+      
+      protected
+      
+      # TODO: Just use a #alignment attribute and have a Cura::Alignment object?
+      def convert_attributes(attributes={})
+        attributes = super
+        
+        if attributes.has_key?(:alignment)
+          alignment_attributes = attributes.delete(:alignment)
+          alignment_attributes = alignment_attributes.to_hash rescue alignment_attributes.to_h
+          
+          attributes[:horizontal_alignment] = alignment_attributes[:horizontal] if alignment_attributes.has_key?(:horizontal)
+          attributes[:vertical_alignment] = alignment_attributes[:vertical] if alignment_attributes.has_key?(:vertical)
+        end
+        
+        attributes
       end
       
     end

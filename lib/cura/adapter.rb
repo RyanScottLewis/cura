@@ -1,17 +1,29 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_attributes'
 end
 
 module Cura
   
-  # TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  # How to use adapter system?
-  # mixin = adapter.mixins[ component.class ]
-  # component.extend( mixin ) if mixin && mixin.is_a?(Module)
-  # TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   # The base class for adapters.
   class Adapter
     
+    class << self
+      
+      # The list of all Adapter subclasses.
+      # 
+      # @return [Array]
+      def all
+        @all ||= []
+      end
+      
+      def inherited(subclass)
+        all << subclass
+      end
+      
+    end
+    
+    include Attributes::HasInitialize
     include Attributes::HasAttributes
     
     def initialize(attributes={})
@@ -27,7 +39,7 @@ module Cura
     attr_reader :mixins
     
     def setup
-      
+      @mixins.each { |klass, mod| klass.include(mod) }
     end
     
     def clear

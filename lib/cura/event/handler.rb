@@ -50,12 +50,13 @@ module Cura
           # TODO: Optional event consumption
           if result == false
             chain_broken = true
+            
             break
           end
           
         end
         
-        propagate_event(event) unless chain_broken
+        delegate_event(event) unless chain_broken
       end
       
       protected

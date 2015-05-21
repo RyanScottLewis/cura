@@ -1,5 +1,7 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_application'
+  require 'cura/attributes/has_foreground_and_background'
   require 'cura/attributes/has_dimensions'
   require 'cura/attributes/has_events'
   require 'cura/attributes/has_offsets'
@@ -15,10 +17,10 @@ module Cura
     # Margins, borders, paddings, then content.
     class Base
       
-      include Attributes::HasApplication
+      include Attributes::HasInitialize
       include Attributes::HasDimensions
       include Attributes::HasEvents
-      # include Attributes::HasForegroundAndBackground
+      include Attributes::HasForegroundAndBackground
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
       
@@ -43,7 +45,7 @@ module Cura
       # 
       # @return [Cursor]
       def cursor
-        @application.cursor
+        application.cursor
       end
       
       # Get the pencil for this application.
@@ -51,7 +53,7 @@ module Cura
       # 
       # @return [Pencil]
       def pencil
-        @application.pencil
+        application.pencil
       end
       
       # Queue all objects for drawing during the next loop cycle.
@@ -59,7 +61,7 @@ module Cura
       # 
       # @return [Application]
       def redraw
-        @application.redraw
+        application.redraw
       end
       
       # Update this component.
@@ -75,6 +77,15 @@ module Cura
         draw_borders
         
         self
+      end
+      
+      # Get the application of this object.
+      # 
+      # @return [Application]
+      def application
+        return nil if parent.nil?
+        
+        parent.application
       end
       
       # Focus on this component.
@@ -110,7 +121,7 @@ module Cura
       
       # Draw the background of this component.
       def draw_background
-        options = translate( x: offsets.left, y: offsets.top ).merge( width: width, height: height, foreground: foreground, background: background )
+        options = translate( x: offsets.left, y: offsets.top ).merge( width: width, height: height )#, foreground: foreground, background: background )
         
         pencil.draw_rectangle( options )
       end

@@ -1,4 +1,5 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_side_attributes'
 end
 
@@ -26,6 +27,7 @@ module Cura
       end
     end
     
+    include Attributes::HasInitialize
     include Attributes::HasSideAttributes
     # include Attributes::HasForegroundAndBackground
     

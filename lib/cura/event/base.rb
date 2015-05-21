@@ -1,6 +1,8 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_attributes'
   require 'cura/attributes/has_events'
+  
   require 'cura/event'
 end
 
@@ -17,7 +19,7 @@ module Cura
         # 
         # @return [Symbol]
         def name
-          to_s.split(/::/).last.gsub(/([a-z])([A-Z])/, '\1_\2').downcase.to_sym
+          to_s.split(/::/).last.gsub( /([a-z])([A-Z])/, '\1_\2' ).downcase.to_sym
         end
         
         # Add the subclass to `Event.all`, when inherited.
@@ -27,6 +29,7 @@ module Cura
         
       end # << self
       
+      include Attributes::HasInitialize
       include Attributes::HasAttributes
       
       # Get the name of this event's class.
@@ -71,8 +74,9 @@ module Cura
         # object_equivalence = super
         # return true if object_equivalence
         
-        # raise TypeError, 'other must respond to #to_hash or #to_h' unless other.respond_to?(:to_hash) || other.respond_to?(:to_h)
-        other = other.to_hash rescue other.to_h
+        other = if other.respond_to?(:to_hash) || other.respond_to?(:to_h)
+          other.to_hash rescue other.to_h
+        end
         
         other == to_h
       end

@@ -8,7 +8,7 @@ module Cura
     # Adds the `x` and `y` attributes.
     module HasCoordinates
       
-      include Attributes::HasAttributes
+      include HasAttributes
       
       def initialize(attributes={})
         @x, @y = 0, 0

@@ -8,7 +8,7 @@ module Cura
     # Adds the `width` and `height` attributes.
     module HasDimensions
       
-      include Attributes::HasAttributes
+      include HasAttributes
       
       def initialize(attributes={})
         @width, @height = 0, 0

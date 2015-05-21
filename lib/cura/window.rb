@@ -1,4 +1,5 @@
 if Kernel.respond_to?(:require)
+  require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_application'
   require 'cura/attributes/has_children'
   require 'cura/attributes/has_coordinates'
@@ -10,6 +11,7 @@ module Cura
   # A window containing a drawing area.
   class Window
     
+    include Attributes::HasInitialize
     include Attributes::HasApplication
     include Attributes::HasChildren
     include Attributes::HasCoordinates
@@ -17,7 +19,7 @@ module Cura
     
     # Update this window's components.
     # 
-    # @return [Application] This application.
+    # @return [Window]
     def update
       update_children
       
@@ -26,14 +28,14 @@ module Cura
     
     # Draw this window's children.
     # 
-    # @return [Application] This application.
+    # @return [Window]
     def draw
-      adapter.clear
+      application.adapter.clear
       
       draw_children
-      # @application.cursor.draw # TODO
+      # application.cursor.draw # TODO
       
-      adapter.present
+      application.adapter.present
       
       @redraw = false
       
@@ -42,7 +44,7 @@ module Cura
     
     # Queue all children for drawing during the next loop cycle.
     # 
-    # @return [Application] This application.
+    # @return [Window]
     def redraw
       @redraw = true
       
@@ -54,6 +56,44 @@ module Cura
     # @return [Boolean]
     def redraw?
       @redraw == true
+    end
+    
+    # Show this window.
+    # 
+    # @return [Window]
+    def show
+      
+    end
+    
+    # Hide this window.
+    # 
+    # @return [Window]
+    def hide
+      
+    end
+    
+    # Add a child to this window.
+    # 
+    # @param [Component] component
+    # @return [Component]
+    def add_child(component)
+      component = super
+      
+      component.parent = self
+      
+      component
+    end
+      
+    # Remove a child from this window's children at the given index.
+    # 
+    # @param [Integer] index
+    # @return [Component]
+    def delete_child_at(index)
+      component = super
+      
+      component.parent = nil
+      
+      component
     end
     
   end

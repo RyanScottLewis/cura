@@ -1,6 +1,6 @@
 require 'cura'
 # require 'cura-adapter-termbox'
-require 'cura-adapter-termbox-ffi'
+require 'cura/termbox_ffi/adapter'
 # require 'cura-adapter-curses'
 # require 'cura-adapter-sdl'
 # require 'cura-adapter-sdl-ffi'
@@ -8,33 +8,44 @@ require 'cura-adapter-termbox-ffi'
 # require 'cura-adapter-opengl-ffi'
 # require 'cura-adapter-gosu'
 
-module Todo
+require 'hello_world/application'
+
+module HelloWorld
   
   class << self
     
     def run
-      adapter = choose_adapter
-      
-      Application.run( adapter: adapter )
+      # adapter = choose_adapter
+      # 
+      # Application.run( adapter: adapter )
+      Application.run( adapter: Cura::TermboxFFI::Adapter.new )
     end
     
     protected
     
     def choose_adapter
-      adapter_names = Cura::Adapter.all.collect(&:name)
+      adapters = Cura::Adapter.all
       adapter = nil
+      index = -1
       
       loop do
-        puts "\nChoose one or type 'exit': #{ adapter_names.join(', ') }"
+        adapters.each_with_index do |adapter, index|
+          puts "#{index}. #{adapter}"
+        end
+        
+        puts "\nChoose adapter or type 'exit'"
         print '> '
         
-        adapter = gets.downcase.strip.to_sym
+        answer = gets.downcase.strip
   
-        exit if adapter == :exit
-        break if adapter_names.include?( adapter )
+        exit if answer == 'exit'
+        
+        index = answer.to_i
+        
+        break if index < adapters.length && index >= 0
       end
       
-      adapter
+      adapters[index]
     end
     
   end

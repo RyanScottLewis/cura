@@ -2,10 +2,10 @@ module Cura
   
   module Key
     
-    CODES = ( ('0'..'9').to_a + ('a'..'z').to_a ).inject({}) { |memo, character| memo.merge( character.to_sym => character.ord ) }.merge(
+    CODES = {
       cancel:        3,
       help:          6,
-      back_space:    8,
+      backspace:     8,
       tab:           9,
       clear:         12,
       return:        13,
@@ -16,7 +16,7 @@ module Cura
       pause:         19,
       caps_lock:     20,
       escape:        27,
-      space:         32,
+      # space:         32,
       page_up:       33,
       page_down:     34,
       end:           35,
@@ -28,8 +28,8 @@ module Cura
       printscreen:   44,
       insert:        45,
       delete:        46,
-      semicolon:     59,
-      equals:        61,
+      # semicolon:     59,
+      # equals:        61,
       context_menu:  93,
       numpad0:       96,
       numpad1:       97,
@@ -73,17 +73,17 @@ module Cura
       f24:           135,
       num_lock:      144,
       scroll_lock:   145,
-      comma:         188,
-      dash:          189,
-      period:        190,
-      slash:         191,
-      back_quote:    192,
-      open_bracket:  219,
-      back_slash:    220,
-      close_bracket: 221,
-      quote:         222,
+      # comma:         188,
+      # dash:          189,
+      # period:        190,
+      # slash:         191,
+      # back_quote:    192,
+      # open_bracket:  219,
+      # back_slash:    220,
+      # close_bracket: 221,
+      # quote:         222,
       meta:          224
-    )
+    }
     
     class << self
       
