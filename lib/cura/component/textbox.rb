@@ -38,6 +38,8 @@ module Cura
       def initialize(attributes={})
         super
         
+        @foreground, @background = Cura::Color.black, Cura::Color.white
+        
         @width  = 1 if @width < 1
         @height = 1 if @height < 1
       end
@@ -46,7 +48,7 @@ module Cura
       # 
       # @return [Textbox]
       def clear
-        @text = ""
+        @text = ''
         redraw
         
         self

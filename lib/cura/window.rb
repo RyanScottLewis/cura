@@ -4,6 +4,7 @@ if Kernel.respond_to?(:require)
   require 'cura/attributes/has_children'
   require 'cura/attributes/has_coordinates'
   require 'cura/attributes/has_dimensions'
+  require 'cura/attributes/has_events'
 end
 
 module Cura
@@ -16,6 +17,7 @@ module Cura
     include Attributes::HasChildren
     include Attributes::HasCoordinates
     include Attributes::HasDimensions
+    include Attributes::HasEvents
     
     # Update this window's components.
     # 
@@ -94,6 +96,13 @@ module Cura
       component.parent = nil
       
       component
+    end
+    
+    # Return this window's parent.
+    # 
+    # @return [Window]
+    def parent
+      @application
     end
     
   end

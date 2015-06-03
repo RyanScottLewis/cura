@@ -117,17 +117,24 @@ module Cura
         }
       end
       
+      # Instance inspection.
+      # 
+      # @return [String]
+      def inspect
+        "#<#{self.class} x=#{@x} y=#{@y} w=#{@width} h=#{@height} parent=#{@parent.class}>"
+      end
+      
       protected
       
       # Draw the background of this component.
       def draw_background
-        options = translate( x: offsets.left, y: offsets.top ).merge( width: width, height: height )#, foreground: foreground, background: background )
+        options = translate( x: offsets.left, y: offsets.top ).merge( width: width, height: height, foreground: foreground, background: background )
         
         pencil.draw_rectangle( options )
       end
       
       # Draw the borders of this component.
-      def draw_borders
+      def draw_borders # TODO
         if borders.top > 0 # TODO: :none
           options = translate( x: margins.left, y: margins.top ).merge( width: width + margins.width, height: borders.top, foreground: borders.foreground, background: Color.red )
           

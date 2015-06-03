@@ -33,10 +33,17 @@ module HelloWorld
       label_hello_kanji = Cura::Component::Label.new( text: '今日は', alignment: { horizontal: :center }, margins: { bottom: 5 } )
       pack.add_child(label_hello_kanji)
       
-      # textbox_1 = Cura::Component::Textbox.new( alignment: { horizontal: :center } )
-      # pack.add_child(textbox_1)
-      #
-      # textbox_1.focus
+      
+      input_pack = Cura::Component::Pack.new( width: 250, fill: true )
+      input_label = Cura::Component::Label.new( text: 'Type and press Enter to echo:' )
+      input_pack.add_child(input_label)
+      
+      input_textbox = Cura::Component::Textbox.new
+      input_pack.add_child(input_textbox)
+      
+      pack.add_child(input_pack)
+      
+      input_textbox.focus
     end
   
   end

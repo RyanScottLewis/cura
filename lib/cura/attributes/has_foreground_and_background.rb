@@ -14,7 +14,7 @@ module Cura
       include HasAttributes
       
       def initialize(attributes={})
-        @foreground, @background = Cura::Color.default, Cura::Color.default
+        @foreground, @background = Cura::Color.white, Cura::Color.black
         
         super
       end
@@ -24,9 +24,9 @@ module Cura
       
       # Set the foreground color of this object.
       def foreground=(value)
-        raise ArgumentError, "foreground must respond to :to_i" unless value.respond_to?(:to_i)
+        raise ArgumentError, "foreground must be a Cura::Color" unless value.is_a?(Cura::Color)
         
-        @foreground = value.to_i
+        @foreground = value
       end
       
       # Get the background color of this object.
@@ -34,9 +34,9 @@ module Cura
       
       # Set the background color of this object.
       def background=(value)
-        raise ArgumentError, "background must respond to :to_i" unless value.respond_to?(:to_i)
+        raise ArgumentError, "foreground must be a Cura::Color" unless value.is_a?(Cura::Color)
         
-        @background = value.to_i
+        @background = value
       end
       
     end

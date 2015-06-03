@@ -194,6 +194,13 @@ module Cura
       self
     end
     
+    # Instance inspection.
+    # 
+    # @return [String]
+    def inspect
+      "#<#{self.class}>"
+    end
+    
   end
   
 end

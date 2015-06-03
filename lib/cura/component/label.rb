@@ -14,7 +14,7 @@ module Cura
       def initialize(attributes={})
         @horizontal_alignment, @vertical_alignment = :left, :top
         @bold, @underline = false, false
-        @text = ""
+        @text = ''
         
         super
       end
@@ -171,7 +171,7 @@ module Cura
             
             y_offset += 1
           else
-            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), color: foreground, bold: bold?, underline: underlined? )
+            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: @foreground, background: @background, bold: @bold, underline: @underlined )
             pencil.draw_text( options )
             
             x_offset += 1
