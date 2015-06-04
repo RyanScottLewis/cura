@@ -19,8 +19,15 @@ module Cura
     include Attributes::HasDimensions
     include Attributes::HasEvents
     
-    on_event(:key_down) do |event| # TODO: tab focusing controller thingymabober -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-      LOGGER.debug( event.inspect )
+    # TODO: tab focusing controller thingymabober vvvvvvvv -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+    on_event(:focus) do |event|
+      focusable_children = focusable_children_of(self)
+      
+      @focused_child_index = focusable_children.index( event.target )
+    end
+    
+    on_event(:key_down) do |event|
       if event.key_name == :tab # TODO: SHIFT+TAB
         focusable_children = focusable_children_of(self)
         
@@ -31,6 +38,8 @@ module Cura
         application.focus( focusable_children[@focused_child_index] )
       end
     end
+    
+    # TODO: tab focusing controller thingymabober ^^^^^^^^ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     # Update this window's components.
     # 
@@ -115,6 +124,13 @@ module Cura
     # @return [Window]
     def parent
       @application
+    end
+    
+    # Instance inspection.
+    # 
+    # @return [String]
+    def inspect
+      "#<#{self.class}:0x#{__id__.to_s(16)} application=#{@application.class}:0x#{@application.__id__.to_s(16)}>"
     end
     
     protected

@@ -7,6 +7,8 @@ if Kernel.respond_to?(:require)
   require 'cura/component/base'
   
   require 'cura/event/dispatcher'
+  
+  require 'cura/event/click'
   require 'cura/event/focus'
   require 'cura/event/unfocus'
   require 'cura/event/handler'

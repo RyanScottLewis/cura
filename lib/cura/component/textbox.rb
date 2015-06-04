@@ -41,6 +41,7 @@ module Cura
         
         super
         
+        # TODO
         # @width  = 1 if @width != :auto && @width < 1
         # @height = 1 if @height != :auto && @height < 1
       end

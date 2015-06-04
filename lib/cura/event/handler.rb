@@ -49,7 +49,7 @@ module Cura
           
           # TODO: Optional event consumption
           if result == false
-            chain_broken = true
+            # chain_broken = true # TODO TODO TODO TODO TODO 
             
             break
           end

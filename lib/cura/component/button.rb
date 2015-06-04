@@ -1,50 +1,38 @@
+if Kernel.respond_to?(:require)
+  require 'cura/component/label'
+end
+
 module Cura
   module Component
     
     class Button < Label
       
-      def initialize(attributes={}, &block)
-        @callback = block if block_given?
-        @clicked = false
+      on_event(:focus) do |event|
+        switch_foreground_and_background if event.target == self
+      end
+      
+      on_event(:unfocus) do |event|
+        switch_foreground_and_background if event.target == self
+      end
+      
+      on_event(:key_down) do |event|
+        click if event.target == self && event.key_name == :enter
+      end
+      
+      def initialize(attributes={})
+        @focusable = true
+        @foreground, @background = Cura::Color.black, Cura::Color.white
         
         super
       end
-      
-      # Get the state of this button.
-      attr_reader :state
       
       # Click this button.
+      # 
+      # @return [Button]
       def click
-        @clicked = true
-        
-        switch_foreground_and_background
-        execute_callback_if_needed
-      end
-      
-      # Get or set the callback of this button.
-      # TODO: Should /all/ components have a callback? Like FLTK? Kinda stupid..
-      def callback(&block)
-        @callback = block if block_given?
-        
-        @callback
-      end
-      
-      def draw
-        super
-        
-        if @clicked
-          @clicked = false
-          
-          invert_colors
-        end
+        application.dispatch_event( :click, target: self )
         
         self
-      end
-      
-      protected
-      
-      def execute_callback_if_needed
-        instance_eval(&@callback) unless @callback.nil?
       end
       
     end
