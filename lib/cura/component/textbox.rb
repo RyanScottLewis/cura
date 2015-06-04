@@ -41,8 +41,8 @@ module Cura
         
         super
         
-        @width  = 1 if @width != :auto && @width < 1
-        @height = 1 if @height != :auto && @height < 1
+        # @width  = 1 if @width != :auto && @width < 1
+        # @height = 1 if @height != :auto && @height < 1
       end
       
       # Clear all characters within this textbox.
