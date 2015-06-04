@@ -59,7 +59,7 @@ module Cura
     
     # Draw (set) the cursor.
     def draw
-      adapter.set_cursor( cursor_x, cursor_y )
+      application.adapter.set_cursor( @x, @y )
     end
     
   end

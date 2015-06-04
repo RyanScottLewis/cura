@@ -36,9 +36,10 @@ module Cura
       end
       
       def initialize(attributes={})
-        super
-        
+        @focusable = true
         @foreground, @background = Cura::Color.black, Cura::Color.white
+        
+        super
         
         @width  = 1 if @width != :auto && @width < 1
         @height = 1 if @height != :auto && @height < 1
@@ -50,6 +51,7 @@ module Cura
       def clear
         @text = ''
         redraw
+        set_cursor_position
         
         self
       end

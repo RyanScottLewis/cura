@@ -206,6 +206,7 @@ module Cura
     # @return [Application]
     def draw
       draw_windows
+      cursor.draw
       
       self
     end

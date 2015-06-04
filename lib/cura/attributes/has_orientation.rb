@@ -11,7 +11,7 @@ module Cura
       include HasAttributes
       
       def initialize(attributes={})
-        @orientation = :vertical
+        @orientation = :vertical unless instance_variable_defined?(:@orientation)
         
         super
       end

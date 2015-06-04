@@ -11,7 +11,8 @@ module Cura
       include HasAttributes
       
       def initialize(attributes={})
-        @width, @height = :auto, :auto
+        @width = :auto unless instance_variable_defined?(:@width)
+        @height = :auto unless instance_variable_defined?(:@height)
         
         super
       end

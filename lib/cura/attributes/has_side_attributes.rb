@@ -12,7 +12,10 @@ module Cura
       include HasAttributes
       
       def initialize(attributes={})
-        @top, @right, @bottom, @left = 0, 0, 0, 0
+        @top = 0 unless instance_variable_defined?(:@top)
+        @right = 0 unless instance_variable_defined?(:@right)
+        @bottom = 0 unless instance_variable_defined?(:@bottom)
+        @left = 0 unless instance_variable_defined?(:@left)
         
         super
       end

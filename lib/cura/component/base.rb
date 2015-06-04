@@ -1,6 +1,7 @@
 if Kernel.respond_to?(:require)
   require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_application'
+  require 'cura/attributes/has_focusability'
   require 'cura/attributes/has_foreground_and_background'
   require 'cura/attributes/has_dimensions'
   require 'cura/attributes/has_events'
@@ -20,6 +21,7 @@ module Cura
       include Attributes::HasInitialize
       include Attributes::HasDimensions
       include Attributes::HasEvents
+      include Attributes::HasFocusability
       include Attributes::HasForegroundAndBackground
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
@@ -90,8 +92,10 @@ module Cura
       
       # Focus on this component.
       # 
-      # @return [Component] This component.
+      # @return [nil, Component] This component or nil if it isn't focusable.
       def focus
+        return nil unless @focusable
+        
         application.focus(self)
       end
       

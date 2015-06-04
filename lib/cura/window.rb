@@ -35,7 +35,6 @@ module Cura
       application.adapter.clear
       
       draw_children
-      # application.cursor.draw # TODO
       
       application.adapter.present
       
