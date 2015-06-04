@@ -47,7 +47,6 @@ module Cura
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
       @event_dispatcher = Event::Dispatcher.new( application: self )
-      @focused_child_index = 0
     end
     
     # Get the adapter used for running this application.
@@ -151,7 +150,7 @@ module Cura
     def focus(component)
       raise TypeError, 'component must be nil or be a Cura::Component::Base' unless component.nil? || component.is_a?(Cura::Component::Base)
       
-      dispatch_event( :unfocus )
+      dispatch_event( :unfocus, target: @focused ) unless @focused.nil?
       
       event_dispatcher.target = component.nil? ? self : component
       @focused = component
