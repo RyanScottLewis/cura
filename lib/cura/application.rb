@@ -43,7 +43,7 @@ module Cura
       
       @running = false
       @redraw = true
-      @wait_time = 0
+      @wait_time = 0.1
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
       @event_dispatcher = Event::Dispatcher.new( application: self )
@@ -115,8 +115,8 @@ module Cura
       is_polling = wait_time == 0 ? true : false
       
       while @running
-        update_windows
-        draw_windows
+        update
+        draw
         
         is_polling ? event_dispatcher.poll : event_dispatcher.peek(wait_time)
       end
@@ -190,6 +190,22 @@ module Cura
     # @return [Application]
     def redraw
       windows.each(&:redraw)
+      
+      self
+    end
+
+    # Update all windows.
+    # 
+    # @return [Application]
+    def update
+      update_windows
+    end
+    
+    # Draw all windows.
+    # 
+    # @return [Application]
+    def draw
+      draw_windows
       
       self
     end

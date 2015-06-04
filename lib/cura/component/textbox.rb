@@ -40,8 +40,8 @@ module Cura
         
         @foreground, @background = Cura::Color.black, Cura::Color.white
         
-        @width  = 1 if @width < 1
-        @height = 1 if @height < 1
+        @width  = 1 if @width != :auto && @width < 1
+        @height = 1 if @height != :auto && @height < 1
       end
       
       # Clear all characters within this textbox.

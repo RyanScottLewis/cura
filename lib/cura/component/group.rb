@@ -14,9 +14,7 @@ module Cura
       # 
       # @return [Integer]
       def width
-        value = super
-        
-        return value unless value == 0 # TODO: :auto option?
+        return @width unless @width == :auto
         return 0 if children.empty?
         
         children.collect { |child| child.x + child.width }.max
@@ -26,9 +24,7 @@ module Cura
       # 
       # @return [Integer]
       def height
-        value = super
-        
-        return value unless value == 0 # TODO: :auto option?
+        return @height unless @height == :auto
         return 0 if children.empty?
         
         children.collect { |child| child.y + child.height }.max

@@ -11,7 +11,7 @@ module Cura
       include HasAttributes
       
       def initialize(attributes={})
-        @width, @height = 0, 0
+        @width, @height = :auto, :auto
         
         super
       end
@@ -27,7 +27,7 @@ module Cura
       # @return [Integer]
       def width=(value)
         value = value.to_i
-        value = 0 if value < 0
+        value = :auto if value < 0
         
         @width = value
       end
@@ -43,7 +43,7 @@ module Cura
       # @return [Integer]
       def height=(value)
         value = value.to_i
-        value = 0 if value < 0
+        value = :auto if value < 0
         
         @height = value
       end

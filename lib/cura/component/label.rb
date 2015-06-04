@@ -25,20 +25,18 @@ module Cura
       # 
       # @return [Integer]
       def width
-        result = super
-        result = text_width if result == 0 # TODO: :auto
+        return text_width if @width == :auto
         
-        result
+        @width
       end
       
       # Get the height of this label.
       # 
       # @return [Integer]
       def height
-        result = super
-        result = text_height if result == 0 # TODO: :auto
+        return text_height if @height == :auto
         
-        result
+        @height
       end
       
       # Get the text of this label.
@@ -74,9 +72,9 @@ module Cura
       # 
       # @return [Integer]
       def text_height
-        result = lines.length
+        value = lines.length
         
-        result == 0 ? 1 : result
+        value == 0 ? 1 : value
       end
       
       # Get whether the text is bold.
