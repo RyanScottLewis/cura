@@ -69,7 +69,7 @@ module HelloWorld
       
       
       
-      form_pack = Cura::Component::Pack.new( fill: true, orientation: :horizontal )
+      form_pack = Cura::Component::Pack.new
       
       form_first_name_label = Cura::Component::Label.new( text: 'First Name:' )
       form_pack.add_child(form_first_name_label)
@@ -94,6 +94,12 @@ module HelloWorld
       
       form_zip_textbox = Cura::Component::Textbox.new( width: 20 )
       form_pack.add_child(form_zip_textbox)
+      
+      form_clear_button = Cura::Component::Textbox.new( text: 'Clear', padding: { left: 1, right: 1 } )
+      form_pack.add_child(form_clear_button)
+      
+      form_submit_button = Cura::Component::Textbox.new( text: 'Submit', padding: { left: 1, right: 1 } )
+      form_pack.add_child(form_submit_button)
       
       pack.add_child(form_pack)
     end
