@@ -20,7 +20,8 @@ module Cura
     include Attributes::HasEvents
     
     on_event(:key_down) do |event| # TODO: tab focusing controller thingymabober -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-      if event.key_name == :tab
+      LOGGER.debug( event.inspect )
+      if event.key_name == :tab # TODO: SHIFT+TAB
         focusable_children = focusable_children_of(self)
         
         @focused_child_index ||= 0

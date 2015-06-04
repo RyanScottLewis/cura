@@ -9,6 +9,7 @@ LOGGER = Logger.new(LOG_PATH)
 require 'cura'
 
 module HelloWorld
+  
   class Application < Cura::Application
     
     on_event(:key_down) do |event|
@@ -64,15 +65,37 @@ module HelloWorld
       #-----
       
       pack.add_child(input_pack)
-
-
-      name_label = Cura::Component::Label.new( text: 'Name:' )
-      pack.add_child(name_label)
-      
-      name_textbox = Cura::Component::Textbox.new
-      pack.add_child(name_textbox)
-      
       input_textbox.focus
+      
+      
+      
+      form_pack = Cura::Component::Pack.new( fill: true, orientation: :horizontal )
+      
+      form_first_name_label = Cura::Component::Label.new( text: 'First Name:' )
+      form_pack.add_child(form_first_name_label)
+      
+      form_first_name_textbox = Cura::Component::Textbox.new( width: 20, margins: { right: 1 } )
+      form_pack.add_child(form_first_name_textbox)
+      
+      form_last_name_label = Cura::Component::Label.new( text: 'Last Name:' )
+      form_pack.add_child(form_last_name_label)
+      
+      form_last_name_textbox = Cura::Component::Textbox.new( width: 20, margins: { right: 1 } )
+      form_pack.add_child(form_last_name_textbox)
+      
+      form_age_label = Cura::Component::Label.new( text: 'Age:' )
+      form_pack.add_child(form_age_label)
+      
+      form_age_textbox = Cura::Component::Textbox.new( width: 20, margins: { right: 1 } )
+      form_pack.add_child(form_age_textbox)
+      
+      form_zip_label = Cura::Component::Label.new( text: 'ZIP:' )
+      form_pack.add_child(form_zip_label)
+      
+      form_zip_textbox = Cura::Component::Textbox.new( width: 20 )
+      form_pack.add_child(form_zip_textbox)
+      
+      pack.add_child(form_pack)
     end
     
     def update
