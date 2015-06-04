@@ -36,7 +36,7 @@ module HelloWorld
       label_hello = Cura::Component::Label.new( text: 'Hello, world!', alignment: { horizontal: :center } )
       pack.add_child(label_hello)
       
-      label_hello_kanji = Cura::Component::Label.new( text: '今日は', alignment: { horizontal: :center }, margins: { bottom: 5 } )
+      label_hello_kanji = Cura::Component::Label.new( text: '今日は', alignment: { horizontal: :center }, margins: { bottom: 1 } )
       pack.add_child(label_hello_kanji)
       
       
@@ -47,10 +47,6 @@ module HelloWorld
       input_textbox = Cura::Component::Textbox.new
       input_pack.add_child(input_textbox)
       
-      
-      
-      pack.add_child(input_pack)
-      
       #-----
       
       @timer_start = nil
@@ -58,7 +54,7 @@ module HelloWorld
       input_pack.add_child(@input_result_label)
 
       input_textbox.on_event(:key_down) do |event|
-        if event.key_name == :return || event.key_name == :enter
+        if event.key_name == :enter
           application.timer_start = Time.now
           application.input_result_label.text = input_textbox.text
           clear
@@ -66,6 +62,8 @@ module HelloWorld
       end
       
       #-----
+      
+      pack.add_child(input_pack)
       
       input_textbox.focus
     end

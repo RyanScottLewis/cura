@@ -5,18 +5,17 @@ module Cura
     CODES = {
       cancel:        3,
       help:          6,
-      backspace:     8,
+      backspace:     [ 8, 127 ],
       tab:           9,
       clear:         12,
-      return:        13,
-      enter:         14,
+      enter:         [ 13, 14 ],
       shift:         16,
       control:       17,
       alt:           18,
       pause:         19,
       caps_lock:     20,
       escape:        27,
-      # space:         32,
+      space:         32,
       page_up:       33,
       page_down:     34,
       end:           35,
@@ -62,7 +61,6 @@ module Cura
       f13:           124,
       f14:           125,
       f15:           126,
-      f16:           127,
       f17:           128,
       f18:           129,
       f19:           130,
@@ -105,7 +103,7 @@ module Cura
       # @return [Symbol]
       def name_from_code(code)
         code = code.to_i
-        result = Key::CODES.find { |key, value| value == code }
+        result = Key::CODES.find { |key, value| value.is_a?(Array) ? value.include?(code) : value == code }
         
         return nil if result.nil?
         

@@ -25,8 +25,8 @@ module Cura
             self.text = text[0..-2]
           elsif event.key_name == :space
             self.text << ' '
-          elsif event.key_name == :return # TODO: if multiline?
-            # self.text << "\n"
+          # elsif event.key_name == :enter # TODO: if multiline?
+          #   self.text << "\n"
           elsif !event.control_key?
             self.text << event.character
           end
