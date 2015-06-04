@@ -35,7 +35,7 @@ module Cura
         # Register this classes callbacks onto the subclass, when inherited.
         def inherited(subclass)
           callbacks.each do |event_name, blocks|
-            block.each do |block|
+            blocks.each do |block|
               subclass.on_event( event_name, &block )
             end
           end

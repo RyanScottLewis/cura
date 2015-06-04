@@ -19,6 +19,18 @@ module Cura
     include Attributes::HasDimensions
     include Attributes::HasEvents
     
+    on_event(:key_down) do |event| # TODO: tab focusing controller thingymabober -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+      if event.key_name == :tab
+        focusable_children = focusable_children_of(self)
+        
+        @focused_child_index ||= 0
+        @focused_child_index += 1
+        @focused_child_index = @focused_child_index % focusable_children.length
+
+        application.focus( focusable_children[@focused_child_index] )
+      end
+    end
+    
     # Update this window's components.
     # 
     # @return [Window]
@@ -102,6 +114,20 @@ module Cura
     # @return [Window]
     def parent
       @application
+    end
+    
+    protected
+    
+    # Recursively find all children which are focusable.
+    def focusable_children_of(component)
+      result = []
+      
+      component.children.each do |child|
+        result << child if child.focusable?
+        result << focusable_children_of(child) if child.respond_to?(:children)
+      end
+      
+      result.flatten
     end
     
   end

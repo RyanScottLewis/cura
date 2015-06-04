@@ -47,6 +47,7 @@ module Cura
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
       @event_dispatcher = Event::Dispatcher.new( application: self )
+      @focused_child_index = 0
     end
     
     # Get the adapter used for running this application.

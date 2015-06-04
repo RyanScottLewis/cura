@@ -64,6 +64,13 @@ module HelloWorld
       #-----
       
       pack.add_child(input_pack)
+
+
+      name_label = Cura::Component::Label.new( text: 'Name:' )
+      pack.add_child(name_label)
+      
+      name_textbox = Cura::Component::Textbox.new
+      pack.add_child(name_textbox)
       
       input_textbox.focus
     end

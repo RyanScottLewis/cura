@@ -125,7 +125,7 @@ module Cura
       # 
       # @return [String]
       def inspect
-        "#<#{self.class} x=#{@x} y=#{@y} w=#{@width} h=#{@height} parent=#{@parent.class}>"
+        "#<#{self.class}:0x#{__id__.to_s(16)} x=#{@x} y=#{@y} w=#{@width} h=#{@height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
       end
       
       protected
