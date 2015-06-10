@@ -16,18 +16,18 @@ module Cura
       end
       
       on_event(:unfocus) do |event|
-        cursor.hidden = true if event.target == self
+        cursor.hidden = true if !cursor.hidden? && event.target == self
       end
       
       on_event(:key_down) do |event|
         if event.target == self
-          if event.key_name == :backspace
+          if event.name == :backspace
             self.text = text[0..-2]
-          elsif event.key_name == :space
+          elsif event.name == :space
             self.text << ' '
-          # elsif event.key_name == :enter # TODO: if multiline?
+          # elsif event.name == :enter # TODO: if multiline?
           #   self.text << "\n"
-          elsif !event.control_key?
+          elsif event.printable?
             self.text << event.character
           end
 

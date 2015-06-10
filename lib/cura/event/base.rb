@@ -32,14 +32,6 @@ module Cura
       include Attributes::HasInitialize
       include Attributes::HasAttributes
       
-      # Get the name of this event's class.
-      # 
-      # @return [Symbol]
-      # @see .name
-      def name
-        self.class.name
-      end
-      
       # Get the target this event was dispatched to.
       # TODO: Rename to source.
       #       The source is the component the event was originally sent to.

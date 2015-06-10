@@ -24,19 +24,17 @@ module Cura
     on_event(:focus) do |event|
       focusable_children = focusable_children_of(self)
       
-      @focused_child_index = focusable_children.index( event.target )
+      @focused_index = focusable_children.index( event.target )
     end
     
     on_event(:key_down) do |event|
-      if event.key_name == :tab # TODO: SHIFT+TAB
-        focusable_children = focusable_children_of(self)
-        
-        @focused_child_index ||= 0
-        @focused_child_index += 1
-        @focused_child_index = @focused_child_index % focusable_children.length
-
-        application.focus( focusable_children[@focused_child_index] )
-      end
+      self.focused_index += 1 if event.name == :tab
+    end
+    
+    def initialize(attributes={})
+      @focused_index = 0
+      
+      super
     end
     
     # TODO: tab focusing controller thingymabober ^^^^^^^^ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -60,25 +58,7 @@ module Cura
       
       application.adapter.present
       
-      @redraw = false
-      
       self
-    end
-    
-    # Queue all children for drawing during the next loop cycle.
-    # 
-    # @return [Window]
-    def redraw
-      @redraw = true
-      
-      self
-    end
-    
-    # Get whether all children will redraw in the next loop cycle.
-    # 
-    # @return [Boolean]
-    def redraw?
-      @redraw == true
     end
     
     # Show this window.
@@ -131,6 +111,17 @@ module Cura
     # @return [String]
     def inspect
       "#<#{self.class}:0x#{__id__.to_s(16)} application=#{@application.class}:0x#{@application.__id__.to_s(16)}>"
+    end
+    
+    attr_reader :focused_index
+    
+    def focused_index=(value)
+      focusable_children = focusable_children_of(self)
+
+      @focused_index = value.to_i
+      @focused_index = @focused_index % focusable_children.length
+
+      application.focus( focusable_children[@focused_index] )
     end
     
     protected

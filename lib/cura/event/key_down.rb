@@ -8,50 +8,58 @@ module Cura
     # Dispatched when is key's state changes from up to down.
     class KeyDown < Base
       
-      # Get if the key was a control character.
+      def initialize(attributes={})
+        @control = false
+        
+        super
+        
+        raise ArgumentError, 'name must be set' if @name.nil?
+      end
+      
+      # Get whether the key was pressed while holding the control key.
       # 
       # @return [Boolean]
-      def control_key?
-        @control_key
+      def control?
+        @control
       end
       
-      # Set if the key was a control character.
+      # Get the key name.
       # 
-      # @param [Boolean] value
+      # @return [Integer]
+      attr_reader :name
+      
+      # Get whether the key is printable.
+      # 
       # @return [Boolean]
-      def control_key=(value)
-        @control_key = !!value
+      def printable?
+        return false if @control
+        
+        Key.name_is_printable?(@name)
       end
       
-      # Get the key code.
-      # 
-      # @return [Integer]
-      attr_reader :key_code
-      
-      # Set the key code.
-      # 
-      # @param [#to_i] value
-      # @return [Integer]
-      def key_code=(value)
-        @key_code = value.to_i
-      end
-      
-      # Get the character of this key, if there is one.
+      # Get the printable character for the key.
       # 
       # @return [nil, String]
       def character
-        return nil if control_key?
-        
-        [@key_code].pack(?U) # UTF-8 character from key code
+        Key.character_from_name(@name)
       end
       
-      # Get the name of this key, if it is a control character.
+      protected
+      
+      # Set if the key was pressed while holding the control key.
       # 
-      # @return [nil, String]
-      def key_name
-        return nil unless control_key?
-        
-        Key.name_from_code(@key_code)
+      # @param [Boolean] value
+      # @return [Boolean]
+      def control=(value)
+        @control = !!value
+      end
+      
+      # Set the key name.
+      # 
+      # @param [#to_sym] value
+      # @return [String]
+      def name=(value)
+        @name = value.to_sym
       end
       
     end

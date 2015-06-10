@@ -16,7 +16,7 @@ module Cura
       end
       
       on_event(:key_down) do |event|
-        click if event.target == self && event.key_name == :enter
+        click if event.target == self && event.name == :enter
       end
       
       def initialize(attributes={})

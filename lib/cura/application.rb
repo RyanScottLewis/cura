@@ -44,7 +44,6 @@ module Cura
       @adapter.setup
       
       @running = false
-      @redraw = true
       @wait_time = 0.1
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
@@ -185,15 +184,6 @@ module Cura
       window.application = self
       
       window
-    end
-    
-    # Redraw all windows.
-    # 
-    # @return [Application]
-    def redraw
-      windows.each(&:redraw)
-      
-      self
     end
 
     # Update all windows.

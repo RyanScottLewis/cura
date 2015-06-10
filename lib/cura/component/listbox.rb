@@ -8,15 +8,29 @@ module Cura
     
     class Listbox < Pack
       
-      on_event(:focus) { |event| selected_child.switch_foreground_and_background }
+      on_event(:focus) do |event|
+        if event.target == self
+          set_cursor_position
+          cursor.hidden = false if cursor.hidden?
+          
+          switch_selected_colors
+        end
+      end
       
-      on_event(:unfocus) { |event| selected_child.switch_foreground_and_background }
+      on_event(:unfocus) do |event|
+        if event.target == self
+          cursor.hidden = true
+          
+          switch_selected_colors
+        end
+      end
       
       on_event(:key_down) do |event|
-        self.selected_index -= 1 if event.key_code == Key.code_from_name(:up) && selected_index != 0
-        self.selected_index += 1 if event.key_code == Key.code_from_name(:down) && selected_index != children.count-1
+        self.selected_index -= 1 if event.name == :up && @selected_index != 0
+        self.selected_index += 1 if event.name == :down && @selected_index != @children.count-1
+        # TODO: Loop around query attribute to determine if to loop around after pressing down on the last item or up on the first
         
-        if event.key_code == Key.code_from_name(:enter)
+        if event.name == :enter
           application.dispatch_event( :selected )
           
           false
@@ -25,6 +39,7 @@ module Cura
       end
       
       def initialize(attributes={})
+        @focusable = true
         @selected_index = 0
         
         super
@@ -44,9 +59,11 @@ module Cura
       def selected_index=(value)
         raise ArgumentError, 'selected_index must respond to :to_i' unless value.respond_to?(:to_i)
         
-        selected_child.switch_foreground_and_background if focused?
+        selected_child.switch_foreground_and_background if !selected_child.nil? && focused?
         @selected_index = value.to_i
-        selected_child.switch_foreground_and_background if focused?
+        selected_child.switch_foreground_and_background if !selected_child.nil? && focused?
+        
+        set_cursor_position
         
         @selected_index
       end
@@ -56,6 +73,30 @@ module Cura
       # @return [Component]
       def selected_child
         @children[ @selected_index ]
+      end
+      
+      # Remove a child from this listbox's children at the given index.
+      # 
+      # @param [#to_i] index
+      # @return [Component]
+      def delete_child_at(index)
+        deleted_child = super
+        
+        self.selected_index = @children.length-1 if @selected_index >= @children.length
+        switch_selected_colors
+        
+        deleted_child
+      end
+      
+      protected
+      
+      def switch_selected_colors
+        selected_child.switch_foreground_and_background unless @children.empty?
+      end
+      
+      def set_cursor_position
+        cursor.x = @children.empty? ? absolute_x : selected_child.absolute_x
+        cursor.y = @children.empty? ? absolute_y : selected_child.absolute_y
       end
       
     end

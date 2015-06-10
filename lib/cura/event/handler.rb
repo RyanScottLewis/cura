@@ -40,7 +40,7 @@ module Cura
       # TODO: These should be able to break the callback chain by returning false in the callback (which would also break the delegation chain).
       # TODO: The event should be delegated to the host's #parent if there are no callbacks registered for it, if it responds to #parent, and it's not nil.
       def handle(event)
-        callbacks = @callbacks[:default] + @callbacks[ event.name ].to_a
+        callbacks = @callbacks[:default] + @callbacks[ event.class.name ].to_a
         
         chain_broken = false
         callbacks.each do |callback|
