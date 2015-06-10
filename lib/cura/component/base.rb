@@ -58,14 +58,6 @@ module Cura
         application.pencil
       end
       
-      # Queue all objects for drawing during the next loop cycle.
-      # TODO: Delegate
-      # 
-      # @return [Application]
-      def redraw
-        application.redraw
-      end
-      
       # Update this component.
       def update
         # NOTE: Does nothing here on purpose.
@@ -156,8 +148,6 @@ module Cura
         f, b = foreground, background
         
         self.foreground, self.background = b, f
-        
-        redraw
       end
       
     end

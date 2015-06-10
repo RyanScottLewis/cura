@@ -51,7 +51,7 @@ module Cura
       # @return [Textbox]
       def clear
         @text = ''
-        redraw
+        
         set_cursor_position
         
         self
