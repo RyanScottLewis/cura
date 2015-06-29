@@ -4,6 +4,12 @@ module Cura
     # Allows an object to have a `parent` and `ancestors`.
     module HasAncestry
       
+      def initialize(attributes={})
+        @ancestors = []
+        
+        super
+      end
+      
       # Get the parent of this object.
       # It's not recommended to set this directly as it will break the ancestory chain.
       # 
@@ -17,20 +23,27 @@ module Cura
       # @return [Object]
       def parent=(value)
         @parent = value
+        
+        set_ancestors
+        
+        @parent
       end
       
       # Get the ancestors of this object.
-      # TODO: Cache when parent is set instead of computing each time
       # 
       # @return [Array<Object>]
-      def ancestors
-        ancestors = []
+      attr_reader :ancestors
+      
+      protected
+      
+      def set_ancestors
+        @ancestors = []
         current_ancestor = self
         
         while !current_ancestor.nil?
           
           if current_ancestor.respond_to?(:parent)
-            ancestors << current_ancestor
+            @ancestors << current_ancestor
             current_ancestor = current_ancestor.parent
           else
             current_ancestor = nil
@@ -38,7 +51,7 @@ module Cura
           
         end
         
-        ancestors
+        @ancestors
       end
       
     end
