@@ -14,3 +14,6 @@ PLATFORMS
 DEPENDENCIES
   cura!
   rake (~> 10.4.2)
+
+BUNDLED WITH
+   1.10.4

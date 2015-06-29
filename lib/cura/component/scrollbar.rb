@@ -101,14 +101,14 @@ module Cura
         set_button_labels_based_on_orientation
       end
       
-      # Increment the value of this scrollbar by the given number (default: 1).
+      # Increment the value of this scrollbar by the given number.
       def increment(value=1)
         raise ArgumentError, "value must respond to :to_i" unless value.respond_to?(:to_i)
         
         self.value += value.to_i
       end
       
-      # Decrement the value of this scrollbar by the given number (default: 1).
+      # Decrement the value of this scrollbar by the given number.
       def decrement(value=1)
         raise ArgumentError, "value must respond to :to_i" unless value.respond_to?(:to_i)
         

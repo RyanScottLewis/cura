@@ -23,7 +23,7 @@ module Cura
         # Store a callback on this class.
         # Stored callbacks will be registered on the event handler on initialization.
         # 
-        # @param [nil, #to_sym] event_name The event name. Default is `:default`.
+        # @param [nil, #to_sym] event_name The event name.
         # @yield The callback block.
         # @return [Proc] The callback block.
         def on_event(event_name=:default, &block)
@@ -65,7 +65,7 @@ module Cura
       
       # Register a callback for an event to this instance.
       # 
-      # @param [nil, #to_sym] event_name The event name. Default is `:default`.
+      # @param [nil, #to_sym] event_name The event name.
       # @yield The callback block.
       # @return [Proc] The callback block.
       def on_event(event_name=:default, &block)

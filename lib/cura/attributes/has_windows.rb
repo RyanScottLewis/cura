@@ -35,7 +35,6 @@ module Cura
       # @param [#to_i] index
       # @return [Window]
       def delete_window_at(index)
-        # NOTE: All deleting uses this method so that subclasses can override default behaviour when deleting a window
         @windows.delete_at( index.to_i )
       end
       
@@ -45,8 +44,9 @@ module Cura
       # @return [Window]
       def delete_window(window)
         raise TypeError, 'window must be a Cura::Window' unless window.is_a?(Window)
+        index = @windows.index(window)
         
-        delete_window_at( @windows.index(window) )
+        delete_window_at( index )
       end
       
       # Remove all windows.

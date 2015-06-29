@@ -1,1 +1,0 @@
-D, [2015-06-04T18:16:16.734599 #24062] DEBUG -- : #<Cura::Event::KeyDown:0x007ff4a4174670 @key_code=3, @control_key=true, @target=#<Cura::Component::Textbox:0x3ffa5283bc24 x=0 y=1 w=382 h=auto parent=Cura::Component::Pack:0x3ffa520ab978>>

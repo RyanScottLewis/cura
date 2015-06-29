@@ -124,7 +124,7 @@ module Cura
       
       # Draw the background of this component.
       def draw_background
-        options = translate( x: offsets.left, y: offsets.top ).merge( width: width, height: height, foreground: foreground, background: background )
+        options = translate( x: @offsets.left, y: @offsets.top ).merge( width: width + @padding.width, height: height + @padding.height, foreground: foreground, background: background )
         
         pencil.draw_rectangle( options )
       end

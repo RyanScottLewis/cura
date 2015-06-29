@@ -19,8 +19,6 @@ module Cura
     include Attributes::HasDimensions
     include Attributes::HasEvents
     
-    # TODO: tab focusing controller thingymabober vvvvvvvv -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    
     on_event(:focus) do |event|
       focusable_children = focusable_children_of(self)
       
@@ -36,8 +34,6 @@ module Cura
       
       super
     end
-    
-    # TODO: tab focusing controller thingymabober ^^^^^^^^ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
     # Update this window's components.
     # 

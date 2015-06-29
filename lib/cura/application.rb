@@ -94,7 +94,6 @@ module Cura
     # @param [#to_i] value The new value.
     # @return [Integer]
     def wait_time=(value)
-      # TODO: TypeError, :to_i
       value = value.to_i
       value = 0 if value < 0
       

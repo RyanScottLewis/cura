@@ -105,40 +105,40 @@ module HelloWorld
 
       form_pack = Cura::Component::Pack.new( orientation: :horizontal )
 
-      form_first_name_label = Cura::Component::Label.new( text: 'First Name:' )
+      form_first_name_label = Cura::Component::Label.new( text: 'First Name:', margins: { right: 1 } )
       form_pack.add_child(form_first_name_label)
 
       @form_first_name_textbox = Cura::Component::Textbox.new( width: 20, margins: { right: 1 } )
       form_pack.add_child(@form_first_name_textbox)
       @form_first_name_textbox.on_event(:key_down) { |event| application.form_submit_button.click if event.name == :enter }
 
-      form_last_name_label = Cura::Component::Label.new( text: 'Last Name:' )
+      form_last_name_label = Cura::Component::Label.new( text: 'Last Name:', margins: { right: 1 } )
       form_pack.add_child(form_last_name_label)
 
       @form_last_name_textbox = Cura::Component::Textbox.new( width: 20, margins: { right: 1 } )
       form_pack.add_child(@form_last_name_textbox)
       @form_last_name_textbox.on_event(:key_down) { |event| application.form_submit_button.click if event.name == :enter }
 
-      form_age_label = Cura::Component::Label.new( text: 'Age:' )
+      form_age_label = Cura::Component::Label.new( text: 'Age:', margins: { right: 1 } )
       form_pack.add_child(form_age_label)
 
       @form_age_textbox = Cura::Component::Textbox.new( width: 20, margins: { right: 1 } )
       form_pack.add_child(@form_age_textbox)
       @form_age_textbox.on_event(:key_down) { |event| application.form_submit_button.click if event.name == :enter }
 
-      form_zip_label = Cura::Component::Label.new( text: 'ZIP:' )
+      form_zip_label = Cura::Component::Label.new( text: 'ZIP:', margins: { right: 1 } )
       form_pack.add_child(form_zip_label)
 
       @form_zip_textbox = Cura::Component::Textbox.new( width: 20 )
       form_pack.add_child(@form_zip_textbox)
       @form_zip_textbox.on_event(:key_down) { |event| application.form_submit_button.click if event.name == :enter }
 
-      form_clear_button = Cura::Component::Button.new( text: 'Clear', padding: { left: 1, right: 1 }, margins: { left: 1, right: 1 } )
+      form_clear_button = Cura::Component::Button.new( text: 'Clear', padding: { left: 1, right: 1 }, margins: { left: 1 } )
       form_pack.add_child(form_clear_button)
 
       form_clear_button.on_event(:click) { application.clear_form }
 
-      @form_submit_button = Cura::Component::Button.new( text: 'Submit', padding: { left: 1, right: 1 } )
+      @form_submit_button = Cura::Component::Button.new( text: 'Submit', padding: { left: 1, right: 1 }, margins: { left: 1 } )
       form_pack.add_child(@form_submit_button)
 
       @form_submit_button.on_event(:click) do |event|
@@ -160,6 +160,9 @@ module HelloWorld
       end
       pack.add_child(form_pack)
 
+      people_label = Cura::Component::Label.new( text: 'People:' )
+      pack.add_child(people_label)
+      
       @people_listbox = Cura::Component::Listbox.new
       @people_listbox.on_event(:key_down) { |event| delete_child(selected_child) if event.control? && event.name == :D }
 

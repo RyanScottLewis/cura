@@ -39,7 +39,8 @@ module Cura
     attr_reader :mixins
     
     def setup
-      @mixins.each { |klass, mod| klass.include(mod) }
+      # @mixins.each { |klass, mod| klass.include(mod) }
+      @mixins.each { |klass, mod| klass.send( :include, mod ) }
     end
     
     def clear

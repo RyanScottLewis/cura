@@ -160,7 +160,7 @@ module Cura
       
       # TODO: Should use instance vars 
       def draw_text
-        x_offset = x_offset_start = x_offset_from_alignment
+        x_offset = x_offset_start = x_offset_from_alignment + @padding.left
         y_offset = y_offset_from_alignment
         
         text_to_draw.each_char do |character|
