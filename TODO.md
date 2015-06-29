@@ -21,3 +21,4 @@
   back up from the target to the root. http://www.w3.org/TR/DOM-Level-3-Events/#h3_event-flow
 * Todo example application
 * Rename borders and margins to the singular like CSS
+* Better adapter system.
