@@ -25,24 +25,51 @@ module Cura
     end
     
     # Check if the cursor is hidden.
+    # 
+    # @return [Boolean]
     def hidden?
       !!@hidden
     end
     
     # Set if the cursor is hidden.
+    # 
+    # @param [Boolean] value
+    # @return [Boolean]
     def hidden=(value)
       value = !!value
       
       @hidden = value
     end
     
+    # Show the cursor.
+    # 
+    # @return [Cursor]
+    def show
+      @hidden = false
+      
+      self
+    end
+    
+    # Hide the cursor.
+    # 
+    # @return [Cursor]
+    def hide
+      @hidden = true
+      
+      self
+    end
+    
     # Draw (set) the cursor.
+    # 
+    # @return [Cursor]
     def draw
       if @hidden
         application.adapter.hide_cursor
       else
         application.adapter.set_cursor( @x, @y )
       end
+      
+      self
     end
     
   end

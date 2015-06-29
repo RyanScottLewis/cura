@@ -11,12 +11,12 @@ module Cura
       on_event(:focus) do |event|
         if event.target == self
           set_cursor_position
-          cursor.hidden = false if cursor.hidden?
+          cursor.show
         end
       end
       
       on_event(:unfocus) do |event|
-        cursor.hidden = true if !cursor.hidden? && event.target == self
+        cursor.hide
       end
       
       on_event(:key_down) do |event|
