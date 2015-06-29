@@ -1,8 +1,6 @@
 if Kernel.respond_to?(:require)
   require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_attributes'
-  require 'cura/attributes/has_borders'
-  require 'cura/attributes/has_margins'
   require 'cura/component/base'
 end
 
@@ -12,8 +10,6 @@ module Cura
     
     include Attributes::HasInitialize
     include Attributes::HasAttributes
-    include Attributes::HasBorders
-    include Attributes::HasMargins
     
     def initialize(attributes={})
       super
