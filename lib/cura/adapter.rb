@@ -27,6 +27,7 @@ module Cura
     include Attributes::HasAttributes
     
     def initialize(attributes={})
+      @setup = false
       @mixins = {}
       
       super
@@ -39,8 +40,15 @@ module Cura
     attr_reader :mixins
     
     def setup
+      @setup = true
       # @mixins.each { |klass, mod| klass.include(mod) }
       @mixins.each { |klass, mod| klass.send( :include, mod ) }
+      
+      self
+    end
+    
+    def setup?
+      @setup
     end
     
     def clear
@@ -48,7 +56,9 @@ module Cura
     end
     
     def cleanup
+      @setup = false
       
+      self
     end
     
   end
