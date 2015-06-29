@@ -10,31 +10,6 @@ require 'cura'
 
 module HelloWorld
   
-  # class Application < Cura::Application
-  #
-  #   on_event(:key_down) do |event|
-  #     if event.control? && event.name == :C # CTRL+C
-  #       stop
-  #     else
-  #       @output.text += event.inspect + "\n"
-  #     end
-  #   end
-  #
-  #   def initialize(attributes={})
-  #     super
-  #
-  #     window = Cura::Window.new
-  #     add_window(window)
-  #
-  #     pack = Cura::Component::Pack.new( width: window.width, height: window.height, fill: true )
-  #     window.add_child(pack)
-  #
-  #     @output = Cura::Component::Label.new
-  #     pack.add_child(@output)
-  #   end
-  #
-  # end
-  
   class Application < Cura::Application
 
     on_event(:key_down) do |event|

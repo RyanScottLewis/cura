@@ -15,6 +15,8 @@ if Kernel.respond_to?(:require)
   require 'cura/event/key_down'
   require 'cura/event/resize'
   require 'cura/event/selected'
+  
+  require 'cura/error/invalid_adapter'
     
   require 'cura/cursor'
   require 'cura/pencil'
@@ -41,7 +43,7 @@ module Cura
     def initialize(attributes={})
       super
       
-      @adapter.setup
+      setup_adapter
       
       @running = false
       @wait_time = 0.1
@@ -61,6 +63,7 @@ module Cura
     # @param [Adapter] value The new adapter.
     # @return [Adapter]
     def adapter=(value)
+      # TODO: Raise error if ever set more than once
       raise TypeError, 'adapter must be a Cura::Adapter' unless value.is_a?(Cura::Adapter)
       
       @adapter = value
@@ -112,14 +115,8 @@ module Cura
     # @return [Application] This application.
     def run
       @running = true
-      is_polling = wait_time == 0 ? true : false
       
-      while @running
-        update
-        draw
-        
-        is_polling ? event_dispatcher.poll : event_dispatcher.peek(wait_time)
-      end
+      run_event_loop
       
       self
     ensure
@@ -207,6 +204,28 @@ module Cura
     # @return [String]
     def inspect
       "#<#{self.class}>"
+    end
+    
+    protected
+    
+    def setup_adapter
+      if @adapter.nil?
+        adapter_class ||= Adapter.all.first
+        raise Error::InvalidAdapter if adapter_class.nil?
+        
+        @adapter = adapter_class.new
+      end
+      
+      @adapter.setup
+    end
+    
+    def run_event_loop
+      while @running
+        update
+        draw
+        
+        @wait_time == 0 ? event_dispatcher.poll : event_dispatcher.peek(@wait_time)
+      end
     end
     
   end

@@ -21,6 +21,16 @@ module Cura
         all << subclass
       end
       
+      def mixins
+        @mixins ||= {}
+      end
+      
+      def mixin(value)
+        value = value.to_hash rescue value.to_h 
+        
+        mixins.merge!(value)
+      end
+      
     end
     
     include Attributes::HasInitialize
@@ -28,21 +38,14 @@ module Cura
     
     def initialize(attributes={})
       @setup = false
-      @mixins = {}
       
       super
     end
     
-    # The mixins to apply per class.
-    # Key is the class to mix into and the value is the module to mixin.
-    # 
-    # @return [Hash]
-    attr_reader :mixins
-    
     def setup
       @setup = true
-      # @mixins.each { |klass, mod| klass.include(mod) }
-      @mixins.each { |klass, mod| klass.send( :include, mod ) }
+      
+      self.class.mixins.each { |type, mod| type.send( :include, mod ) }
       
       self
     end
