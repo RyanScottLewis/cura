@@ -51,9 +51,7 @@ module Cura
       def selected_index=(value)
         raise ArgumentError, 'selected_index must respond to :to_i' unless value.respond_to?(:to_i)
         
-        selected_child.switch_foreground_and_background if !selected_child.nil? && focused?
         @selected_index = value.to_i
-        selected_child.switch_foreground_and_background if !selected_child.nil? && focused?
         
         set_cursor_position
         
@@ -75,16 +73,11 @@ module Cura
         deleted_child = super
         
         self.selected_index = @children.length-1 if @selected_index >= @children.length
-        switch_selected_colors
         
         deleted_child
       end
       
       protected
-      
-      def switch_selected_colors
-        selected_child.switch_foreground_and_background unless @children.empty?
-      end
       
       def set_cursor_position
         cursor.x = @children.empty? ? absolute_x : selected_child.absolute_x
