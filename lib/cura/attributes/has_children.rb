@@ -9,13 +9,24 @@ module Cura
     # TODO: Lots of code is the same as HasWindows
     module HasChildren
       
+      include Enumerable
+      
       def initialize(*arguments)
         @children = []
         
         super
       end
       
+      # Traverse the children of this object.
+      # 
+      # @return [Array]
+      def each(&block)
+        @children.each(&block)
+      end
+      
       # Get the children of this object.
+      # 
+      # @return [<Component>]
       attr_reader :children
       
       # Add a child to this group.
