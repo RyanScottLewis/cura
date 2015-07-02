@@ -32,7 +32,7 @@ module TodoList
           
           previous_selected_index = @selected_index
           sidebar.fill_listbox
-          self.selected_index = previous_selected_index
+          self.selected_index = [ previous_selected_index, count-1 ].min
         end
         
         selected_child.focus if event.target == self && event.control? && event.name == :E

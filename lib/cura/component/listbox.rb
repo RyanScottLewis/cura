@@ -21,16 +21,14 @@ module Cura
       
       on_event(:key_down) do |event|
         if event.target == self
-          self.selected_index -= 1 if event.name == :up && @selected_index != 0
-          self.selected_index += 1 if event.name == :down && @selected_index != @children.count-1
-          # TODO: Loop around query attribute to determine if to loop around after pressing down on the last item or up on the first
-          
+          update_selected_index_if_needed(event)
           application.dispatch_event( :selected ) if event.name == :enter
         end
       end
       
       def initialize(attributes={})
         @focusable = true
+        @loopable = true
         @selected_index = 0
         
         super
@@ -76,11 +74,44 @@ module Cura
         deleted_child
       end
       
+      # Get whether this listbox is loopable or not.
+      # 
+      # @return [Boolean]
+      def loopable?
+        @loopable
+      end
+      
+      # Set whether this listbox is loopable or not.
+      # 
+      # @param [Object] value
+      # @return [Boolean]
+      def loopable=(value)
+        @loopable = !!value
+      end
+      
       protected
       
       def set_cursor_position
         cursor.x = @children.empty? ? absolute_x : selected_child.absolute_x
         cursor.y = @children.empty? ? absolute_y : selected_child.absolute_y
+      end
+      
+      def update_selected_index_if_needed(event)
+        if event.name == :up
+          if @loopable
+            self.selected_index = (@selected_index - 1) % count
+          else
+            self.selected_index -= 1 if @selected_index >= 0
+          end
+        end
+        
+        if event.name == :down
+          if @loopable
+            self.selected_index = (@selected_index + 1) % count
+          else
+            self.selected_index += 1 if @selected_index <= @children.count-1
+          end
+        end
       end
       
     end
