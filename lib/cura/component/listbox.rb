@@ -9,12 +9,14 @@ module Cura
     class Listbox < Pack
       
       on_event(:focus) do |event|
-        set_cursor_position
-        cursor.show
+        if event.target == self
+          set_cursor_position
+          cursor.show
+        end
       end
       
       on_event(:unfocus) do |event|
-        cursor.hide
+        cursor.hide if event.target == self
       end
       
       on_event(:key_down) do |event|
