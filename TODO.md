@@ -24,3 +24,5 @@
 * Better adapter system.
 * Threaded event loop
 * Always update, only draw when needed (backing data has changed, a character needs to be draw, cursor needs to move...)
+* Margins and padding on ANY component. Doesn't work on listboxes, groups, etcetc
+* Listbox children should be able to have an arbitrary object be associated with it.

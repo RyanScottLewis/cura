@@ -22,12 +22,17 @@ module TodoList
       @create_list_button.on_event(:click, self) { |event, sidebar| sidebar.create_list }
       header_pack.add_child(@create_list_button)
       
+      listbox_header_label = Cura::Component::Label.new( text: 'Lists', bold: true, underline: true, margins: { top: 1 } )
+      add_child(listbox_header_label)
+      
       @listbox = Cura::Component::Listbox.new( width: @width )
       @listbox.on_event(:key_down, self) do |event, sidebar|
         if event.control? && event.name == :D
           List.find( name: selected_child.text ).destroy
+          
+          previous_selected_index = @selected_index
           sidebar.fill_listbox
-          self.selected_index = selected_index - 1
+          self.selected_index = previous_selected_index
         end
         
         selected_child.focus if event.target == self && event.control? && event.name == :E

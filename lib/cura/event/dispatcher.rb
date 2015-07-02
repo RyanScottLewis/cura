@@ -56,30 +56,28 @@ module Cura
         @target = value
       end
       
-      # Run the event dispatcher loop.
+      # Poll or peek for events and dispatch it if one was found.
       # 
       # @return [Event::Dispatcher]
       def run
-        @wait_time == 0 ? poll : peek(@wait_time)
+        event = @wait_time == 0 ? poll : peek(@wait_time)
+        
+        dispatch_event(event) unless event.nil?
       end
       
-      # Wait forever for an event and handle it.
+      # Wait forever for an event.
       # 
       # @return [Event::Base] The event
       def poll
-        event = @application.adapter.poll_event
-        
-        dispatch_event(event)
+        @application.adapter.poll_event
       end
       
-      # Wait a set amount of time for an event and handle it if needed.
+      # Wait a set amount of time for an event.
       # 
       # @param [#to_i] milliseconds The amount of time to wait in milliseconds.
       # @return [nil, Event::Base] The event, if handled.
       def peek(milliseconds=100)
-        event = @application.adapter.peek_event( milliseconds.to_i )
-        
-        dispatch_event(event) unless event.nil?
+        @application.adapter.peek_event( milliseconds.to_i )
       end
       
       # Dispatch an event to the target or application, if the target is nil.
