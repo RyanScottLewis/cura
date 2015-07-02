@@ -30,6 +30,7 @@ module Cura
         @focusable = true
         @loopable = true
         @selected_index = 0
+        @index_object_map = {}
         
         super
       end
@@ -46,9 +47,17 @@ module Cura
       # @param [nil, #to_i] value
       # @return [nil, Integer]
       def selected_index=(value)
-        raise ArgumentError, 'selected_index must respond to :to_i' unless value.respond_to?(:to_i)
+        value = value.to_i
         
-        @selected_index = value.to_i
+        if @loopable
+          # Avoids value = value % 0 (divide by zero error)
+          value = count == 0 ? 0 : value % count
+        else
+          value = 0 if value <= 0
+          value = count-1 if value >= count-1
+        end
+        
+        @selected_index = value
         
         set_cursor_position
         
@@ -97,21 +106,8 @@ module Cura
       end
       
       def update_selected_index_if_needed(event)
-        if event.name == :up
-          if @loopable
-            self.selected_index = (@selected_index - 1) % count
-          else
-            self.selected_index -= 1 if @selected_index >= 0
-          end
-        end
-        
-        if event.name == :down
-          if @loopable
-            self.selected_index = (@selected_index + 1) % count
-          else
-            self.selected_index += 1 if @selected_index <= @children.count-1
-          end
-        end
+        self.selected_index -= 1 if event.name == :up
+        self.selected_index += 1 if event.name == :down
       end
       
     end

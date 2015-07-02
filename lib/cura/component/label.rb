@@ -169,7 +169,7 @@ module Cura
             
             y_offset += 1
           else
-            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: @foreground, background: @background, bold: @bold, underline: @underlined )
+            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: @foreground, background: @background, bold: @bold, underline: @underline )
             pencil.draw_text( options )
             
             x_offset += 1
