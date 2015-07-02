@@ -21,7 +21,8 @@ module Cura
       
       on_event(:key_down) do |event|
         if event.target == self
-          update_selected_index_if_needed(event)
+          self.selected_index -= 1 if event.name == :up
+          self.selected_index += 1 if event.name == :down
           application.dispatch_event( :selected ) if event.name == :enter
         end
       end
@@ -30,7 +31,7 @@ module Cura
         @focusable = true
         @loopable = true
         @selected_index = 0
-        @index_object_map = {}
+        @objects = []
         
         super
       end
@@ -50,8 +51,7 @@ module Cura
         value = value.to_i
         
         if @loopable
-          # Avoids value = value % 0 (divide by zero error)
-          value = count == 0 ? 0 : value % count
+          value = count == 0 ? 0 : value % count # Avoids value = value % 0 (divide by zero error)
         else
           value = 0 if value <= 0
           value = count-1 if value >= count-1
@@ -71,6 +71,20 @@ module Cura
         @children[ @selected_index ]
       end
       
+      # Add a child to this group.
+      # 
+      # @param [Component] component
+      # @param [Object] object An arbitrary object to associate with the added child in this listbox.
+      # @return [Component]
+      def add_child(component, object=nil)
+        index = count
+        child = super(component)
+
+        @objects << object
+
+        child
+      end
+      
       # Remove a child from this listbox's children at the given index.
       # 
       # @param [#to_i] index
@@ -78,9 +92,25 @@ module Cura
       def delete_child_at(index)
         deleted_child = super
         
-        self.selected_index = @children.length-1 if @selected_index >= @children.length
+        @objects.delete_at(index)
+        self.selected_index = @children.length - 1 if @selected_index >= @children.length
         
         deleted_child
+      end
+      
+      # Get the associated object with the child at the given index.
+      # 
+      # @param [#to_i] index
+      # @return [Object]
+      def object_at(index)
+        @objects[index]
+      end
+      
+      # Get the object associated with the child at the selected index.
+      # 
+      # @return [Component]
+      def selected_object
+        @objects[ @selected_index ]
       end
       
       # Get whether this listbox is loopable or not.
@@ -103,11 +133,6 @@ module Cura
       def set_cursor_position
         cursor.x = @children.empty? ? absolute_x : selected_child.absolute_x
         cursor.y = @children.empty? ? absolute_y : selected_child.absolute_y
-      end
-      
-      def update_selected_index_if_needed(event)
-        self.selected_index -= 1 if event.name == :up
-        self.selected_index += 1 if event.name == :down
       end
       
     end

@@ -38,7 +38,9 @@ module Cura
       end
 
       # Add a child to this group.
-      # TODO: Pass fill/expand options
+      # 
+      # @param [Component] component
+      # @return [Component]
       def add_child(component)
         child = super
 
@@ -48,6 +50,9 @@ module Cura
       end
 
       # Remove a child from this object's children at the given index.
+      # 
+      # @param [#to_i] index
+      # @return [Component]
       def delete_child_at(index)
         child = super
 

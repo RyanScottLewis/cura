@@ -26,8 +26,8 @@ module TodoList
       @listbox = Cura::Component::Listbox.new( width: @width )
       @listbox.on_event(:key_down, self) do |event, sidebar|
         if event.control? && event.name == :D
-          List.find( name: selected_child.text ).destroy
-          
+          selected_object.destroy
+
           previous_selected_index = @selected_index
           sidebar.fill_listbox
           self.selected_index = [ previous_selected_index, count-1 ].min
@@ -71,7 +71,7 @@ module TodoList
           end
         end
         
-        @listbox.add_child( list_textbox )
+        @listbox.add_child( list_textbox, list )
       end
     end
     
