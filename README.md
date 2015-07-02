@@ -80,7 +80,7 @@ class MainWindow < Cura::Window
       bold: true,
       underline: true,
       alignment: { horizontal: :center },
-      margins: 10,
+      margin: 10,
       border: { size: 1, color: Cura::Color.red },
       padding: 3
     )

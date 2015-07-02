@@ -14,7 +14,7 @@ module TodoList
       header_pack = Cura::Component::Pack.new( orientation: :horizontal )
       add_child(header_pack)
       
-      @create_list_textbox = Cura::Component::Textbox.new( width: (width/3).floor*2, margins: { right: 1 } )
+      @create_list_textbox = Cura::Component::Textbox.new( width: (width/3).floor*2, margin: { right: 1 } )
       @create_list_textbox.on_event(:key_down, self) { |event, sidebar| sidebar.create_list if event.name == :enter }
       header_pack.add_child(@create_list_textbox)
       
@@ -22,7 +22,7 @@ module TodoList
       @create_list_button.on_event(:click, self) { |event, sidebar| sidebar.create_list }
       header_pack.add_child(@create_list_button)
       
-      listbox_header_label = Cura::Component::Label.new( text: 'Lists', bold: true, underline: true, margins: { top: 1 } )
+      listbox_header_label = Cura::Component::Label.new( text: 'Lists', bold: true, underline: true, margin: { top: 1 } )
       add_child(listbox_header_label)
       
       @listbox = Cura::Component::Listbox.new( width: @width )

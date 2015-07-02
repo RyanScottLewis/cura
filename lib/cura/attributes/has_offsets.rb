@@ -16,29 +16,29 @@ module Cura
       include HasAttributes
       include HasObjectAttributes
       
-      # @method borders
+      # @method border
       # Get the borders of this object.
       # 
       # @return [Borders]
       
-      # @method borders=(value)
+      # @method border=(value)
       # Set the borders of this object.
       # 
       # @param [Borders, #to_hash, #to_h] value
       # @return [Borders]
-      attr_object :borders, Borders
+      attr_object :border, Borders
       
-      # @method margins
+      # @method margin
       # Get the margins of this object.
       # 
       # @return [Margins]
       
-      # @method margins=(value)
+      # @method margin=(value)
       # Set the margins of this object.
       # 
       # @param [Margins, #to_hash, #to_h] value
       # @return [Margins]
-      attr_object :margins, Margins
+      attr_object :margin, Margins
       
       # @method padding
       # Get the padding of this object.
@@ -55,8 +55,8 @@ module Cura
       def initialize(attributes={})
         @offsets = Offsets.new( component: self )
         
-        self.margins = attributes[:margins]
-        self.borders = attributes[:borders]
+        self.margin = attributes[:margin]
+        self.border = attributes[:border]
         self.padding = attributes[:padding]
         
         super

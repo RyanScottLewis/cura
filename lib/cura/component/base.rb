@@ -68,7 +68,7 @@ module Cura
       # @return [Component] This component.
       def draw
         draw_background
-        draw_borders
+        draw_border
         
         self
       end
@@ -129,16 +129,16 @@ module Cura
         pencil.draw_rectangle( options )
       end
       
-      # Draw the borders of this component.
-      def draw_borders # TODO
-        if borders.top > 0 # TODO: :none
-          options = translate( x: margins.left, y: margins.top ).merge( width: width + margins.width, height: borders.top, foreground: borders.foreground, background: Color.red )
+      # Draw the border of this component.
+      def draw_border # TODO
+        if border.top > 0 # TODO: :none
+          options = translate( x: margin.left, y: margin.top ).merge( width: width + margin.width, height: border.top, foreground: border.foreground, background: Color.red )
           
           pencil.draw_rectangle( options )
         end
         
-        if borders.bottom > 0 # TODO: :none
-          options = translate( x: margins.left, y: offsets.top + padding.bottom ).merge( width: width + margins.width, height: borders.bottom, foreground: borders.foreground, background: Color.red )
+        if border.bottom > 0 # TODO: :none
+          options = translate( x: margin.left, y: offsets.top + padding.bottom ).merge( width: width + margin.width, height: border.bottom, foreground: border.foreground, background: Color.red )
           
           pencil.draw_rectangle( options )
         end

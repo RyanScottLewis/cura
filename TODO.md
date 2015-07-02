@@ -20,7 +20,6 @@
   W3C defines propagation as going down from the root to the target (capturing) first, then 
   back up from the target to the root. http://www.w3.org/TR/DOM-Level-3-Events/#h3_event-flow
 * Todo example application
-* Rename borders and margins to the singular like CSS
 * Better adapter system.
 * Threaded event loop
 * Always update, only draw when needed (backing data has changed, a character needs to be draw, cursor needs to move...)

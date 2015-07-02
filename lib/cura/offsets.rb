@@ -36,28 +36,28 @@ module Cura
     # 
     # @return [Integer]
     def top
-      @component.margins.top + @component.borders.top
+      @component.margin.top + @component.border.top
     end
     
     # Get the right offset from the contents of a component from the right.
     # 
     # @return [Integer]
     def right
-      @component.margins.right + @component.borders.right
+      @component.margin.right + @component.border.right
     end
     
     # Get the bottom offset from the contents of a component from the bottom.
     # 
     # @return [Integer]
     def bottom
-      @component.margins.bottom + @component.borders.bottom
+      @component.margin.bottom + @component.border.bottom
     end
     
     # Get the left offset from the contents of a component from the left.
     # 
     # @return [Integer]
     def left
-      @component.margins.left + @component.borders.left
+      @component.margin.left + @component.border.left
     end
     
     # Get the full height of offsets of a component.
