@@ -9,8 +9,8 @@ module Cura
     class Listbox < Pack
       
       on_event(:focus) do |event|
-          set_cursor_position
-          cursor.show
+        set_cursor_position
+        cursor.show
       end
       
       on_event(:unfocus) do |event|
@@ -18,16 +18,13 @@ module Cura
       end
       
       on_event(:key_down) do |event|
-        self.selected_index -= 1 if event.name == :up && @selected_index != 0
-        self.selected_index += 1 if event.name == :down && @selected_index != @children.count-1
-        # TODO: Loop around query attribute to determine if to loop around after pressing down on the last item or up on the first
-        
-        if event.name == :enter
-          application.dispatch_event( :selected )
+        if event.target == self
+          self.selected_index -= 1 if event.name == :up && @selected_index != 0
+          self.selected_index += 1 if event.name == :down && @selected_index != @children.count-1
+          # TODO: Loop around query attribute to determine if to loop around after pressing down on the last item or up on the first
           
-          false
+          application.dispatch_event( :selected ) if event.name == :enter
         end
-        
       end
       
       def initialize(attributes={})

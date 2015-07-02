@@ -31,8 +31,8 @@ module Cura
       # Add a callback to the event chain.
       # The first registered callback will be the first one called (FIFO).
       # If no event_name is given, the callback is registered to the `:default` name, which are called before all others.
-      def register(event_name=:default, &callback)
-        ( @callbacks[event_name] ||= [] ) << callback
+      def register(event_name=:default, *arguments, &block)
+        ( @callbacks[event_name] ||= [] ) << { block: block, arguments: arguments }
       end
       
       # Run all callbacks registered on this instance for the given event.
@@ -45,7 +45,7 @@ module Cura
         chain_broken = false
         callbacks.each do |callback|
           
-          result = host.instance_exec( event, &callback )
+          result = host.instance_exec( event, *callback[:arguments], &callback[:block] )
           
           # TODO: Optional event consumption
           if result == false

@@ -9,10 +9,9 @@ module Cura
     class Textbox < Label
       
       on_event(:focus) do |event|
-        if event.target == self
-          set_cursor_position
-          cursor.show
-        end
+        set_cursor_position
+        
+        cursor.show
       end
       
       on_event(:unfocus) do |event|

@@ -19,43 +19,42 @@ module Cura
         super
       end
       
-      # TODO: What's up with this?
-      # # Set the width dimension of this pack.
-      # def width=(value)
-      #   result = super
-      #
-      #   pack_children
-      #
-      #   result
-      # end
-      #
-      # # Set the height dimension of this pack.
-      # def height=(value)
-      #   result = super
-      #
-      #   pack_children
-      #
-      #   result
-      # end
-      #
-      # # Add a child to this group.
-      # # TODO: Pass fill/expand options
-      # def add_child(component)
-      #   child = super
-      #
-      #   pack_children
-      #
-      #   child
-      # end
-      #
-      # # Remove a child from this object's children at the given index.
-      # def delete_child_at(index)
-      #   child = super
-      #
-      #   pack_children
-      #
-      #   child
-      # end
+      # Set the width dimension of this pack.
+      def width=(value)
+        result = super
+
+        pack_children
+
+        result
+      end
+
+      # Set the height dimension of this pack.
+      def height=(value)
+        result = super
+
+        pack_children
+
+        result
+      end
+
+      # Add a child to this group.
+      # TODO: Pass fill/expand options
+      def add_child(component)
+        child = super
+
+        pack_children
+
+        child
+      end
+
+      # Remove a child from this object's children at the given index.
+      def delete_child_at(index)
+        child = super
+
+        pack_children
+
+        child
+      end
       
       # Get whether children will be filled.
       # 

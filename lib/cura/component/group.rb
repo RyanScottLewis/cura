@@ -30,7 +30,7 @@ module Cura
         children.collect { |child| child.y + child.height }.max
       end
       
-      # Add a child to this group.
+      # Add a child to this group and set it's parent to this Group.
       # 
       # @param [Component] component
       # @return [Component]
@@ -42,7 +42,7 @@ module Cura
         component
       end
       
-      # Remove a child from this object's children at the given index.
+      # Remove a child from this object's children at the given index and set it's parent to nil.
       # 
       # @param [Integer] index
       # @return [Component]

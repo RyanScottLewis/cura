@@ -53,7 +53,7 @@ module Cura
         (0...@children.count).to_a.reverse.each { |index| delete_child_at(index) }
       end
       
-      protected # TODO: These should be protected?
+      protected
       
       def update_children
         children.each(&:update)

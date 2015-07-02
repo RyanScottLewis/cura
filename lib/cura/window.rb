@@ -20,9 +20,7 @@ module Cura
     include Attributes::HasEvents
     
     on_event(:focus) do |event|
-      focusable_children = focusable_children_of(self)
-      
-      @focused_index = focusable_children.index( event.target )
+      update_focused_index(event)
     end
     
     on_event(:key_down) do |event|
@@ -109,18 +107,33 @@ module Cura
       "#<#{self.class}:0x#{__id__.to_s(16)} application=#{@application.class}:0x#{@application.__id__.to_s(16)}>"
     end
     
+    # TODO: Focus controller
+    
+    # Get the index of the currently focused component.
+    # 
+    # @return [Integer]
     attr_reader :focused_index
     
+    # Set the index of the currently focused component.
+    # This will send dispatch a Event::Focus instance to the object.
+    # 
+    # @param [#to_i] value
+    # @return [Integer]
     def focused_index=(value)
-      focusable_children = focusable_children_of(self)
-
       @focused_index = value.to_i
-      @focused_index = @focused_index % focusable_children.length
-
+      focusable_children = focusable_children_of(self)
+      @focused_index %= focusable_children.length
+      
       application.focus( focusable_children[@focused_index] )
     end
     
     protected
+    
+    def update_focused_index(event)
+      focusable_children = focusable_children_of(self)
+      
+      @focused_index = focusable_children.index( event.target )
+    end
     
     # Recursively find all children which are focusable.
     def focusable_children_of(component)

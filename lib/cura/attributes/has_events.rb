@@ -68,8 +68,8 @@ module Cura
       # @param [nil, #to_sym] event_name The event name.
       # @yield The callback block.
       # @return [Proc] The callback block.
-      def on_event(event_name=:default, &block)
-        event_handler.register( event_name, &block )
+      def on_event(event_name=:default, *arguments, &block)
+        event_handler.register( event_name, *arguments, &block )
       end
       
       protected
