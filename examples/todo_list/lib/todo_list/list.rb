@@ -1,12 +1,7 @@
-require 'cura'
-require 'todo_list/model'
-
 module TodoList
   
-  class List < Model
-    
-    attribute(:name) { |value| value.to_s }
-    
+  class List < Sequel::Model
+    one_to_many :list_items
   end
   
 end

@@ -1,9 +1,7 @@
-require 'cura'
-
 module TodoList
-  
-  class ListItem < Cure::Component::Listbox
-    
+
+  class ListItem < Sequel::Model
+    many_to_one :list
   end
   
 end
