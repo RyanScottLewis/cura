@@ -54,11 +54,13 @@ module TodoList
       
       List.all.each do |list|
         list_textbox = Cura::Component::Textbox.new( text: list.name, background: Cura::Color.black, foreground: Cura::Color.white )
-        list_textbox.on_event(:key_down) do |event|
+        list_textbox.on_event(:key_down, @listbox) do |event, listbox|
           if event.name == :enter
             list.name = text
             
             list.save
+            
+            listbox.focus
           end
         end
         
