@@ -46,7 +46,6 @@ module Cura
       setup_adapter
       
       @running = false
-      @wait_time = 0.1
       @cursor = Cursor.new( application: self )
       @pencil = Pencil.new
       @event_dispatcher = Event::Dispatcher.new( application: self )
@@ -83,25 +82,6 @@ module Cura
     # 
     # @return [Event::Dispatcher]
     attr_reader :event_dispatcher
-    
-    # Get the time to wait for events in milliseconds.
-    # TODO: Should be on dispatcher?
-    # 
-    # @return [Integer]
-    attr_reader :wait_time
-    
-    # Set the time to wait for events in milliseconds.
-    # Set to 0 to wait forever.
-    # TODO: Should be on dispatcher?
-    # 
-    # @param [#to_i] value The new value.
-    # @return [Integer]
-    def wait_time=(value)
-      value = value.to_i
-      value = 0 if value < 0
-      
-      @wait_time = value
-    end
     
     # Check if this application is running.
     # 
@@ -149,7 +129,7 @@ module Cura
       
       dispatch_event( :unfocus, target: @focused ) unless @focused.nil?
       
-      event_dispatcher.target = component.nil? ? self : component
+      @event_dispatcher.target = component.nil? ? self : component
       @focused = component
       
       dispatch_event( :focus, target: component )
@@ -164,10 +144,10 @@ module Cura
     def dispatch_event( event_name, options={})
       options = options.to_hash rescue options.to_h
       
-      event_dispatcher.target = options[:target] if options.has_key?(:target)
+      @event_dispatcher.target = options[:target] if options.has_key?(:target)
       event = Event.new_from_name(event_name)
       
-      event_dispatcher.dispatch_event(event)
+      @event_dispatcher.dispatch_event(event)
     end
     
     # Add a window to this application.
@@ -223,8 +203,7 @@ module Cura
       while @running
         update
         draw
-        
-        @wait_time == 0 ? event_dispatcher.poll : event_dispatcher.peek(@wait_time)
+        event_dispatcher.run
       end
     end
     

@@ -21,6 +21,24 @@ module Cura
         
         raise ArgumentError, 'application must be set' if @application.nil?
         @target = @application if @target.nil?
+        @wait_time = 0
+      end
+      
+      # Get the time to wait for events in milliseconds.
+      # 
+      # @return [Integer]
+      attr_reader :wait_time
+    
+      # Set the time to wait for events in milliseconds.
+      # Set to 0 to wait forever (poll instead of peek).
+      # 
+      # @param [#to_i] value The new value.
+      # @return [Integer]
+      def wait_time=(value)
+        value = value.to_i
+        value = 0 if value < 0
+      
+        @wait_time = value
       end
       
       # Get the object with an event handler to dispatch events to.
@@ -36,6 +54,13 @@ module Cura
         raise TypeError, 'target must be a Cura::Attributes::HasEvents' unless value.is_a?(Attributes::HasEvents)
         
         @target = value
+      end
+      
+      # Run the event dispatcher loop.
+      # 
+      # @return [Event::Dispatcher]
+      def run
+        @wait_time == 0 ? poll : peek(@wait_time)
       end
       
       # Wait forever for an event and handle it.
