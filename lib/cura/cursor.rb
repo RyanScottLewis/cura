@@ -62,7 +62,7 @@ module Cura
     # Draw (set) the cursor.
     # 
     # @return [Cursor]
-    def draw
+    def update
       if @hidden
         application.adapter.hide_cursor
       else

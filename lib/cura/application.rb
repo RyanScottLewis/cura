@@ -167,6 +167,7 @@ module Cura
     # @return [Application]
     def update
       update_windows
+      cursor.update
     end
     
     # Draw all windows.
@@ -174,7 +175,6 @@ module Cura
     # @return [Application]
     def draw
       draw_windows
-      cursor.draw
       
       self
     end
