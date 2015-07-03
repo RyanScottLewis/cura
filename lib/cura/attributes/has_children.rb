@@ -68,8 +68,19 @@ module Cura
       end
       
       # Remove all children.
+      # 
+      # @return [Group]
       def delete_children
         (0...@children.count).to_a.reverse.each { |index| delete_child_at(index) }
+        
+        self
+      end
+    
+      # Determine if this group has children.
+      # 
+      # @return [Boolean]
+      def children?
+        @children.any?
       end
       
       protected

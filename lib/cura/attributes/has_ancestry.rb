@@ -29,6 +29,13 @@ module Cura
         @parent
       end
       
+      # Determine if this object has a parent.
+      # 
+      # @return [Boolean]
+      def parent?
+        !@parent.nil?
+      end
+      
       # Get the ancestors of this object.
       # 
       # @return [Array<Object>]

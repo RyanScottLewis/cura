@@ -22,14 +22,14 @@ module Cura
       # 
       # @return [Integer]
       def absolute_x
-        ancestors.collect(&:x).inject(&:+)
+        parent? && parent.respond_to?(:absolute_x) ? parent.absolute_x + @x : @x # ancestors.collect(&:x).inject(&:+)
       end
       
       # Get the absolute Y coordinate of this object.
       # 
       # @return [Integer]
       def absolute_y
-        ancestors.collect(&:y).inject(&:+)
+        parent? && parent.respond_to?(:absolute_y) ? parent.absolute_y + @y : @y # ancestors.collect(&:y).inject(&:+)
       end
       
     end
