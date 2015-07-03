@@ -25,7 +25,7 @@ module TodoList
       main_pack = Cura::Component::Pack.new
       window.add_child(main_pack)
       
-      header_pack = Cura::Component::Pack.new( orientation: :horizontal, margin: { bottom: 1 } )
+      header_pack = Cura::Component::Pack.new( orientation: :horizontal )
       main_pack.add_child(header_pack)
       
       header_pack.add_children(

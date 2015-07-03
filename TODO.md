@@ -30,3 +30,5 @@
 ### Textbox placeholder (says "Email" when there is no text, should be styleable based on it's state)
 ### Textbox max_length
 ### Attribute inheritence with :inherit. Default on background, foreground, and other stylistic attributes
+### border.left.size, border.right.color
+### Split attributes in key with dashes so margin-left: 10 breaks out to margin: { left: 10 }
