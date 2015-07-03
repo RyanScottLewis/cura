@@ -59,13 +59,15 @@ module Cura
       end
       
       # Update this component.
+      # 
+      # @return [Component]
       def update
-        # NOTE: Does nothing here on purpose.
+        self
       end
       
       # Draw this component.
       # 
-      # @return [Component] This component.
+      # @return [Component]
       def draw
         draw_background
         draw_border
@@ -117,7 +119,7 @@ module Cura
       # 
       # @return [String]
       def inspect
-        "#<#{self.class}:0x#{__id__.to_s(16)} x=#{@x} y=#{@y} w=#{@width} h=#{@height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
+        "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
       end
       
       protected

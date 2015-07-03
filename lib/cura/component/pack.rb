@@ -38,7 +38,7 @@ module Cura
       end
 
       # Add a child to this group.
-      # 
+      #
       # @param [Component] component
       # @return [Component]
       def add_child(component)
@@ -50,7 +50,7 @@ module Cura
       end
 
       # Remove a child from this object's children at the given index.
-      # 
+      #
       # @param [#to_i] index
       # @return [Component]
       def delete_child_at(index)
@@ -98,9 +98,11 @@ module Cura
       end
       
       # Draw this pack.
+      #
+      # @return [Pack]
       def draw
         pack_children
-        
+
         super
       end
       
@@ -113,12 +115,14 @@ module Cura
         children.each do |child|
           if horizontal?
             child.x = child_x
-            child.height = height if fill?
             child_x += child.outer_width + spacing
+            
+            child.height = height if fill?
           elsif vertical?
             child.y = child_y if vertical?
-            child.width = width if fill?
             child_y += child.outer_height + spacing
+            
+            child.width = width if fill?
           end
         end
       end
