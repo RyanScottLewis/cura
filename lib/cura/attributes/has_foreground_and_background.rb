@@ -1,5 +1,6 @@
 if Kernel.respond_to?(:require)
   require 'cura/attributes/has_attributes'
+  require 'cura/attributes/has_ancestry'
   
   require 'cura/color'
 end
@@ -12,10 +13,11 @@ module Cura
     module HasForegroundAndBackground
       
       include HasAttributes
+      include HasAncestry
       
       def initialize(attributes={})
         @foreground = Cura::Color.white unless instance_variable_defined?(:@foreground)
-        @background = Cura::Color.black unless instance_variable_defined?(:@background)
+        @background = :inherit unless instance_variable_defined?(:@background)
         
         super
       end
@@ -30,7 +32,7 @@ module Cura
       # @param [Color] value
       # @return [Color]
       def foreground=(value)
-        raise ArgumentError, "foreground must be a Cura::Color" unless value.is_a?(Cura::Color)
+        raise ArgumentError, 'foreground must be a Cura::Color' unless value.is_a?(Cura::Color)
         
         @foreground = value
       end
@@ -38,14 +40,25 @@ module Cura
       # Get the background color of this object.
       # 
       # @return [Color]
-      attr_reader :background
+      def background
+        return @background unless @background == :inherit
+        return Cura::Color.default unless parent? && parent.respond_to?(:background)
+        
+        parent.background
+      end
       
       # Set the background color of this object.
       # 
       # @param [Color] value
       # @return [Color]
       def background=(value)
-        raise ArgumentError, "foreground must be a Cura::Color" unless value.is_a?(Cura::Color)
+        unless value.is_a?(Cura::Color)
+          begin
+            value = value.to_sym
+          rescue
+            raise ArgumentError, 'foreground must be a Symbol or Cura::Color'
+          end
+        end
         
         @background = value
       end
