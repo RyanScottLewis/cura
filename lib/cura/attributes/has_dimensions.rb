@@ -17,36 +17,44 @@ module Cura
         super
       end
       
+      # @method width
       # Get the width dimension of this object.
       # 
       # @param [#to_i] value
       # @return [Integer]
-      attr_reader :width
       
+      # @method width=(value)
       # Set the width dimension of this object.
       # 
       # @return [Integer]
-      def width=(value)
-        value = value.to_i
-        value = 0 if value < 0
-        
-        @width = value
-      end
       
+      attribute(:width) { |value| validate_dimension_attribute(value) }
+      
+      # @method height
       # Get the height dimension of this object.
       # 
       # @return [Integer]
-      attr_reader :height
       
+      # @method height=(value)
       # Set the height dimension of this object.
       # 
       # @param [#to_i] value
       # @return [Integer]
-      def height=(value)
-        value = value.to_i
-        value = 0 if value < 0
+      
+      attribute(:height) { |value| validate_dimension_attribute(value) }
+      
+      protected
+      
+      def validate_dimension_attribute(value)
+        if value.is_a?(Symbol)
+          valid_symbols = [ :auto, :inherit ]
+          raise TypeError, "must be one of #{ valid_symbols.join(', ') }" unless valid_symbols.include?(value)
+        else
+          value = value.to_i
+          value = 0 if value < 0
+        end
         
-        @height = value
+        value
       end
       
     end

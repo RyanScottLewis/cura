@@ -1,6 +1,5 @@
 if Kernel.respond_to?(:require)
   require 'cura/attributes/has_attributes'
-  require 'cura/attributes/has_object_attributes'
   require 'cura/borders'
   require 'cura/margins'
   require 'cura/padding'
@@ -14,7 +13,6 @@ module Cura
     module HasOffsets
       
       include HasAttributes
-      include HasObjectAttributes
       
       # @method border
       # Get the borders of this object.
@@ -26,7 +24,8 @@ module Cura
       # 
       # @param [Borders, #to_hash, #to_h] value
       # @return [Borders]
-      attr_object :border, Borders
+      
+      attribute(:border, type: Borders) { |value, options| validate_offset_attribute(value, options) }
       
       # @method margin
       # Get the margins of this object.
@@ -38,7 +37,8 @@ module Cura
       # 
       # @param [Margins, #to_hash, #to_h] value
       # @return [Margins]
-      attr_object :margin, Margins
+      
+      attribute(:margin, type: Margins) { |value, options| validate_offset_attribute(value, options) }
       
       # @method padding
       # Get the padding of this object.
@@ -50,7 +50,8 @@ module Cura
       # 
       # @param [Padding, #to_hash, #to_h] value
       # @return [Padding]
-      attr_object :padding, Padding
+      
+      attribute(:padding, type: Padding) { |value, options| validate_offset_attribute(value, options) }
       
       def initialize(attributes={})
         @offsets = Offsets.new( component: self )
@@ -66,6 +67,14 @@ module Cura
       # 
       # @return [Offsets]
       attr_reader :offsets
+      
+      protected
+      
+      def validate_offset_attribute(value, options={})
+        value ||= {}
+        
+        result = value.is_a?( options[:type] ) ? value : options[:type].new(value)
+      end
       
     end
     
