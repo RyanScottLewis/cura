@@ -28,7 +28,7 @@ module Cura
       # @return [Integer]
       def width=(value)
         value = value.to_i
-        value = :auto if value < 0
+        value = 0 if value < 0
         
         @width = value
       end
@@ -44,7 +44,7 @@ module Cura
       # @return [Integer]
       def height=(value)
         value = value.to_i
-        value = :auto if value < 0
+        value = 0 if value < 0
         
         @height = value
       end
