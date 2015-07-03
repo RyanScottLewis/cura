@@ -168,6 +168,8 @@ module Cura
     def update
       update_windows
       cursor.update
+      
+      self
     end
     
     # Draw all windows.

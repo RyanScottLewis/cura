@@ -41,6 +41,14 @@ module Cura
         component
       end
       
+      # Add multiple children to this group.
+      # 
+      # @param [Component] component
+      # @return [Component]
+      def add_children(*children)
+        children.each { |child| add_child(child) }
+      end
+      
       # Remove a child from this object's children at the given index.
       # 
       # @param [#to_i] index

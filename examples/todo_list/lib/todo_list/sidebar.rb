@@ -59,7 +59,7 @@ module TodoList
       @listbox.delete_children
       
       List.all.each do |list|
-        list_textbox = Cura::Component::Textbox.new( text: list.name, background: Cura::Color.black, foreground: Cura::Color.white, focusable: false )
+        list_textbox = Cura::Component::Textbox.new( text: list.name, width: @listbox.width, background: Cura::Color.black, foreground: Cura::Color.white, focusable: false )
         list_textbox.on_event(:key_down, @listbox) do |event, listbox|
           if event.name == :enter
             list.name = text
