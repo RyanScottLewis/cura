@@ -68,18 +68,22 @@ module Cura
         @bottom = 0 unless instance_variable_defined?(:@bottom)
         @left = 0 unless instance_variable_defined?(:@left)
         
+        unless attributes.respond_to?(:to_hash) || attributes.respond_to?(:to_h)
+          attributes = { top: attributes, right: attributes, bottom: attributes, left: attributes }
+        end
+        
         super
       end
       
       # Get the total height of the attributes.
-      # 
+      #
       # @return [Integer]
       def height
         @top + @bottom
       end
       
       # Get the total width of the attributes.
-      # 
+      #
       # @return [Integer]
       def width
         @left + @right
@@ -88,8 +92,12 @@ module Cura
       protected
       
       def validate_side_attribute(value, options={})
-        value = value.to_i
-        value = 0 if value < 0
+        if value.respond_to?(:to_sym)
+          value = value.to_sym # TODO: Validate is :auto, :inherit, etc
+        else
+          value = value.to_i
+          value = 0 if value < 0
+        end
         
         value
       end
