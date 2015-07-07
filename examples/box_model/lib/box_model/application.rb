@@ -10,9 +10,13 @@ module BoxModel
       super
   
       window = Cura::Window.new
-      add_window(window)
+      add_window( window )
       
-      label = Cura::Component::Label.new( text: 'Hello, world!', margin: :auto )
+      group = Cura::Component::Group.new( background: Cura::Color.red, margin: 1, padding: 1, width: window.width-4 )
+      window.add_child( group )
+      
+      label = Cura::Component::Label.new( text: 'Hello, world!', background: Cura::Color.blue, padding: 1 )
+      group.add_child( label )
     end
   
   end

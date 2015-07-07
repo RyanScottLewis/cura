@@ -22,7 +22,7 @@ module TodoList
         self.focused_index -= 1 if event.control? && event.name == :B
       end
       
-      main_pack = Cura::Component::Pack.new
+      main_pack = Cura::Component::Pack.new( width: window.width, height: window.height, fill: true )
       window.add_child(main_pack)
       
       header_pack = Cura::Component::Pack.new( orientation: :horizontal )
@@ -35,26 +35,11 @@ module TodoList
         Cura::Component::Label.new( text: '^-D to delete list item' )
       )
       
-      middle_pack = Cura::Component::Pack.new( orientation: :horizontal, fill: true )
+      middle_pack = Cura::Component::Pack.new( height: window.height-1, orientation: :horizontal, fill: true )
       main_pack.add_child(middle_pack)
       
-      sidebar = Sidebar.new( width: 20, background: Cura::Color.blue )
+      sidebar = Sidebar.new( width: 20, background: Cura::Color.blue, padding: 1 )
       middle_pack.add_child(sidebar)
-      
-      
-      LOGGER.debug( ?- * 80 )
-      LOGGER.debug( "main_pack.height = #{ main_pack.height }" )
-      LOGGER.debug( main_pack.inspect )
-      LOGGER.debug( "header_pack.height = #{ header_pack.height }" )
-      LOGGER.debug( header_pack.inspect )
-      LOGGER.debug( header_pack.children.first.inspect )
-      LOGGER.debug( "middle_pack.height = #{ middle_pack.height }" )
-      LOGGER.debug( middle_pack.inspect )
-      LOGGER.debug( middle_pack.children.first.inspect )
-      LOGGER.debug( middle_pack.children.first.create_list_textbox.inspect )
-      LOGGER.debug( middle_pack.children.first.create_list_textbox.ancestors.inspect )
-      LOGGER.debug( ?- * 80 )
-      
       
       sidebar.create_list_textbox.focus
     end
