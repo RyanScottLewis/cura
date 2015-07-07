@@ -11,27 +11,27 @@ module Cura
       include Attributes::HasChildren
       
       # Get the width of this group.
-      # 
+      #
       # @return [Integer]
       def width
         return @width unless @width == :auto
         return 0 if children.empty?
         
-        children.collect { |child| child.x + child.width }.max
+        children.collect { |child| child.x + child.width + child.offsets.width + child.padding.width }.max
       end
       
       # Get the height of this group.
-      # 
+      #
       # @return [Integer]
       def height
         return @height unless @height == :auto
         return 0 if children.empty?
         
-        children.collect { |child| child.y + child.height }.max
+        children.collect { |child| child.y + child.height + child.offsets.height + child.padding.height }.max
       end
       
       # Add a child to this group and set it's parent to this Group.
-      # 
+      #
       # @param [Component] component
       # @return [Component]
       def add_child(component)
@@ -43,7 +43,7 @@ module Cura
       end
       
       # Remove a child from this object's children at the given index and set it's parent to nil.
-      # 
+      #
       # @param [Integer] index
       # @return [Component]
       def delete_child_at(index)
