@@ -3,7 +3,7 @@ if Kernel.respond_to?(:require)
 end
 
 module Cura
-  module Component  
+  module Component
     
     class Label < Base
       
@@ -22,7 +22,7 @@ module Cura
       # TODO: #text_foreground, #text_background (? Maybe a separate Text component, like in )
       
       # Get the width of this label.
-      # 
+      #
       # @return [Integer]
       def width
         return text_width if @width == :auto
@@ -31,7 +31,7 @@ module Cura
       end
       
       # Get the height of this label.
-      # 
+      #
       # @return [Integer]
       def height
         return text_height if @height == :auto
@@ -40,12 +40,12 @@ module Cura
       end
       
       # Get the text of this label.
-      # 
+      #
       # @return [String]
       attr_reader :text
       
       # Set the text of this label.
-      # 
+      #
       # @param [#to_s] value
       # @return [String]
       def text=(value)
@@ -53,14 +53,14 @@ module Cura
       end
       
       # Get the lines of this label.
-      # 
+      #
       # @return [<String>]
       def lines
         @text.split("\n") # NOTE: Would use String#lines but it's output doesn't think a trailing newline character constitutes a line unless it is followed by another character. #split also removes the newline characters.
       end
       
       # Get the width of the text of this label.
-      # 
+      #
       # @return [Integer]
       def text_width
         return 0 if @text.empty?
@@ -69,7 +69,7 @@ module Cura
       end
       
       # Get the height of the text of this label.
-      # 
+      #
       # @return [Integer]
       def text_height
         value = lines.length
@@ -78,41 +78,41 @@ module Cura
       end
       
       # Get whether the text is bold.
-      # 
+      #
       # @return [Boolean]
       def bold?
         @bold
       end
       
       # Set whether the text is bold.
-      # 
+      #
       # @return [Boolean]
       def bold=(value)
         @bold = !!value
       end
       
       # Get whether the text is underlined.
-      # 
+      #
       # @return [Boolean]
       def underlined?
         @underline
       end
       
       # Set whether the text is underlined.
-      # 
+      #
       # @return [Boolean]
       def underline=(value)
         @underline = !!value
       end
       
       # Get the horizontal alignment of this label.
-      # 
+      #
       # @return [Symbol]
       attr_reader :horizontal_alignment
       
       # Set the horizontal alignment of this label.
       # Must be :left, :center, or :right.
-      # 
+      #
       # @param [#to_sym] value
       # @return [Symbol]
       def horizontal_alignment=(value)
@@ -124,13 +124,13 @@ module Cura
       
       # Get the vertical alignment of this label.
       # Will be :left, :center, or :right.
-      # 
+      #
       # @return [Symbol]
       attr_reader :vertical_alignment
       
       # Set the vertical alignment of this label.
       # Must be :left, :center, or :right.
-      # 
+      #
       # @param [#to_sym] value
       # @return [Symbol]
       def vertical_alignment=(value)
@@ -158,10 +158,10 @@ module Cura
         character
       end
       
-      # TODO: Should use instance vars 
+      # TODO: Should use instance vars
       def draw_text
         x_offset = x_offset_start = x_offset_from_alignment + @padding.left
-        y_offset = y_offset_from_alignment
+        y_offset = y_offset_from_alignment + @padding.top
         
         text_to_draw.each_char do |character|
           if character == "\n"
@@ -170,7 +170,7 @@ module Cura
             y_offset += 1
           else
             options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: foreground, background: background, bold: @bold, underline: @underline )
-            pencil.draw_text( options )
+            pencil.draw_text( options ) unless x_offset > width || y_offset > height
             
             x_offset += 1
           end

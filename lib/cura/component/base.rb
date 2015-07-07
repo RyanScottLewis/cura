@@ -13,7 +13,7 @@ module Cura
   module Component
     
     # The base class for all components.
-    # 
+    #
     # All components use a box model similar to CSS.
     # Margins, borders, paddings, then content.
     class Base
@@ -28,7 +28,7 @@ module Cura
       
       # Get the outer width of this component.
       # This is the dimension including any borders, margins, or padding sizes.
-      # 
+      #
       # @return [Integer]
       def outer_width
         width + offsets.width + padding.width
@@ -36,7 +36,7 @@ module Cura
       
       # Get the outer width of this component.
       # This is the dimension including any borders, margins, or padding sizes.
-      # 
+      #
       # @return [Integer]
       def outer_height
         height + offsets.height + padding.height
@@ -44,7 +44,7 @@ module Cura
       
       # Get the cursor for this application.
       # TODO: Delegate
-      # 
+      #
       # @return [Cursor]
       def cursor
         application.cursor
@@ -52,21 +52,21 @@ module Cura
       
       # Get the pencil for this application.
       # TODO: Delegate
-      # 
+      #
       # @return [Pencil]
       def pencil
         application.pencil
       end
       
       # Update this component.
-      # 
+      #
       # @return [Component]
       def update
         self
       end
       
       # Draw this component.
-      # 
+      #
       # @return [Component]
       def draw
         draw_background
@@ -76,7 +76,7 @@ module Cura
       end
       
       # Get the application of this object.
-      # 
+      #
       # @return [Application]
       def application
         return nil if parent.nil?
@@ -85,7 +85,7 @@ module Cura
       end
       
       # Focus on this component.
-      # 
+      #
       # @return [nil, Component] This component or nil if it isn't focusable.
       def focus
         return nil unless @focusable
@@ -94,14 +94,14 @@ module Cura
       end
       
       # Check whether this component is focused.
-      # 
+      #
       # @return [Boolean]
       def focused?
         application.focused == self # TODO: application.focused?(self)
       end
       
       # Translate absolute coordinates to relative coordinates.
-      # 
+      #
       # @param [#to_hash, #to_h] options
       # @option option [#to_i] :x
       # @option option [#to_i] :y
@@ -116,7 +116,7 @@ module Cura
       end
       
       # Instance inspection.
-      # 
+      #
       # @return [String]
       def inspect
         "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
