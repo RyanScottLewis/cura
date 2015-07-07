@@ -46,7 +46,7 @@ module Cura
       end
       
       # Clear all characters within this textbox.
-      # 
+      #
       # @return [Textbox]
       def clear
         @text = ''
@@ -57,13 +57,13 @@ module Cura
       end
       
       # Get the mask character for this textbox.
-      # 
+      #
       # @return [String]
       attr_reader :mask_character
       
       # Set the mask character for this textbox.
       # Set to anything for a "password" textbox. Only the first character of whatever is given is used.
-      # 
+      #
       # @param [String] value
       # @return [String]
       def mask_character=(value)
@@ -74,7 +74,7 @@ module Cura
       end
       
       # Set the width of this textbox.
-      # 
+      #
       # @param [#to_i] value
       # @return [Integer]
       def width=(value)
@@ -84,7 +84,7 @@ module Cura
       end
       
       # Set the height of this textbox.
-      # 
+      #
       # @param [#to_i] value
       # @return [Integer]
       def height=(value)
@@ -97,8 +97,8 @@ module Cura
       
       def text_to_draw
         return text if text.length <= width
-        
-        text[-width..-1]
+
+        focused? ? text[-width..-1] : text[0...width]
       end
       
       def character_to_draw(character)
