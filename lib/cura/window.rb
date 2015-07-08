@@ -5,6 +5,8 @@ if Kernel.respond_to?(:require)
   require 'cura/attributes/has_coordinates'
   require 'cura/attributes/has_dimensions'
   require 'cura/attributes/has_events'
+  
+  require 'cura/component/group'
 end
 
 module Cura
@@ -13,8 +15,8 @@ module Cura
   class Window
     
     include Attributes::HasInitialize
+    include Attributes::HasAttributes
     include Attributes::HasApplication
-    include Attributes::HasChildren
     include Attributes::HasCoordinates
     include Attributes::HasDimensions
     include Attributes::HasEvents
@@ -28,95 +30,144 @@ module Cura
     end
     
     def initialize(attributes={})
+      @root = Component::Group.new( parent: self )
       @focused_index = 0
       
       super
     end
     
     # Update this window's components.
-    # 
+    #
     # @return [Window]
     def update
-      update_children
+      @root.update
       
       self
     end
     
     # Draw this window's children.
-    # 
+    #
     # @return [Window]
     def draw
       application.adapter.clear
-      
-      draw_children
-      
+      @root.draw
       application.adapter.present
       
       self
     end
     
     # Show this window.
-    # 
+    #
     # @return [Window]
     def show
-      
+      self
     end
     
     # Hide this window.
-    # 
+    #
     # @return [Window]
     def hide
-      
-    end
-    
-    # Add a child to this window.
-    # 
-    # @param [Component] component
-    # @return [Component]
-    def add_child(component)
-      component = super
-      
-      component.parent = self
-      
-      component
-    end
-      
-    # Remove a child from this window's children at the given index.
-    # 
-    # @param [Integer] index
-    # @return [Component]
-    def delete_child_at(index)
-      component = super
-      
-      component.parent = nil
-      
-      component
+      self
     end
     
     # Return this window's parent.
-    # 
+    #
     # @return [Window]
-    def parent
+    def parent # TODO: Needed?
       @application
     end
     
     # Instance inspection.
-    # 
+    #
     # @return [String]
     def inspect
       "#<#{self.class}:0x#{__id__.to_s(16)} application=#{@application.class}:0x#{@application.__id__.to_s(16)}>"
     end
     
-    # TODO: Focus controller
+    # Get root component for this window.
+    #
+    # @return [Component::Group]
+    attr_reader :root
+    
+    # Set root component for this window.
+    #
+    # @param [Component::Group] component
+    # @return [Component::Group]
+    def root=(component)
+      raise TypeError, 'root must be a Component::Group' unless component.is_a?(Component::Group)
+      
+      @root.parent = nil unless @root.nil?
+      @root = component
+      @root.parent = self
+      
+      @root
+    end
+    
+    # Root Delegates -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
+    # Get the children of this object.
+    #
+    # @return [<Component>]
+    def children
+      @root.children
+    end
+    
+    # Add a child to this window's root component.
+    #
+    # @param [Component] component
+    # @return [Component]
+    def add_child(component)
+      @root.add_child(component)
+    end
+    
+    # Add multiple children to this window's root component.
+    #
+    # @param [Component] component
+    # @return [Component]
+    def add_children(*children)
+      @root.add_children(*children)
+    end
+    
+    # Remove a child from window's root component at the given index.
+    #
+    # @param [Integer] index
+    # @return [Component]
+    def delete_child_at(index)
+      @root.delete_child_at(index)
+    end
+    
+    # Remove a child from this window's root component.
+    #
+    # @param [Component] component
+    # @return [Component]
+    def delete_child(component)
+      @root.delete_child(component)
+    end
+    
+    # Remove all children from window's root component.
+    #
+    # @return [HasChildren]
+    def delete_children
+      @root.delete_children
+    end
+  
+    # Determine if this window's root component has children.
+    #
+    # @return [Boolean]
+    def children?
+      @root.children?
+    end
+    
+    # TODO: Focus controller -==-=--=-=-=-==--=-=-==--=-==--=-==-=--=-==--=-==--=-=-=-=-=-==--=
     
     # Get the index of the currently focused component.
-    # 
+    #
     # @return [Integer]
     attr_reader :focused_index
     
     # Set the index of the currently focused component.
     # This will send dispatch a Event::Focus instance to the object.
-    # 
+    #
     # @param [#to_i] value
     # @return [Integer]
     def focused_index=(value)
