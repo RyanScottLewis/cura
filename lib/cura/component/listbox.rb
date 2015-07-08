@@ -26,6 +26,10 @@ module Cura
         end
       end
       
+      on_event(:selected) do |event|
+        set_cursor_position if event.target == self && focused?
+      end
+      
       def initialize(attributes={})
         @focusable = true
         @loopable = true
@@ -58,7 +62,6 @@ module Cura
         
         @selected_index = value
         
-        set_cursor_position
         application.dispatch_event( :selected, target: self )
         
         @selected_index
