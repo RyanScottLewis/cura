@@ -14,10 +14,10 @@ module TodoList
         db_existed = path.exist?
         @connection = Sequel.sqlite( path.to_s )
         
+        create_tables unless db_existed
+        
         require 'todo_list/list'
         require 'todo_list/list_item'
-        
-        create_tables unless db_existed
       end
       
       protected
@@ -31,18 +31,17 @@ module TodoList
         @connection.create_table(:lists) do
           primary_key :id
           String :name
-        end
+        end unless @connection.table_exists?(:lists)
       end
       
       def create_list_items_table
         @connection.create_table(:list_items) do
           primary_key :id
           String :text
-          foreign_key :list_id, :list
-        end
+          foreign_key :list_id, :lists
+        end unless @connection.table_exists?(:list_items)
       end
       
     end
   end
 end
-

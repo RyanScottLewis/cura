@@ -32,3 +32,6 @@
 * Attribute inheritence with :inherit. Default on background, foreground, and other stylistic attributes
 * border.left.size, border.right.color
 * Split attributes in key with dashes so margin-left: 10 breaks out to margin: { left: 10 }
+* Component dimension attribute arguments, by default return's it's width, with `width(:border, :margin, :padding)` it'd return the pidth plus it's offsets
+* * Remove Component#outer_*
+* Offsets shouldn't ignore padding as it does now

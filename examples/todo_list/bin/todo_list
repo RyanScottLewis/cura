@@ -5,7 +5,17 @@ $:.unshift( Pathname.new(__FILE__).join( '..', '..', '..', '..', 'lib' ).expand_
 $:.unshift( Pathname.new(__FILE__).join( '..', '..', '..', '..', '..', 'ruby-cura-termbox_ffi', 'lib' ).expand_path.to_s )
 $:.unshift( Pathname.new(__FILE__).join( '..', '..', 'lib' ).expand_path.to_s )
 
+require 'ruby-prof'
+
 require 'todo_list'
 require 'cura/termbox_ffi/adapter'
 
+RubyProf.start
+
 TodoList.run
+
+
+result = RubyProf.stop
+
+printer = RubyProf::GraphHtmlPrinter.new(result)
+Pathname.new(__FILE__).join( '..', '..', 'profile.html' ).open('w+') { |file| printer.print(file) }
