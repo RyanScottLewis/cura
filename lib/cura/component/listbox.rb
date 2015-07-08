@@ -23,7 +23,6 @@ module Cura
         if event.target == self
           self.selected_index -= 1 if event.name == :up
           self.selected_index += 1 if event.name == :down
-          application.dispatch_event( :selected ) if event.name == :enter
         end
       end
       
@@ -38,13 +37,13 @@ module Cura
       
       # Get the currently selected item's index.
       # Returns `nil` is nothing is selected.
-      # 
+      #
       # @return [nil, Integer]
       attr_reader :selected_index
       
       # Set the currently selected item's index.
       # Set to `nil` if nothing is selected.
-      # 
+      #
       # @param [nil, #to_i] value
       # @return [nil, Integer]
       def selected_index=(value)
@@ -60,19 +59,20 @@ module Cura
         @selected_index = value
         
         set_cursor_position
+        application.dispatch_event( :selected, target: self )
         
         @selected_index
       end
       
       # Get the child at the selected index.
-      # 
+      #
       # @return [Component]
       def selected_child
         @children[ @selected_index ]
       end
       
       # Add a child to this group.
-      # 
+      #
       # @param [Component] component
       # @param [Object] object An arbitrary object to associate with the added child in this listbox.
       # @return [Component]
@@ -86,7 +86,7 @@ module Cura
       end
       
       # Remove a child from this listbox's children at the given index.
-      # 
+      #
       # @param [#to_i] index
       # @return [Component]
       def delete_child_at(index)
@@ -99,7 +99,7 @@ module Cura
       end
       
       # Get the associated object with the child at the given index.
-      # 
+      #
       # @param [#to_i] index
       # @return [Object]
       def object_at(index)
@@ -107,21 +107,21 @@ module Cura
       end
       
       # Get the object associated with the child at the selected index.
-      # 
+      #
       # @return [Component]
       def selected_object
         @objects[ @selected_index ]
       end
       
       # Get whether this listbox is loopable or not.
-      # 
+      #
       # @return [Boolean]
       def loopable?
         @loopable
       end
       
       # Set whether this listbox is loopable or not.
-      # 
+      #
       # @param [Object] value
       # @return [Boolean]
       def loopable=(value)
