@@ -169,8 +169,10 @@ module Cura
             
             y_offset += 1
           else
-            options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: foreground, background: background, bold: @bold, underline: @underline )
-            pencil.draw_text( options ) unless x_offset > width || y_offset > height
+            unless x_offset > width || y_offset > height
+              options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: foreground, background: background, bold: @bold, underline: @underline )
+              pencil.draw_text( options )
+            end
             
             x_offset += 1
           end
