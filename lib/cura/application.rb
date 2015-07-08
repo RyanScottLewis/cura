@@ -52,13 +52,13 @@ module Cura
     end
     
     # Get the adapter used for running this application.
-    # 
+    #
     # @return [Adapter]
     attr_reader :adapter
     
     # Set the adapter used for running this application.
     # This cannot be set after #run is used.
-    # 
+    #
     # @param [Adapter] value The new adapter.
     # @return [Adapter]
     def adapter=(value)
@@ -69,29 +69,29 @@ module Cura
     end
     
     # Get the text cursor.
-    # 
+    #
     # @return [Cursor]
     attr_reader :cursor
     
     # Get the pencil used for drawing.
-    # 
+    #
     # @return [Pencil]
     attr_reader :pencil
     
     # Get the event dispatcher.
-    # 
+    #
     # @return [Event::Dispatcher]
     attr_reader :event_dispatcher
     
     # Check if this application is running.
-    # 
+    #
     # @return [Boolean]
     def running?
       @running
     end
     
     # Run this application.
-    # 
+    #
     # @return [Application] This application.
     def run
       @running = true
@@ -104,7 +104,7 @@ module Cura
     end
     
     # Stop the application.
-    # 
+    #
     # @return [Application] This application.
     def stop
       @running = false
@@ -113,15 +113,15 @@ module Cura
     end
     
     # Get the currently focused component.
-    # 
+    #
     # @return [Component::Base]
     attr_reader :focused
     
     # Set focus to a component.
-    # 
+    #
     # There can only be one component focused at a time within an application, if any.
     # All dispatched events are sent to the currently focused component, or the application if no component is focused.
-    # 
+    #
     # @param [nil, Component::Base] component
     # @return [Component::Base]
     def focus(component)
@@ -138,20 +138,20 @@ module Cura
     end
     
     # Dispatch an event.
-    # 
+    #
     # @param [#to_sym] name The name of the event class to create an instance of.
     # @return [Event::Base] The dispatched event.
     def dispatch_event( event_name, options={})
       options = options.to_hash rescue options.to_h
       
-      @event_dispatcher.target = options[:target] if options.has_key?(:target)
       event = Event.new_from_name(event_name)
+      event.target = options[:target] if options.has_key?(:target)
       
       @event_dispatcher.dispatch_event(event)
     end
     
     # Add a window to this application.
-    # 
+    #
     # @param [Window] window
     # @return [Window]
     def add_window(window)
@@ -163,7 +163,7 @@ module Cura
     end
 
     # Update all windows.
-    # 
+    #
     # @return [Application]
     def update
       update_windows
@@ -173,7 +173,7 @@ module Cura
     end
     
     # Draw all windows.
-    # 
+    #
     # @return [Application]
     def draw
       draw_windows
@@ -182,7 +182,7 @@ module Cura
     end
     
     # Instance inspection.
-    # 
+    #
     # @return [String]
     def inspect
       "#<#{self.class}>"
