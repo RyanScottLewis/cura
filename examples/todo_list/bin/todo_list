@@ -10,12 +10,11 @@ require 'ruby-prof'
 require 'todo_list'
 require 'cura/termbox_ffi/adapter'
 
-RubyProf.start
+# RubyProf.start
 
 TodoList.run
 
-
-result = RubyProf.stop
-
-printer = RubyProf::GraphHtmlPrinter.new(result)
-Pathname.new(__FILE__).join( '..', '..', 'profile.html' ).open('w+') { |file| printer.print(file) }
+# result = RubyProf.stop
+#
+# printer = RubyProf::GraphHtmlPrinter.new(result)
+# Pathname.new(__FILE__).join( '..', '..', 'profile.html' ).open('w+') { |file| printer.print(file) }

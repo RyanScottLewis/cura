@@ -14,24 +14,25 @@ module TodoList
       create_form_pack = Cura::Component::Pack.new( orientation: :horizontal )
       add_child(create_form_pack)
       
-      @create_list_item_textbox = Cura::Component::Textbox.new( width: ((width/3).floor*2)-1, margin: { right: 1 } )
-      @create_list_item_textbox.on_event(:key_down, self) { |event, list_items| list_items.create_list_item if event.name == :enter }
+      @create_list_item_textbox = Cura::Component::Textbox.new( width: width-21, padding: { left: 1, right: 1 }, margin: { right: 1 } )
+      @create_list_item_textbox.on_event(:key_down, self) { |event, model_list| model_list.create_list_item if event.name == :enter }
       create_form_pack.add_child(@create_list_item_textbox)
       
-      @create_list_item_button = Cura::Component::Button.new( width: (width/3).floor, text: 'Create', alignment: { horizontal: :center } )
-      @create_list_item_button.on_event(:click, self) { |event, list_items| list_items.create_list_item }
+      @create_list_item_button = Cura::Component::Button.new( text: 'Create List Item', padding: { left: 1, right: 1 } )
+      @create_list_item_button.on_event(:click, self) { |event| model_list.create_list_item }
       create_form_pack.add_child(@create_list_item_button)
       
       @listbox_header_label = Cura::Component::Label.new( text: ' ' * width, bold: true, underline: true, margin: { top: 1 } )
       add_child(@listbox_header_label)
       
       @listbox = Cura::Component::Listbox.new( width: @width )
-      @listbox.on_event(:key_down, self) do |event, list_items|
-        if event.control? && event.name == :D && !selected_object.nil?
+      
+      @listbox.on_event(:key_down, self) do |event, model_list|
+        if event.target == self && event.control? && event.name == :D && !selected_object.nil?
           selected_object.destroy
 
           previous_selected_index = @selected_index
-          list_items.fill_listbox
+          model_list.fill_listbox
           self.selected_index = [ previous_selected_index, count-1 ].min
         end
         
@@ -43,14 +44,7 @@ module TodoList
       
       add_child(@listbox)
       
-      # fill_listbox
-    end
-    
-    def list=(list)
-      @listbox_header_label.text = list.name + ' ' * (width - list.name.length)
-      @list = list
       
-      fill_listbox
     end
     
     def create_list_item
@@ -84,6 +78,14 @@ module TodoList
         
         @listbox.add_child( list_item_textbox, list_item )
       end
+    end
+    
+    def list=(list)
+      @list = list
+      @listbox_header_label.text = @list.name
+      @listbox_header_label.text << ' ' * (width - @list.name.length) unless @list.name.length >= width
+      
+      fill_listbox
     end
     
   end

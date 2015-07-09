@@ -1,5 +1,5 @@
 require 'pathname'
-require_relative 'lib/cura.rb'
+require_relative 'lib/cura/version.rb'
 
 # cura : management, administration, care, concern, charge
 Gem::Specification.new do |s|
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email   = 'ryan@rynet.us'
   s.summary = 'A library written in pure Ruby for building user interfaces.'
   s.license = 'MIT'
-  s.version = Cura.version
+  s.version = Cura::VERSION
 
   # Dependencies
   # s.add_development_dependency 'fuubar', '~> 1.2.1'
