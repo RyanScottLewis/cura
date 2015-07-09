@@ -13,6 +13,10 @@ if Kernel.respond_to?(:require)
   require 'cura/event/unfocus'
   require 'cura/event/handler'
   require 'cura/event/key_down'
+  require 'cura/event/mouse_down'
+  require 'cura/event/mouse_up'
+  require 'cura/event/mouse_wheel_down'
+  require 'cura/event/mouse_wheel_up'
   require 'cura/event/resize'
   require 'cura/event/selected'
   

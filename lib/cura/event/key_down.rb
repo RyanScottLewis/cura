@@ -5,7 +5,7 @@ end
 module Cura
   module Event
     
-    # Dispatched when is key's state changes from up to down.
+    # Dispatched when a key's state changes from up to down.
     class KeyDown < Base
       
       def initialize(attributes={})
@@ -17,19 +17,19 @@ module Cura
       end
       
       # Get whether the key was pressed while holding the control key.
-      # 
+      #
       # @return [Boolean]
       def control?
         @control
       end
       
       # Get the key name.
-      # 
+      #
       # @return [Integer]
       attr_reader :name
       
       # Get whether the key is printable.
-      # 
+      #
       # @return [Boolean]
       def printable?
         return false if @control
@@ -38,7 +38,7 @@ module Cura
       end
       
       # Get the printable character for the key.
-      # 
+      #
       # @return [nil, String]
       def character
         Key.character_from_name(@name)
@@ -47,7 +47,7 @@ module Cura
       protected
       
       # Set if the key was pressed while holding the control key.
-      # 
+      #
       # @param [Boolean] value
       # @return [Boolean]
       def control=(value)
@@ -55,7 +55,7 @@ module Cura
       end
       
       # Set the key name.
-      # 
+      #
       # @param [#to_sym] value
       # @return [String]
       def name=(value)

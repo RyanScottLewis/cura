@@ -12,13 +12,13 @@ module Cura
       
       # Get the parent of this object.
       # It's not recommended to set this directly as it will break the ancestory chain.
-      # 
+      #
       # @return [Object]
       attr_reader :parent
       
       # Set the parent of this object.
       # It's not recommended to set this directly as it will break the ancestory chain.
-      # 
+      #
       # @param [Object] value
       # @return [Object]
       def parent=(value)
@@ -30,14 +30,14 @@ module Cura
       end
       
       # Determine if this object has a parent.
-      # 
+      #
       # @return [Boolean]
       def parent?
         !@parent.nil?
       end
       
       # Get the ancestors of this object.
-      # 
+      #
       # @return [Array<Object>]
       attr_reader :ancestors
       
