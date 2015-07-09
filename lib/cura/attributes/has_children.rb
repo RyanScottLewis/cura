@@ -26,8 +26,17 @@ module Cura
       
       # Get the children of this object.
       #
+      # @param [Boolean] recursive Determines if the children should be gathered recursively to retrieve all of this object's decendants.
       # @return [<Component>]
-      attr_reader :children
+      def children(recursive=false)
+        if recursive
+          @children.collect do |child|
+            child.respond_to?(:children) ? [ child ] + child.children(true) : child
+          end.flatten
+        else
+          @children
+        end
+      end
       
       # Add a child to this group.
       #

@@ -108,8 +108,8 @@ module Cura
     # Get the children of this object.
     #
     # @return [<Component>]
-    def children
-      @root.children
+    def children(recursive=false)
+      @root.children(recursive)
     end
     
     # Add a child to this window's root component.
