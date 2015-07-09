@@ -1,14 +1,5 @@
-module Cura
-  class << self
-    
-    def version
-      @version ||= '0.0.1'
-    end
-    
-  end
-end
-
 if Kernel.respond_to?(:require)
+  require 'cura/version'
   require 'cura/adapter'
   require 'cura/application'
   require 'cura/window'
