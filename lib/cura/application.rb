@@ -140,11 +140,13 @@ module Cura
     # Dispatch an event.
     #
     # @param [#to_sym] name The name of the event class to create an instance of.
+    # @param [#to_hash, #to_h] options
+    # @option options [#to_i] :target The optional target of the event.
     # @return [Event::Base] The dispatched event.
-    def dispatch_event( event_name, options={})
+    def dispatch_event( name, options={} )
       options = options.to_hash rescue options.to_h
       
-      event = Event.new_from_name(event_name)
+      event = Event.new_from_name(name)
       event.target = options[:target] if options.has_key?(:target)
       
       @event_dispatcher.dispatch_event(event)

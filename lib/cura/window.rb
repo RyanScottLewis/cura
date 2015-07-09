@@ -122,8 +122,8 @@ module Cura
     
     # Add multiple children to this window's root component.
     #
-    # @param [Component] component
-    # @return [Component]
+    # @param [<Component>] children
+    # @return [<Component>]
     def add_children(*children)
       @root.add_children(*children)
     end

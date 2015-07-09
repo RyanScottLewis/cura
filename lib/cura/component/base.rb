@@ -30,7 +30,7 @@ module Cura
       # This is the dimension including any borders, margins, or padding sizes.
       #
       # @return [Integer]
-      def outer_width
+      def outer_width # TODO: Remove
         width + offsets.width + padding.width
       end
       
@@ -38,7 +38,7 @@ module Cura
       # This is the dimension including any borders, margins, or padding sizes.
       #
       # @return [Integer]
-      def outer_height
+      def outer_height # TODO: Remove
         height + offsets.height + padding.height
       end
       
@@ -103,8 +103,8 @@ module Cura
       # Translate absolute coordinates to relative coordinates.
       #
       # @param [#to_hash, #to_h] options
-      # @option option [#to_i] :x
-      # @option option [#to_i] :y
+      # @option options [#to_i] :x
+      # @option options [#to_i] :y
       # @return [Hash] The new coordinates.
       def translate(options={})
         options = options.to_hash rescue options.to_h

@@ -18,19 +18,19 @@ module Cura
       end
       
       # Traverse the children of this object.
-      # 
+      #
       # @return [Array]
       def each(&block)
         @children.each(&block)
       end
       
       # Get the children of this object.
-      # 
+      #
       # @return [<Component>]
       attr_reader :children
       
       # Add a child to this group.
-      # 
+      #
       # @param [Component] component
       # @return [Component]
       def add_child(component)
@@ -42,15 +42,15 @@ module Cura
       end
       
       # Add multiple children to this group.
-      # 
-      # @param [Component] component
-      # @return [Component]
+      #
+      # @param [<Component>] children
+      # @return [<Component>]
       def add_children(*children)
         children.each { |child| add_child(child) }
       end
       
       # Remove a child from this object's children at the given index.
-      # 
+      #
       # @param [#to_i] index
       # @return [Component]
       def delete_child_at(index)
@@ -58,7 +58,7 @@ module Cura
       end
       
       # Remove a child from this object's children.
-      # 
+      #
       # @param [Component] component
       # @return [Component]
       def delete_child(component)
@@ -68,7 +68,7 @@ module Cura
       end
       
       # Remove all children.
-      # 
+      #
       # @return [Group]
       def delete_children
         (0...@children.count).to_a.reverse.each { |index| delete_child_at(index) }
@@ -77,7 +77,7 @@ module Cura
       end
     
       # Determine if this group has children.
-      # 
+      #
       # @return [Boolean]
       def children?
         @children.any?

@@ -62,7 +62,9 @@ module Cura
       end
       
       # Get whether children will be filled.
-      # 
+      # If this pack's orientation is set to :vertical, then the children's width will be set to this pack's width.
+      # If this pack's orientation is set to :horizontal, then the children's height will be set to this pack's width.
+      #
       # @return [Boolean]
       def fill?
         @fill
@@ -70,11 +72,11 @@ module Cura
       
       # Set whether children will be filled.
       # Must be truthy or falsey.
-      # 
+      #
       # If set to a truthy value, children will be resized to fit the space available to it.
       # For example, if orientation is set to :horizontal, then all of the children's width attributes
       # will be set to this instance's width.
-      # 
+      #
       # @param [Object] value
       # @return [Boolean]
       def fill=(value)
@@ -82,12 +84,12 @@ module Cura
       end
       
       # Get the spacing between children.
-      # 
+      #
       # @return [Integer]
       attr_reader :spacing
       
       # Set the spacing between children.
-      # 
+      #
       # @param [#to_i] value
       # @return [Integer]
       def spacing=(value)

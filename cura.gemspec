@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   # s.add_development_dependency 'fuubar', '~> 1.2.1'
   # s.add_development_dependency 'guard-rspec', '~> 3.1.0'
   s.add_development_dependency 'rake', '~> 10.4.2'
+  s.add_development_dependency 'yard', '~> 0.8.7.6'
   # s.add_development_dependency 'rb-fsevent', '~> 0.9.0'
   
   # Pragmatically set variables
