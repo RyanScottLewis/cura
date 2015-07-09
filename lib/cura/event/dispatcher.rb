@@ -67,7 +67,7 @@ module Cura
       
       # Wait forever for an event.
       #
-      # @return [Event::Base] The event
+      # @return [Event::Base]
       def poll
         @application.adapter.poll_event
       end
@@ -82,13 +82,25 @@ module Cura
       
       # Dispatch an event to the target or application, if the target is nil.
       #
-      # @param [Event::Base] event
-      # @return [Event::Base] The event.
-      def dispatch_event(event)
+      # @param [#to_sym] event The name of the event class to create an instance of or an event instance.
+      # @param [#to_hash, #to_h] options
+      # @option options [#to_i] :target The optional target of the event, overrides this dispatcher's #target value.
+      # @return [Event::Base] The dispatched event.
+      def dispatch_event(event, options={})
+        event = Event.new_from_name(event) if event.respond_to?(:to_sym)
         raise TypeError, 'event must be an Event::Base' unless event.is_a?(Event::Base)
         
+        options = options.to_hash rescue options.to_h
+        
+        if event.is_a?(Event::MouseDown) || event.is_a?(Event::MouseUp)
+          component = @application.top_most_component_at( x: event.x , y: event.y )
+          
+          event.target = component
+        end
+         
         event.target ||= @target
-        @target.event_handler.handle(event)
+        
+        event.target.event_handler.handle(event)
         
         event
       end

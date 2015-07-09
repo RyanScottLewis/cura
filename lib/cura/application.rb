@@ -119,7 +119,9 @@ module Cura
     # Get the currently focused component.
     #
     # @return [Component::Base]
-    attr_reader :focused
+    def focused
+      @event_dispatcher.target
+    end
     
     # Set focus to a component.
     #
@@ -131,29 +133,21 @@ module Cura
     def focus(component)
       raise TypeError, 'component must be nil or be a Cura::Component::Base' unless component.nil? || component.is_a?(Cura::Component::Base)
       
-      dispatch_event( :unfocus, target: @focused ) unless @focused.nil?
-      
-      @event_dispatcher.target = component.nil? ? self : component
-      @focused = component
-      
-      dispatch_event( :focus, target: component )
+      dispatch_event( :unfocus )
+      @event_dispatcher.target = component
+      dispatch_event( :focus )
       
       component
     end
     
     # Dispatch an event.
     #
-    # @param [#to_sym] name The name of the event class to create an instance of.
+    # @param [#to_sym] event The name of the event class to create an instance of or an event instance.
     # @param [#to_hash, #to_h] options
     # @option options [#to_i] :target The optional target of the event.
     # @return [Event::Base] The dispatched event.
-    def dispatch_event( name, options={} )
-      options = options.to_hash rescue options.to_h
-      
-      event = Event.new_from_name(name)
-      event.target = options[:target] if options.has_key?(:target)
-      
-      @event_dispatcher.dispatch_event(event)
+    def dispatch_event(event, options={})
+      @event_dispatcher.dispatch_event( event, options )
     end
     
     # Add a window to this application.

@@ -56,6 +56,8 @@ module Cura
       
       # Update all children.
       def update
+        super
+        
         update_children
       end
       
