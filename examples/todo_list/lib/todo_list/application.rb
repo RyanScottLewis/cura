@@ -40,10 +40,8 @@ module TodoList
       sidebar = Lists.new( width: 30, padding: 1 )
       middle_pack.add_child(sidebar)
       
-      @list_items = ListItems.new( padding: 1 )
+      @list_items = ListItems.new( width: 100, padding: 1 )
       middle_pack.add_child( @list_items, expand: true, fill: true )
-      
-      LOGGER.debug( @list_items.width )
       
       #-
       
