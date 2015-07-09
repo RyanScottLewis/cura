@@ -35,3 +35,4 @@
 * Component dimension attribute arguments, by default return's it's width, with `width(:border, :margin, :padding)` it'd return the pidth plus it's offsets
 * * Remove Component#outer_*
 * Offsets shouldn't ignore padding as it does now
+* Selected event should just be Select (Focus isn't "Focused")

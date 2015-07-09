@@ -1,5 +1,6 @@
 require 'pathname'
 require 'rubygems/package_task'
+require 'rake/testtask'
 require 'yard'
 
 gemspec = Pathname.glob( Pathname.new(__FILE__).join('..', '*.gemspec') ).first
@@ -10,3 +11,8 @@ Gem::PackageTask.new($spec) do |task|
 end
 
 YARD::Rake::YardocTask.new
+
+Rake::TestTask.new do |task|
+  task.test_files = FileList['spec/**/*_spec.rb']
+  task.verbose = true
+end
