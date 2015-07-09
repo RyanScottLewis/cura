@@ -17,31 +17,31 @@ module Cura
         super
       end
       
+      # @method x
       # Get the X coordinate of this object.
-      # 
+      #
       # @return [Integer]
-      attr_reader :x
       
+      # @method x=(value)
       # Set the X coordinate of this object.
-      # 
+      #
       # @param [#to_i] value
       # @return [Integer]
-      def x=(value)
-        @x = value.to_i
-      end
       
+      attribute(:x) { |value| value.to_i }
+      
+      # @method y
       # Get the Y coordinate of this object.
-      # 
+      #
       # @return [Integer]
-      attr_reader :y
       
+      # @method y=(value)
       # Set the Y coordinate of this object.
-      # 
+      #
       # @param [#to_i] value
       # @return [Integer]
-      def y=(value)
-        @y = value.to_i
-      end
+      
+      attribute(:y) { |value| value.to_i }
       
     end
     

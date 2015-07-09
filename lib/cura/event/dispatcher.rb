@@ -24,36 +24,41 @@ module Cura
         @wait_time = 0
       end
       
-      # Get the time to wait for events in milliseconds.
+      # @method wait_time
+      # Get the time to wait for events in milliseconds in the run loop.
       #
       # @return [Integer]
-      attr_reader :wait_time
-    
-      # Set the time to wait for events in milliseconds.
+      
+      # @method wait_time=(value)
+      # Set the time to wait for events in milliseconds in the run loop.
       # Set to 0 to wait forever (poll instead of peek).
       #
-      # @param [#to_i] value The new value.
+      # @param [#to_i] value
       # @return [Integer]
-      def wait_time=(value)
+      
+      attribute(:wait_time) do |value|
         value = value.to_i
         value = 0 if value < 0
-      
-        @wait_time = value
+        
+        value
       end
       
+      # @method target
       # Get the object with an event handler to dispatch events to.
       #
       # @return [Cura::Attributes::HasEvents]
-      attr_reader :target
       
+      # @method target=(value)
       # Set the object with an event handler to dispatch events to.
+      # Setting to nil will automatially set the target to the application.
       #
-      # @param [Cura::Attributes::HasEvents] value
+      # @param [nil, Cura::Attributes::HasEvents] value
       # @return [Cura::Attributes::HasEvents]
-      def target=(value)
-        raise TypeError, 'target must be a Cura::Attributes::HasEvents' unless value.is_a?(Attributes::HasEvents)
+      
+      attribute(:target) do |value|
+        raise TypeError, 'target must be a Cura::Attributes::HasEvents or nil' unless value.nil? || value.is_a?(Attributes::HasEvents)
         
-        @target = value
+        value.nil? ? @application : value
       end
       
       # Poll or peek for events and dispatch it if one was found.

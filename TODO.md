@@ -1,3 +1,5 @@
+# TODO
+
 * Tests
 * See if XUL (or HTML... why not?) can be used as document structure, if not:
 * * CCML Cura Component Markup Language specification (CCML). XML extension?
@@ -36,3 +38,8 @@
 * * Remove Component#outer_*
 * Offsets shouldn't ignore padding as it does now
 * Selected event should just be Select (Focus isn't "Focused")
+
+# Current Issues
+* typing in textboxes is offset by 1
+* todo_list is duplicating list items?
+* todo_list list names get a bunch of spaces added after them?
