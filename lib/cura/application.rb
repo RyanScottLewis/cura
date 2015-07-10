@@ -87,13 +87,6 @@ module Cura
     # @return [Event::Dispatcher]
     attr_reader :event_dispatcher
     
-    # Check if this application is running.
-    #
-    # @return [Boolean]
-    def running?
-      @running
-    end
-    
     # Run this application.
     #
     # @return [Application] This application.
@@ -114,6 +107,13 @@ module Cura
       @running = false
       
       self
+    end
+    
+    # Check if this application is running.
+    #
+    # @return [Boolean]
+    def running?
+      @running
     end
     
     # Get the currently focused component.

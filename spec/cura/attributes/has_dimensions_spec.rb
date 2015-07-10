@@ -1,4 +1,4 @@
-require 'minitest/autorun'
+require 'spec_helper'
 require 'cura/attributes/has_initialize'
 require 'cura/attributes/has_dimensions'
 
@@ -17,7 +17,7 @@ describe Cura::Attributes::HasDimensions do
     end
     
     it 'should be initialized with the correct value' do
-      @instance.width.must_equal( :auto )
+      expect( @instance.width ).to eq( :auto )
     end
     
   end
@@ -30,12 +30,12 @@ describe Cura::Attributes::HasDimensions do
     
     it 'should set the attribute correctly' do
       @instance.width = 10
-      @instance.width.must_equal( 10 )
+      expect( @instance.width ).to eq( 10 )
     end
     
     it 'should convert the value to an integer' do
       @instance.width = '10'
-      @instance.width.must_equal( 10 )
+      expect( @instance.width ).to eq( 10 )
     end
     
     describe 'when a symbol is passed' do
@@ -44,10 +44,10 @@ describe Cura::Attributes::HasDimensions do
         
         it 'should set the attribute correctly' do
           @instance.width = :inherit
-          @instance.width.must_equal( :inherit )
+          expect( @instance.width ).to eq( :inherit )
           
           @instance.width = :auto
-          @instance.width.must_equal( :auto )
+          expect( @instance.width ).to eq( :auto )
         end
         
       end
@@ -55,7 +55,7 @@ describe Cura::Attributes::HasDimensions do
       describe 'and it is invalid' do
         
         it 'should raise an ArgumentError' do
-          proc { @instance.width = :invalid_symbol }.must_raise(ArgumentError)
+          expect { @instance.width = :invalid_symbol }.to raise_error(ArgumentError)
         end
         
       end
@@ -71,7 +71,7 @@ describe Cura::Attributes::HasDimensions do
     end
     
     it 'should be initialized with the correct value' do
-      @instance.height.must_equal( :auto )
+      expect( @instance.height ).to eq( :auto )
     end
     
   end
@@ -84,12 +84,12 @@ describe Cura::Attributes::HasDimensions do
     
     it 'should set the attribute correctly' do
       @instance.height = 10
-      @instance.height.must_equal( 10 )
+      expect( @instance.height ).to eq( 10 )
     end
     
     it 'should convert the value to an integer' do
       @instance.height = '10'
-      @instance.height.must_equal( 10 )
+      expect( @instance.height ).to eq( 10 )
     end
     
     describe 'when a symbol is passed' do
@@ -98,10 +98,10 @@ describe Cura::Attributes::HasDimensions do
         
         it 'should set the attribute correctly' do
           @instance.height = :inherit
-          @instance.height.must_equal( :inherit )
+          expect( @instance.height ).to eq( :inherit )
           
           @instance.height = :auto
-          @instance.height.must_equal( :auto )
+          expect( @instance.height ).to eq( :auto )
         end
         
       end
@@ -109,7 +109,7 @@ describe Cura::Attributes::HasDimensions do
       describe 'and it is invalid' do
         
         it 'should raise an ArgumentError' do
-          proc { @instance.height = :invalid_symbol }.must_raise(ArgumentError)
+          expect { @instance.height = :invalid_symbol }.to raise_error(ArgumentError)
         end
         
       end
