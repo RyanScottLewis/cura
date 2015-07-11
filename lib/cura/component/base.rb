@@ -115,6 +115,20 @@ module Cura
         }
       end
       
+      # Get the foreground color of this object.
+      #
+      # @return [Color]
+      def foreground
+        get_or_inherit_color( :foreground, Color.black )
+      end
+      
+      # Get the background color of this object.
+      #
+      # @return [Color]
+      def background
+        get_or_inherit_color( :background, Color.white )
+      end
+      
       # Instance inspection.
       #
       # @return [String]
@@ -150,6 +164,15 @@ module Cura
         f, b = foreground, background
         
         self.foreground, self.background = b, f
+      end
+      
+      def get_or_inherit_color(name, default)
+        value = instance_variable_get("@#{name}")
+        
+        return value unless value == :inherit
+        return default unless respond_to?(:parent) && parent.respond_to?(name)
+        
+        parent.send(name)
       end
       
     end
