@@ -8,11 +8,11 @@ module Cura
     class Button < Label
       
       on_event(:focus) do |event|
-        switch_foreground_and_background if event.target == self
+        switch_colors if event.target == self
       end
       
       on_event(:unfocus) do |event|
-        switch_foreground_and_background if event.target == self
+        switch_colors if event.target == self
       end
       
       on_event(:key_down) do |event|

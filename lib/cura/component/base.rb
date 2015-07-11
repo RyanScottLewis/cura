@@ -2,7 +2,7 @@ if Kernel.respond_to?(:require)
   require 'cura/attributes/has_initialize'
   require 'cura/attributes/has_application'
   require 'cura/attributes/has_focusability'
-  require 'cura/attributes/has_foreground_and_background'
+  require 'cura/attributes/has_colors'
   require 'cura/attributes/has_dimensions'
   require 'cura/attributes/has_events'
   require 'cura/attributes/has_offsets'
@@ -22,7 +22,7 @@ module Cura
       include Attributes::HasDimensions
       include Attributes::HasEvents
       include Attributes::HasFocusability
-      include Attributes::HasForegroundAndBackground
+      include Attributes::HasColors
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
       
@@ -146,7 +146,7 @@ module Cura
         end
       end
       
-      def switch_foreground_and_background
+      def switch_colors
         f, b = foreground, background
         
         self.foreground, self.background = b, f
