@@ -8,7 +8,7 @@ module Cura
     class InvalidAdapter < Base
       
       def to_s
-        'The adapter is invalid.'
+        'The adapter is invalid.' # TODO: Better message
       end
       
     end

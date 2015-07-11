@@ -1,6 +1,5 @@
 if Kernel.respond_to?(:require)
   require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_application'
   require 'cura/attributes/has_focusability'
   require 'cura/attributes/has_colors'
   require 'cura/attributes/has_dimensions'

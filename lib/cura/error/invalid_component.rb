@@ -5,10 +5,10 @@ end
 module Cura
   module Error
     
-    class InvalidApplication < Base
+    class InvalidComponent < Base
       
       def to_s
-        'must nil or be a Cura::Application'
+        'must be a Cura::Component::Base'
       end
       
     end

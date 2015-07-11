@@ -6,7 +6,7 @@ shared_examples 'an object with integer accessors' do |*attributes|
     
     describe "##{attribute}" do
       
-      it 'should be initialized with the correct value' do
+      it "should be initialized with the correct value" do
         expect( instance.send( attribute ) ).to eq( options[:default] )
       end
       
@@ -14,12 +14,12 @@ shared_examples 'an object with integer accessors' do |*attributes|
 
     describe "##{attribute}=" do
       
-      it 'should set the attribute correctly' do
+      it "should set the attribute correctly" do
         instance.send( "#{attribute}=", 10 )
         expect( instance.send( attribute ) ).to eq( 10 )
       end
       
-      it 'should convert the value to an integer' do
+      it "should convert the value to an integer" do
         instance.send( "#{attribute}=", '10' )
         expect( instance.send( attribute ) ).to eq( 10 )
       end
@@ -39,11 +39,11 @@ shared_examples 'an object with size accessors' do |*attributes|
     
     describe "##{attribute}=" do
       
-      context 'when a symbol is passed' do
+      context "when a symbol is passed" do
         
-        context 'and it is valid' do
+        context "and it is valid" do
           
-          it 'should set the attribute correctly' do
+          it "should set the attribute correctly" do
             instance.send( "#{attribute}=", :inherit )
             expect( instance.send( attribute ) ).to eq( :inherit )
             
@@ -53,9 +53,9 @@ shared_examples 'an object with size accessors' do |*attributes|
           
         end
           
-        context 'and it is invalid' do
+        context "and it is invalid" do
           
-          it 'should raise an ArgumentError' do
+          it "should raise an ArgumentError" do
             expect { instance.send( "#{attribute}=", :invalid_symbol ) }.to raise_error( ArgumentError )
           end
           
@@ -73,7 +73,7 @@ shared_examples 'an object with color accessors' do |*attributes|
     
     describe "##{attribute}" do
       
-      it 'should be initialized with the correct value' do
+      it "should be initialized with the correct value" do
         expect( instance.send( attribute ) ).to eq( :inherit )
       end
       
@@ -81,21 +81,21 @@ shared_examples 'an object with color accessors' do |*attributes|
     
     describe "##{attribute}=" do
       
-      context 'when a Color is passed' do
+      context "when a Color is passed" do
         
         before { instance.send( "#{attribute}=", Cura::Color.red ) }
         
-        it 'should set the attribute correctly' do
+        it "should set the attribute correctly" do
           expect( instance.send( attribute ) ).to eq( Cura::Color.red )
         end
         
       end
       
-      context 'when a Symbol-like object is passed' do
+      context "when a Symbol-like object is passed" do
         
-        context 'and it is valid' do
+        context "and it is valid" do
           
-          it 'should set the attribute correctly' do
+          it "should set the attribute correctly" do
             instance.send( "#{attribute}=", :inherit )
             expect( instance.send( attribute ) ).to eq( :inherit )
             
@@ -105,9 +105,9 @@ shared_examples 'an object with color accessors' do |*attributes|
           
         end
         
-        context 'and it is invalid' do
+        context "and it is invalid" do
           
-          it 'should set the attribute correctly' do
+          it "should set the attribute correctly" do
             expect { instance.send( "#{attribute}=", :invalid_symbol ) }.to raise_error( Cura::Error::InvalidColor )
             expect { instance.send( "#{attribute}=", 'invalid_symbol' ) }.to raise_error( Cura::Error::InvalidColor )
           end

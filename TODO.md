@@ -1,6 +1,6 @@
 # TODO
 
-* Tests
+* Tests !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 * See if XUL (or HTML... why not?) can be used as document structure, if not:
 * * CCML Cura Component Markup Language specification (CCML). XML extension?
 * * Parser which parses CCML into Cura Component AST (CC-AST)
@@ -27,7 +27,6 @@
 * Margins and padding on ANY component. Doesn't work on listboxes, groups, etcetc
 * Automatic dimensions are acting weird. Project search for ":auto"
 * Label/textbox ellipsis when text width is longer than the label/textbox (optional and default)
-* * Cursor and text should stick to the end as it does now when it is **focused**, but when it isn't it should show the beginning and ellipsis
 * Autofocus on focusable components
 * Textbox placeholder (says "Email" when there is no text, should be styleable based on it's state)
 * Textbox max_length
