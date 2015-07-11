@@ -28,7 +28,7 @@ module Cura
       #
       # @return [Integer]
       
-      attribute(:width) { |value| validate_dimension_attribute(value) }
+      attribute(:width) { |value| validate_size_attribute(value) }
       
       # @method height
       # Get the height dimension of this object.
@@ -41,22 +41,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       
-      attribute(:height) { |value| validate_dimension_attribute(value) }
-      
-      protected
-      
-      VALID_SYMBOLS = [ :auto, :inherit ]
-      
-      def validate_dimension_attribute(value)
-        if value.is_a?(Symbol)
-          raise ArgumentError, "must be one of #{ VALID_SYMBOLS.join(', ') }" unless VALID_SYMBOLS.include?(value)
-        else
-          value = value.to_i
-          value = 0 if value < 0
-        end
-        
-        value
-      end
+      attribute(:height) { |value| validate_size_attribute(value) }
       
     end
     

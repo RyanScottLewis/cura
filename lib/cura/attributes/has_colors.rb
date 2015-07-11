@@ -22,56 +22,39 @@ module Cura
         super
       end
       
+      # @method foreground
       # Get the foreground color of this object.
       #
       # @return [Color]
-      def foreground
-        get_or_inherit_color(:background, Color.black)
-      end
       
+      # @method foreground=(value)
       # Set the foreground color of this object.
       #
       # @param [Color] value
       # @return [Color]
-      def foreground=(value)
-        @foreground = validate_color_attribute(value)
-      end
       
+      attribute(:foreground) { |value| validate_color_attribute(value) }
+      
+      # @method background
       # Get the background color of this object.
       #
       # @return [Color]
-      def background
-        get_or_inherit_color(:background, Color.white)
-      end
       
+      # @method background=(value)
       # Set the background color of this object.
       #
       # @param [Color] value
       # @return [Color]
-      def background=(value)
-        @background = validate_color_attribute(value)
-      end
+      
+      attribute(:background) { |value| validate_color_attribute(value) }
       
       protected
       
-      def get_or_inherit_color(name, default)
-        value = instance_variable_get("@#{name}")
-        
-        return value unless value == :inherit
-        return default unless respond_to?(:parent) && parent.respond_to?(name)
-        
-        parent.send(name)
-      end
-      
       def validate_color_attribute(value)
         unless value.is_a?(Cura::Color)
-          begin
-            value = value.to_sym
-            
-            raise unless value == :inherit
-          rescue
-            raise Error::InvalidColor
-          end
+          value = value.to_sym
+          
+          raise Error::InvalidColor unless value == :inherit
         end
         
         value

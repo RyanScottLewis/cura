@@ -21,7 +21,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       
-      attribute(:top) { |value| validate_side_attribute(value) }
+      attribute(:top) { |value| validate_size_attribute(value) }
       
       # @method right
       # Get the right attribute.
@@ -34,7 +34,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       
-      attribute(:right) { |value| validate_side_attribute(value) }
+      attribute(:right) { |value| validate_size_attribute(value) }
       
       # @method bottom
       # Get the bottom attribute.
@@ -47,7 +47,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       
-      attribute(:bottom) { |value| validate_side_attribute(value) }
+      attribute(:bottom) { |value| validate_size_attribute(value) }
       
       # @method left
       # Get the left attribute.
@@ -60,7 +60,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       
-      attribute(:left) { |value| validate_side_attribute(value) }
+      attribute(:left) { |value| validate_size_attribute(value) }
       
       def initialize(attributes={})
         @top = 0 unless instance_variable_defined?(:@top)
@@ -87,19 +87,6 @@ module Cura
       # @return [Integer]
       def width
         @left + @right
-      end
-      
-      protected
-      
-      def validate_side_attribute(value, options={})
-        if value.respond_to?(:to_sym)
-          value = value.to_sym # TODO: Validate is :auto, :inherit, etc
-        else
-          value = value.to_i
-          value = 0 if value < 0
-        end
-        
-        value
       end
       
     end
