@@ -5,10 +5,10 @@ end
 module Cura
   module Error
     
-    class InvalidColor < Base
+    class InvalidApplication < Base
       
       def to_s
-        'must be a Cura::Color or :inherit'
+        'application must nil or be a Cura::Application'
       end
       
     end
