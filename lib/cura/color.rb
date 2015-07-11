@@ -50,12 +50,12 @@ module Cura
     end
     
     # The amount of red in this color.
-    # 
+    #
     # @return [Integer]
     attr_reader :red
     
     # Set the amount of red in this color.
-    # 
+    #
     # @param [#to_i] value
     # @return [Integer]
     def red=(value)
@@ -63,12 +63,12 @@ module Cura
     end
     
     # The amount of green in this color.
-    # 
+    #
     # @return [Integer]
     attr_reader :green
     
     # Set the amount of green in this color.
-    # 
+    #
     # @param [#to_i] value
     # @return [Integer]
     def green=(value)
@@ -76,28 +76,28 @@ module Cura
     end
     
     # The amount of blue in this color.
-    # 
+    #
     # @return [Integer]
     attr_reader :blue
     
     # Set the amount of blue in this color.
-    # 
+    #
     # @param [#to_i] value
     # @return [Integer]
     def blue=(value)
       @blue = convert_and_constrain_value(value)
     end
     
-    # Update the RGB values in this color.
-    # 
-    # @param [#to_i] red
-    # @param [#to_i] green
-    # @param [#to_i] blue
-    # @return [Color]
-    def update_values(red, green, blue)
-      self.red, self.green, self.blue = red.to_i, green.to_i, blue.to_i
-      
-      self
+    # Determing if this color is equivalent to another object.
+    #
+    # @param [Object] other
+    # @return [Boolean]
+    def ==(other)
+      if other.is_a?(Color)
+        red == other.red && green == other.green && blue && other.blue
+      else
+        super
+      end
     end
     
     protected
