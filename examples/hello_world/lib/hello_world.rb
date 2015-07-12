@@ -1,6 +1,6 @@
-require 'cura'
+require "cura"
 # require 'cura-adapter-termbox'
-require 'cura/termbox_ffi/adapter'
+require "cura/termbox_ffi/adapter"
 # require 'cura-adapter-curses'
 # require 'cura-adapter-sdl'
 # require 'cura-adapter-sdl-ffi'
@@ -8,7 +8,7 @@ require 'cura/termbox_ffi/adapter'
 # require 'cura-adapter-opengl-ffi'
 # require 'cura-adapter-gosu'
 
-require 'hello_world/application'
+require "hello_world/application"
 
 module HelloWorld
   
@@ -18,7 +18,7 @@ module HelloWorld
       # adapter = choose_adapter
       # 
       # Application.run( adapter: adapter )
-      Application.run( adapter: Cura::TermboxFFI::Adapter.new )
+      Application.run(adapter: Cura::TermboxFFI::Adapter.new)
     end
     
     protected
@@ -34,11 +34,11 @@ module HelloWorld
         end
         
         puts "\nChoose adapter or type 'exit'"
-        print '> '
+        print "> "
         
         answer = gets.downcase.strip
   
-        exit if answer == 'exit'
+        exit if answer == "exit"
         
         index = answer.to_i
         

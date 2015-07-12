@@ -1,14 +1,14 @@
-require 'spec_helper'
+require "spec_helper"
 
-require 'cura/attributes/has_initialize'
-require 'cura/attributes/has_orientation'
+require "cura/attributes/has_initialize"
+require "cura/attributes/has_orientation"
 
 describe Cura::Attributes::HasOrientation do
   
   let(:instance_class) do
     instance_class = Class.new
-    instance_class.include( Cura::Attributes::HasInitialize )
-    instance_class.include( Cura::Attributes::HasOrientation )
+    instance_class.include(Cura::Attributes::HasInitialize)
+    instance_class.include(Cura::Attributes::HasOrientation)
     
     instance_class
   end
@@ -18,7 +18,7 @@ describe Cura::Attributes::HasOrientation do
   describe "#orientation" do
     
     it "should be initialized with the correct value" do
-      expect( instance.orientation ).to eq( :vertical )
+      expect(instance.orientation).to eq(:vertical)
     end
     
   end
@@ -31,10 +31,10 @@ describe Cura::Attributes::HasOrientation do
         
         it "should set the attribute correctly" do
           instance.orientation = :horizontal
-          expect( instance.orientation ).to eq( :horizontal )
+          expect(instance.orientation).to eq(:horizontal)
           
           instance.orientation = :vertical
-          expect( instance.orientation ).to eq( :vertical )
+          expect(instance.orientation).to eq(:vertical)
         end
         
       end
@@ -42,7 +42,7 @@ describe Cura::Attributes::HasOrientation do
       context "and it is invalid" do
         
         it "should raise an ArgumentError" do
-          expect { instance.orientation = :invalid_symbol }.to raise_error( ArgumentError )
+          expect { instance.orientation = :invalid_symbol }.to raise_error(ArgumentError)
         end
         
       end
@@ -55,20 +55,20 @@ describe Cura::Attributes::HasOrientation do
     
     context "when the orientation is set to :vertical" do
       
-      let(:instance) { instance_class.new( orientation: :vertical ) }
+      let(:instance) { instance_class.new(orientation: :vertical) }
       
       it "should return the correct value" do
-        expect( instance.horizontal? ).to eq( false )
+        expect(instance.horizontal?).to eq(false)
       end
       
     end
     
     context "when the orientation is set to :horizontal" do
       
-      let(:instance) { instance_class.new( orientation: :horizontal ) }
+      let(:instance) { instance_class.new(orientation: :horizontal) }
       
       it "should return the correct value" do
-        expect( instance.horizontal? ).to eq( true )
+        expect(instance.horizontal?).to eq(true)
       end
       
     end
@@ -79,20 +79,20 @@ describe Cura::Attributes::HasOrientation do
     
     context "when the orientation is set to :vertical" do
       
-      let(:instance) { instance_class.new( orientation: :vertical ) }
+      let(:instance) { instance_class.new(orientation: :vertical) }
       
       it "should return the correct value" do
-        expect( instance.vertical? ).to eq( true )
+        expect(instance.vertical?).to eq(true)
       end
       
     end
     
     context "when the orientation is set to :horizontal" do
       
-      let(:instance) { instance_class.new( orientation: :horizontal ) }
+      let(:instance) { instance_class.new(orientation: :horizontal) }
       
       it "should return the correct value" do
-        expect( instance.vertical? ).to eq( false )
+        expect(instance.vertical?).to eq(false)
       end
       
     end

@@ -1,23 +1,23 @@
-require 'sequel'
-require 'sqlite3'
-require 'todo_list'
+require "sequel"
+require "sqlite3"
+require "todo_list"
 
 module TodoList
   module Database
     class << self
       
       def path
-        @path ||= TodoList.root.join( 'data.db' )
+        @path ||= TodoList.root.join("data.db")
       end
       
       def setup
         db_existed = path.exist?
-        @connection = Sequel.sqlite( path.to_s )
+        @connection = Sequel.sqlite(path.to_s)
         
         create_tables unless db_existed
         
-        require 'todo_list/list'
-        require 'todo_list/list_item'
+        require "todo_list/list"
+        require "todo_list/list_item"
       end
       
       protected

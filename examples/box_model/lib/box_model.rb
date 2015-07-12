@@ -1,12 +1,12 @@
-require 'pathname'
+require "pathname"
 
-LOG_PATH = Pathname.new(__FILE__).join( '..', '..', 'debug.log' )
+LOG_PATH = Pathname.new(__FILE__).join("..", "..", "debug.log")
 LOG_PATH.truncate(0) if LOG_PATH.exist?
 
-require 'logger'
+require "logger"
 LOGGER = Logger.new(LOG_PATH)
 
-require 'box_model/application'
+require "box_model/application"
 
 module BoxModel
   
