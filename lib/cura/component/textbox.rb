@@ -1,33 +1,32 @@
 if Kernel.respond_to?(:require)
-  require 'cura/component/label'
-  require 'cura/key'
+  require "cura/component/label"
+  require "cura/key"
 end
 
 module Cura
   module Component
     
+    # A component containing editable text.
     class Textbox < Label
       
-      on_event(:focus) do |event|
+      on_event(:focus) do
         set_cursor_position
         
         cursor.show
       end
       
-      on_event(:unfocus) do |event|
-        cursor.hide
-      end
+      on_event(:unfocus) { cursor.hide }
       
       on_event(:key_down) do |event|
         if event.target == self
           if event.name == :backspace
             self.text = text[0..-2]
           elsif event.name == :space
-            self.text << ' '
+            text << " "
           # elsif event.name == :enter # TODO: if multiline?
           #   self.text << "\n"
           elsif event.printable?
-            self.text << event.character
+            text << event.character
           end
 
           set_cursor_position
@@ -36,7 +35,8 @@ module Cura
       
       def initialize(attributes={})
         @focusable = true
-        @foreground, @background = Cura::Color.black, Cura::Color.white
+        @foreground = Cura::Color.black
+        @background = Cura::Color.white
         
         super
         
@@ -49,7 +49,7 @@ module Cura
       #
       # @return [Textbox]
       def clear
-        @text = ''
+        @text = ""
         
         set_cursor_position
         
@@ -108,7 +108,7 @@ module Cura
       def set_cursor_position
         last_line_length = lines.last.nil? ? 0 : lines.last.length
         
-        cursor.x = absolute_x + offsets.left + (text.length < width ? last_line_length : width-1)
+        cursor.x = absolute_x + offsets.left + (text.length < width ? last_line_length : width - 1)
         cursor.y = absolute_y + offsets.top + text_height - 1
       end
       

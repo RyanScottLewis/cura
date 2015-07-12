@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/event/mouse'
+  require "cura/event/mouse"
 end
 
 module Cura

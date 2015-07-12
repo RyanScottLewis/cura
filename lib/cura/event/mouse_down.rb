@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/event/mouse'
+  require "cura/event/mouse"
 end
 
 module Cura
@@ -11,7 +11,7 @@ module Cura
       def initialize(attributes={})
         super
         
-        raise ArgumentError, 'name must be set' if @name.nil?
+        raise ArgumentError, "name must be set" if @name.nil?
       end
       
       # Get the mouse button name.
@@ -43,14 +43,14 @@ module Cura
       
       protected
       
-      VALID_NAMES = [ :left, :middle, :right ]
+      VALID_NAMES = [:left, :middle, :right]
       
       # Set the mouse button name.
       #
       # @param [#to_sym] value
       # @return [String]
       def name=(value)
-        raise ArgumentError, "must be one of #{ VALID_NAMES.join(', ') }" unless VALID_NAMES.include?(value)
+        raise ArgumentError, "must be one of #{VALID_NAMES.join(', ')}" unless VALID_NAMES.include?(value)
         
         @name = value.to_sym
       end

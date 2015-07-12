@@ -1,11 +1,13 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_children'
-  require 'cura/component/base'
+  require "cura/attributes/has_children"
+  require "cura/component/base"
 end
 
 module Cura
   module Component
     
+    # A component with children.
+    # When children are added, their parent will be set to this group.
     class Group < Base
       
       include Attributes::HasChildren

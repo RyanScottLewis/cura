@@ -1,12 +1,12 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_application'
-  require 'cura/attributes/has_children'
-  require 'cura/attributes/has_coordinates'
-  require 'cura/attributes/has_dimensions'
-  require 'cura/attributes/has_events'
+  require "cura/attributes/has_initialize"
+  require "cura/attributes/has_application"
+  require "cura/attributes/has_children"
+  require "cura/attributes/has_coordinates"
+  require "cura/attributes/has_dimensions"
+  require "cura/attributes/has_events"
   
-  require 'cura/component/group'
+  require "cura/component/group"
 end
 
 module Cura
@@ -30,7 +30,7 @@ module Cura
     end
     
     def initialize(attributes={})
-      @root = Component::Group.new( parent: self )
+      @root = Component::Group.new(parent: self)
       @focused_index = 0
       
       super
@@ -94,7 +94,7 @@ module Cura
     # @param [Component::Group] component
     # @return [Component::Group]
     def root=(component)
-      raise TypeError, 'root must be a Component::Group' unless component.is_a?(Component::Group)
+      raise TypeError, "root must be a Component::Group" unless component.is_a?(Component::Group)
       
       @root.parent = nil unless @root.nil?
       @root = component
@@ -175,7 +175,7 @@ module Cura
       focusable_children = focusable_children_of(self)
       @focused_index %= focusable_children.length
       
-      application.focus( focusable_children[@focused_index] )
+      application.focus(focusable_children[@focused_index])
     end
     
     protected
@@ -183,7 +183,7 @@ module Cura
     def update_focused_index(event)
       focusable_children = focusable_children_of(self)
       
-      @focused_index = focusable_children.index( event.target )
+      @focused_index = focusable_children.index(event.target)
     end
     
     # Recursively find all children which are focusable.

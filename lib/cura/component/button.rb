@@ -1,10 +1,11 @@
 if Kernel.respond_to?(:require)
-  require 'cura/component/label'
+  require "cura/component/label"
 end
 
 module Cura
   module Component
     
+    # A button component.
     class Button < Label
       
       on_event(:focus) do |event|
@@ -25,7 +26,8 @@ module Cura
       
       def initialize(attributes={})
         @focusable = true
-        @foreground, @background = Cura::Color.black, Cura::Color.white
+        @foreground = Cura::Color.black
+        @background = Cura::Color.white
         
         super
       end
@@ -34,7 +36,7 @@ module Cura
       #
       # @return [Button]
       def click
-        application.dispatch_event( :click, target: self )
+        application.dispatch_event(:click, target: self)
         
         self
       end

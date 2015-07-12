@@ -10,19 +10,11 @@ module Cura
         super
       end
       
-      # Get the parent of this object.
-      #
-      # @return [Object]
-      attr_reader :parent
-      
-      # Set the parent of this object.
+      # Get/set the parent of this object.
       # It's not recommended to set this directly as it may break the ancestory chain.
       #
-      # @param [Object] value
       # @return [Object]
-      def parent=(value)
-        @parent = value
-      end
+      attr_accessor :parent
       
       # Determine if this object has a parent.
       #
@@ -38,7 +30,7 @@ module Cura
         if @parent.nil?
           []
         else
-          @parent.respond_to?(:ancestors) ?  [@parent] + @parent.ancestors : [@parent]
+          @parent.respond_to?(:ancestors) ? [@parent] + @parent.ancestors : [@parent]
         end
       end
       

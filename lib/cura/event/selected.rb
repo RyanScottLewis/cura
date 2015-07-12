@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/event/base'
+  require "cura/event/base"
 end
 
 module Cura

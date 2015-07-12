@@ -1,7 +1,7 @@
 if Kernel.respond_to?(:require)
-  require 'cura/application'
+  require "cura/application"
   
-  require 'cura/error/invalid_application'
+  require "cura/error/invalid_application"
 end
 
 module Cura
@@ -20,7 +20,7 @@ module Cura
       # @param [Application] value
       # @return [Application]
       def application=(value)
-        raise Error::InvalidApplication unless value.nil? || value.is_a?( Cura::Application )
+        raise Error::InvalidApplication unless value.nil? || value.is_a?(Cura::Application)
         
         @application = value
       end

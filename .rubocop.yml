@@ -1,0 +1,70 @@
+Lint/UnusedMethodArgument:
+  Exclude:
+    - lib/cura/attributes/has_initialize.rb
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - lib/cura/attributes/has_side_attributes.rb
+    - lib/cura/event/dispatcher.rb
+
+Style/CaseIndentation:
+  IndentOneStep: true
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+  
+Style/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+# -=-=-=-=-=- TODO -=-=-=-=-=- #
+
+# Offense count: 18
+Metrics/AbcSize:
+  Max: 135
+
+# Offense count: 3
+# Configuration parameters: CountComments.
+Metrics/ClassLength:
+  Max: 200
+
+# Offense count: 165
+# Configuration parameters: AllowURI, URISchemes.
+Metrics/LineLength:
+  Max: 222
+
+# Offense count: 10
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 80
+
+# Offense count: 1
+# Configuration parameters: CountComments.
+Metrics/ModuleLength:
+  Max: 291
+
+# Offense count: 3
+Metrics/PerceivedComplexity:
+  Max: 16
+
+# Offense count: 272
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues.
+Style/HashSyntax:
+  Enabled: false
+
+# Offense count: 23
+# Cop supports --auto-correct.
+# Configuration parameters: MaxLineLength.
+Style/IfUnlessModifier:
+  Enabled: false
+
+# Offense count: 1202
+# Cop supports --auto-correct.
+Style/TrailingWhitespace:
+  Enabled: false

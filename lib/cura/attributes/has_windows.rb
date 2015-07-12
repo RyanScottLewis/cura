@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/window'
+  require "cura/window"
 end
 
 module Cura
@@ -19,11 +19,11 @@ module Cura
       attr_reader :windows
       
       # Add a window to this object.
-      # 
+      #
       # @param [Window] window
       # @return [Window]
       def add_window(window)
-        raise TypeError, 'window must be a Cura::Window' unless window.is_a?(Window)
+        raise TypeError, "window must be a Cura::Window" unless window.is_a?(Window)
         
         @windows << window
         
@@ -31,27 +31,27 @@ module Cura
       end
       
       # Remove a window from this object's windows at the given index.
-      # 
+      #
       # @param [#to_i] index
       # @return [Window]
       def delete_window_at(index)
-        @windows.delete_at( index.to_i )
+        @windows.delete_at(index.to_i)
       end
       
       # Remove a window from this object's windows.
-      # 
+      #
       # @param [Window] window
       # @return [Window]
       def delete_window(window)
-        raise TypeError, 'window must be a Cura::Window' unless window.is_a?(Window)
+        raise TypeError, "window must be a Cura::Window" unless window.is_a?(Window)
         index = @windows.index(window)
         
-        delete_window_at( index )
+        delete_window_at(index)
       end
       
       # Remove all windows.
       def delete_windows
-        (0...@windows.count).to_a.reverse.each { |index| delete_window_at(index) }
+        (0...@windows.count).to_a.each { |index| delete_window_at(index) }
       end
       
       protected # TODO: These should be protected?

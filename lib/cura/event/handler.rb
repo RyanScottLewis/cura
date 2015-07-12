@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_events'
+  require "cura/attributes/has_events"
 end
 
 module Cura
@@ -12,9 +12,10 @@ module Cura
       
       # @param [Cura::Attributes::HasEvents] host The object this handler is attached to.
       def initialize(host)
-        raise TypeError, 'host must be a Cura::Attributes::HasEvents' unless host.is_a?(Cura::Attributes::HasEvents)
+        raise TypeError, "host must be a Cura::Attributes::HasEvents" unless host.is_a?(Cura::Attributes::HasEvents)
         
-        @host, @callbacks = host, { default: [] }
+        @host = host
+        @callbacks = { default: [] }
       end
       
       # Get the object this handler is attached to.
@@ -32,7 +33,7 @@ module Cura
       # The first registered callback will be the first one called (FIFO).
       # If no event_name is given, the callback is registered to the `:default` name, which are called before all others.
       def register(event_name=:default, *arguments, &block)
-        ( @callbacks[event_name] ||= [] ) << { block: block, arguments: arguments }
+        (@callbacks[event_name] ||= []) << { block: block, arguments: arguments }
       end
       
       # Run all callbacks registered on this instance for the given event.
@@ -40,12 +41,12 @@ module Cura
       # TODO: These should be able to break the callback chain by returning false in the callback (which would also break the delegation chain).
       # TODO: The event should be delegated to the host's #parent if there are no callbacks registered for it, if it responds to #parent, and it's not nil.
       def handle(event)
-        callbacks = @callbacks[:default] + @callbacks[ event.class.name ].to_a
+        callbacks = @callbacks[:default] + @callbacks[event.class.name].to_a
         
         chain_broken = false
         callbacks.each do |callback|
           
-          result = host.instance_exec( event, *callback[:arguments], &callback[:block] )
+          result = host.instance_exec(event, *callback[:arguments], &callback[:block])
           
           # TODO: Optional event consumption
           if result == false

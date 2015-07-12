@@ -1,7 +1,7 @@
 if Kernel.respond_to?(:require)
-  require 'cura/component/base'
+  require "cura/component/base"
 
-  require 'cura/error/invalid_component'
+  require "cura/error/invalid_component"
 end
 
 module Cura
@@ -43,7 +43,7 @@ module Cura
       # @param [Component] component
       # @return [Component]
       def add_child(component)
-        raise TypeError, 'component must be a Cura::Component' unless component.is_a?(Component::Base)
+        raise TypeError, "component must be a Cura::Component" unless component.is_a?(Component::Base)
         
         @children << component
         
@@ -63,7 +63,7 @@ module Cura
       # @param [#to_i] index
       # @return [Component]
       def delete_child_at(index)
-        @children.delete_at( index.to_i )
+        @children.delete_at(index.to_i)
       end
       
       # Remove a child from this object's children.
@@ -96,7 +96,7 @@ module Cura
       
 
       def validate_component(component)
-        fail Error::InvalidComponent unless component.is_a?(Component::Base)
+        raise Error::InvalidComponent unless component.is_a?(Component::Base)
       end
 
       def update_children

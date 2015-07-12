@@ -1,29 +1,29 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_attributes'
-  require 'cura/attributes/has_windows'
-  require 'cura/attributes/has_events'
-  require 'cura/attributes/has_initialize'
+  require "cura/attributes/has_attributes"
+  require "cura/attributes/has_windows"
+  require "cura/attributes/has_events"
+  require "cura/attributes/has_initialize"
   
-  require 'cura/component/base'
+  require "cura/component/base"
   
-  require 'cura/event/dispatcher'
+  require "cura/event/dispatcher"
   
-  require 'cura/event/click'
-  require 'cura/event/focus'
-  require 'cura/event/unfocus'
-  require 'cura/event/handler'
-  require 'cura/event/key_down'
-  require 'cura/event/mouse_down'
-  require 'cura/event/mouse_up'
-  require 'cura/event/mouse_wheel_down'
-  require 'cura/event/mouse_wheel_up'
-  require 'cura/event/resize'
-  require 'cura/event/selected'
+  require "cura/event/click"
+  require "cura/event/focus"
+  require "cura/event/unfocus"
+  require "cura/event/handler"
+  require "cura/event/key_down"
+  require "cura/event/mouse_down"
+  require "cura/event/mouse_up"
+  require "cura/event/mouse_wheel_down"
+  require "cura/event/mouse_wheel_up"
+  require "cura/event/resize"
+  require "cura/event/selected"
   
-  require 'cura/error/invalid_adapter'
+  require "cura/error/invalid_adapter"
     
-  require 'cura/cursor'
-  require 'cura/pencil'
+  require "cura/cursor"
+  require "cura/pencil"
 end
 
 module Cura
@@ -50,9 +50,9 @@ module Cura
       setup_adapter
       
       @running = false
-      @cursor = Cursor.new( application: self )
+      @cursor = Cursor.new(application: self)
       @pencil = Pencil.new
-      @event_dispatcher = Event::Dispatcher.new( application: self )
+      @event_dispatcher = Event::Dispatcher.new(application: self)
     end
     
     # Get the adapter used for running this application.
@@ -67,7 +67,7 @@ module Cura
     # @return [Adapter]
     def adapter=(value)
       # TODO: Raise error if ever set more than once
-      raise TypeError, 'adapter must be a Cura::Adapter' unless value.is_a?(Cura::Adapter)
+      raise TypeError, "adapter must be a Cura::Adapter" unless value.is_a?(Cura::Adapter)
       
       @adapter = value
     end
@@ -131,11 +131,11 @@ module Cura
     # @param [nil, Component::Base] component
     # @return [Component::Base]
     def focus(component)
-      raise TypeError, 'component must be nil or be a Cura::Component::Base' unless component.nil? || component.is_a?(Cura::Component::Base)
+      raise TypeError, "component must be nil or be a Cura::Component::Base" unless component.nil? || component.is_a?(Cura::Component::Base)
       
-      dispatch_event( :unfocus )
+      dispatch_event(:unfocus)
       @event_dispatcher.target = component
-      dispatch_event( :focus )
+      dispatch_event(:focus)
       
       component
     end
@@ -147,7 +147,7 @@ module Cura
     # @option options [#to_i] :target The optional target of the event.
     # @return [Event::Base] The dispatched event.
     def dispatch_event(event, options={})
-      @event_dispatcher.dispatch_event( event, options )
+      @event_dispatcher.dispatch_event(event, options)
     end
     
     # Add a window to this application.
@@ -189,9 +189,8 @@ module Cura
     end
 
     # TODO: Should be in Window
-    def top_most_component_at(options = {})
-      options = options.to_hash rescue options.to_h
-      options = { x: 0, y: 0 }.merge(options)
+    def top_most_component_at(options={})
+      options = { x: 0, y: 0 }.merge(options.to_h)
 
       # TODO: Focused window? Or some way of determining which window so use top_most_component_at with
       windows.first.children(true).reverse.find do |child|

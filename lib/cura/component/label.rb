@@ -1,10 +1,11 @@
 if Kernel.respond_to?(:require)
-  require 'cura/component/base'
+  require "cura/component/base"
 end
 
 module Cura
   module Component
     
+    # A component displaying text.
     class Label < Base
       
       # Note that you can pass the following:
@@ -12,9 +13,11 @@ module Cura
       # instead of:
       #   horizontal_alignment: true, vertical_alignment: true
       def initialize(attributes={})
-        @horizontal_alignment, @vertical_alignment = :left, :top
-        @bold, @underline = false, false
-        @text = ''
+        @horizontal_alignment = :left
+        @vertical_alignment = :top
+        @bold = false
+        @underline = false
+        @text = ""
         
         super
       end
@@ -117,7 +120,7 @@ module Cura
       # @return [Symbol]
       def horizontal_alignment=(value)
         value = value.to_sym
-        raise ArgumentError, 'horizontal_alignment must be one of :left, :center, or :right' unless [:left, :center, :right].include?(value)
+        raise ArgumentError, "horizontal_alignment must be one of :left, :center, or :right" unless [:left, :center, :right].include?(value)
         
         @horizontal_alignment = value
       end
@@ -135,7 +138,7 @@ module Cura
       # @return [Symbol]
       def vertical_alignment=(value)
         value = value.to_sym
-        raise ArgumentError, 'vertical_alignment must be one of :top, :center, or :bottom' unless [:top, :center, :bottom].include?(value)
+        raise ArgumentError, "vertical_alignment must be one of :top, :center, or :bottom" unless [:top, :center, :bottom].include?(value)
         
         @vertical_alignment = value
       end
@@ -170,8 +173,8 @@ module Cura
             y_offset += 1
           else
             unless x_offset > width || y_offset > height
-              options = translate( x: x_offset, y: y_offset ).merge( text: character_to_draw(character), foreground: foreground, background: background, bold: @bold, underline: @underline )
-              pencil.draw_text( options )
+              options = translate(x: x_offset, y: y_offset).merge(text: character_to_draw(character), foreground: foreground, background: background, bold: @bold, underline: @underline)
+              pencil.draw_text(options)
             end
             
             x_offset += 1
@@ -182,16 +185,16 @@ module Cura
       def x_offset_from_alignment
         case horizontal_alignment
           when :left   then offsets.left
-          when :center then ( ( text_width-width ).abs/2 ).to_i
-          when :right  then ( text_width-width ).abs
+          when :center then ((text_width - width).abs / 2).to_i
+          when :right  then (text_width - width).abs
         end
       end
       
       def y_offset_from_alignment
         case vertical_alignment
           when :top    then offsets.top
-          when :center then ( ( text_height-height ).abs/2 ).to_i
-          when :bottom then ( text_height-height ).abs
+          when :center then ((text_height - height).abs / 2).to_i
+          when :bottom then (text_height - height).abs
         end
       end
       
@@ -201,12 +204,11 @@ module Cura
       def convert_attributes(attributes={})
         attributes = super
         
-        if attributes.has_key?(:alignment)
-          alignment_attributes = attributes.delete(:alignment)
-          alignment_attributes = alignment_attributes.to_hash rescue alignment_attributes.to_h
+        if attributes.key?(:alignment)
+          alignment_attributes = attributes.delete(:alignment).to_h
           
-          attributes[:horizontal_alignment] = alignment_attributes[:horizontal] if alignment_attributes.has_key?(:horizontal)
-          attributes[:vertical_alignment] = alignment_attributes[:vertical] if alignment_attributes.has_key?(:vertical)
+          attributes[:horizontal_alignment] = alignment_attributes[:horizontal] if alignment_attributes.key?(:horizontal)
+          attributes[:vertical_alignment] = alignment_attributes[:vertical] if alignment_attributes.key?(:vertical)
         end
         
         attributes

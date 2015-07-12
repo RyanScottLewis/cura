@@ -1,5 +1,6 @@
 module Cura
   
+  # The tool used for drawing on a surface.
   class Pencil
     
     # Draw a point.

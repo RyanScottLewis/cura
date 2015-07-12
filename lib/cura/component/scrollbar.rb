@@ -1,12 +1,13 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_orientation'
-  require 'cura/component/group'
-  require 'cura/component/button'
+  require "cura/attributes/has_orientation"
+  require "cura/component/group"
+  require "cura/component/button"
 end
 
 module Cura
   module Component
     
+    # A component for scrolling.
     # TODO: Option to have buttons or not
     class Scrollbar < Group
       
@@ -14,13 +15,14 @@ module Cura
       
       def initialize(attributes={})
         @value = 0
-        @min, @max = 0, 100
+        @min = 0
+        @max = 100
         @orientation = :vertical
         @buttons = {}
         
-        @buttons[:decrement] = Button.new( width: 1, height: 1 ) { parent.decrement }
-        @buttons[:increment] = Button.new( width: 1, height: 1 ) { parent.increment }
-        @handle = Component.new( width: 1, height: 1 )
+        @buttons[:decrement] = Button.new(width: 1, height: 1) { parent.decrement }
+        @buttons[:increment] = Button.new(width: 1, height: 1) { parent.increment }
+        @handle = Component.new(width: 1, height: 1)
         
         super
         
@@ -123,7 +125,7 @@ module Cura
       end
       
       def setup_buttons
-        @buttons.each do |name, button|
+        @buttons.each do |_, button|
           button.foreground = foreground
           button.background = background
           
@@ -151,15 +153,15 @@ module Cura
       def set_button_coordinates_based_on_orientation
         if vertical?
           @buttons[:increment].x = 0
-          @buttons[:increment].y = height-1
+          @buttons[:increment].y = height - 1
         elsif horizontal?
-          @buttons[:increment].x = width-1
+          @buttons[:increment].x = width - 1
           @buttons[:increment].y = 0
         end
       end
       
       def set_percentage
-        @percent = ( (value.to_f - min.to_f) / (max.to_f - min.to_f) * 100.0 ).to_i
+        @percent = ((value.to_f - min.to_f) / (max.to_f - min.to_f) * 100.0).to_i
       end
       
       def set_handle_position

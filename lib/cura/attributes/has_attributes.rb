@@ -4,17 +4,18 @@ module Cura
     # Adds the `update_attributes` method.
     module HasAttributes
       
+      # The class methods to be mixed in when included.
       module ClassMethods
         
         def attribute(name, options={}, &block)
-          options = options.to_hash rescue options.to_h
+          options = options.to_h
           
           attr_reader(name)
           
           define_method("#{name}=") do |value|
             value = instance_exec(value, options, &block) if block_given?
             
-            instance_variable_set( "@#{name}", value )
+            instance_variable_set("@#{name}", value)
           end
         end
         
@@ -30,7 +31,7 @@ module Cura
       
       # Initialize this object by optionally updating attributes with a Hash.
       #
-      # @param [#to_hash, #to_h] attributes Attributes to set after initializing.
+      # @param [#to_h] attributes Attributes to set after initializing.
       def initialize(attributes={})
         update_attributes(attributes)
         
@@ -39,21 +40,21 @@ module Cura
       
       # Update any attributes on this object.
       #
-      # @param [#to_hash, #to_h] attributes
+      # @param [#to_h] attributes
       # @return [Hash] The attributes.
       def update_attributes(attributes={})
         attributes = convert_attributes(attributes)
         
-        attributes.each { |name, value| send( "#{name}=", value ) }
+        attributes.each { |name, value| send("#{name}=", value) }
       end
       
       protected
       
-      VALID_SIZE_SYMBOLS = [ :auto, :inherit ]
+      VALID_SIZE_SYMBOLS = [:auto, :inherit]
       
       def validate_size_attribute(value)
         if value.is_a?(Symbol)
-          raise ArgumentError, "must be one of #{ VALID_SIZE_SYMBOLS.join(', ') }" unless VALID_SIZE_SYMBOLS.include?(value)
+          raise ArgumentError, "must be one of #{VALID_SIZE_SYMBOLS.join(', ')}" unless VALID_SIZE_SYMBOLS.include?(value)
         else
           value = value.to_i
           value = 0 if value < 0
@@ -64,10 +65,10 @@ module Cura
       
       # Convert the attributes to a Hash and any other conversions that may need to happen.
       #
-      # @param [#to_hash, #to_h] attributes
+      # @param [#to_h] attributes
       # @return [Hash] The attributes.
       def convert_attributes(attributes={})
-        attributes.to_hash rescue attributes.to_h
+        attributes.to_h
       end
       
     end

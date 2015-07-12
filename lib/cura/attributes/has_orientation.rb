@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_attributes'
+  require "cura/attributes/has_attributes"
 end
 
 module Cura
@@ -28,7 +28,7 @@ module Cura
       # @return [Symbol]
       def orientation=(value)
         value = value.to_sym
-        raise ArgumentError, 'orientation must be one of :vertical or :horizontal' unless [:vertical, :horizontal].include?(value)
+        raise ArgumentError, "orientation must be one of :vertical or :horizontal" unless [:vertical, :horizontal].include?(value)
         
         @orientation = value
       end

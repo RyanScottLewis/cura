@@ -1,7 +1,7 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_application'
-  require 'cura/attributes/has_coordinates'
+  require "cura/attributes/has_initialize"
+  require "cura/attributes/has_application"
+  require "cura/attributes/has_coordinates"
 end
 
 module Cura
@@ -21,7 +21,7 @@ module Cura
       
       super
       
-      raise ArgumentError, 'application must be set' if application.nil?
+      raise ArgumentError, "application must be set" if application.nil?
     end
     
     # Check if the cursor is hidden.
@@ -66,7 +66,7 @@ module Cura
       if @hidden
         application.adapter.hide_cursor
       else
-        application.adapter.set_cursor( @x, @y )
+        application.adapter.set_cursor(@x, @y)
       end
       
       self

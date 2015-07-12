@@ -1,9 +1,9 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_attributes'
+  require "cura/attributes/has_attributes"
   
-  require 'cura/error/invalid_color'
+  require "cura/error/invalid_color"
   
-  require 'cura/color'
+  require "cura/color"
 end
 
 module Cura

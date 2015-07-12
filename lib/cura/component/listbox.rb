@@ -1,11 +1,12 @@
 if Kernel.respond_to?(:require)
-  require 'cura/component/pack'
-  require 'cura/key'
+  require "cura/component/pack"
+  require "cura/key"
 end
 
 module Cura
   module Component
     
+    # A component containing a selectable list of components.
     class Listbox < Pack
       
       on_event(:focus) do |event|
@@ -57,12 +58,12 @@ module Cura
           value = count == 0 ? 0 : value % count # Avoids value = value % 0 (divide by zero error)
         else
           value = 0 if value <= 0
-          value = count-1 if value >= count-1
+          value = count - 1 if value >= count - 1
         end
         
         @selected_index = value
         
-        application.dispatch_event( :selected, target: self )
+        application.dispatch_event(:selected, target: self)
         
         @selected_index
       end
@@ -71,7 +72,7 @@ module Cura
       #
       # @return [Component]
       def selected_child
-        @children[ @selected_index ]
+        @children[@selected_index]
       end
       
       # Add a child to this group.
@@ -80,7 +81,6 @@ module Cura
       # @param [Object] object An arbitrary object to associate with the added child in this listbox.
       # @return [Component]
       def add_child(component, object=nil)
-        index = count
         child = super(component)
 
         @objects << object
@@ -113,7 +113,7 @@ module Cura
       #
       # @return [Component]
       def selected_object
-        @objects[ @selected_index ]
+        @objects[@selected_index]
       end
       
       # Get whether this listbox is loopable or not.

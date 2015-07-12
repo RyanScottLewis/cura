@@ -1,8 +1,7 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_attributes'
+  require "cura/attributes/has_initialize"
+  require "cura/attributes/has_attributes"
 end
-
 
 module Cura
   
@@ -26,25 +25,27 @@ module Cura
       end
       
       def white
-        new( red: 255, green: 255, blue: 255 )
+        new(red: 255, green: 255, blue: 255)
       end
       
       def red
-        new( red: 255, green: 0, blue: 0 )
+        new(red: 255, green: 0, blue: 0)
       end
       
       def green
-        new( red: 0, green: 255, blue: 0 )
+        new(red: 0, green: 255, blue: 0)
       end
       
       def blue
-        new( red: 0, green: 0, blue: 255 )
+        new(red: 0, green: 0, blue: 255)
       end
       
     end
     
     def initialize(attributes={})
-      @red, @green, @blue = 0, 0, 0
+      @red = 0
+      @green = 0
+      @blue = 0
       
       super
     end
@@ -106,7 +107,7 @@ module Cura
     def convert_and_constrain_value(value)
       value = value.to_i
       
-      [ 255, [ 0, value ].max ].min
+      [255, [0, value].max].min
     end
     
   end

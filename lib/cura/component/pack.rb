@@ -1,12 +1,12 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_orientation'
-  require 'cura/component/group'
+  require "cura/attributes/has_orientation"
+  require "cura/component/group"
 end
 
 module Cura
   module Component
     
-    # A Group which moves and optionally resizes children.
+    # A component with children which moves and optionally resizes them.
     # TODO: Expand attribute - See: http://www.pygtk.org/pygtk2tutorial/sec-DetailsOfBoxes.html
     # TODO: I think the only time it needs to pack_children is right before drawing? Would that get messy?
     class Pack < Group
@@ -14,7 +14,8 @@ module Cura
       include Attributes::HasOrientation
       
       def initialize(attributes={})
-        @fill, @spacing = false, 0
+        @fill = false
+        @spacing = 0
         
         # @child_modifiers
         super
@@ -119,7 +120,8 @@ module Cura
       
       # Position and resize this pack's children based on it's attributes.
       def pack_children
-        child_x, child_y = 0, 0
+        child_x = 0
+        child_y = 0
         
         children.each do |child|
           if horizontal?

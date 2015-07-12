@@ -1,5 +1,5 @@
 if Kernel.respond_to?(:require)
-  require 'cura/event/base'
+  require "cura/event/base"
 end
 
 module Cura
@@ -13,7 +13,7 @@ module Cura
         
         super
         
-        raise ArgumentError, 'name must be set' if @name.nil?
+        raise ArgumentError, "name must be set" if @name.nil?
       end
       
       # Get whether the key was pressed while holding the control key.

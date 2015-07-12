@@ -1,6 +1,6 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_ancestry'
-  require 'cura/attributes/has_coordinates'
+  require "cura/attributes/has_ancestry"
+  require "cura/attributes/has_coordinates"
 end
 
 module Cura
@@ -13,7 +13,8 @@ module Cura
       include HasCoordinates
       
       def initialize(attributes={})
-        @absolute_x, @absolute_y = 0, 0
+        @absolute_x = 0
+        @absolute_y = 0
         
         super
       end

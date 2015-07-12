@@ -1,9 +1,9 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_attributes'
-  require 'cura/attributes/has_application'
-  require 'cura/attributes/has_events'
-  require 'cura/event/base'
+  require "cura/attributes/has_initialize"
+  require "cura/attributes/has_attributes"
+  require "cura/attributes/has_application"
+  require "cura/attributes/has_events"
+  require "cura/event/base"
 end
 
 module Cura
@@ -19,7 +19,7 @@ module Cura
       def initialize(attributes={})
         super
         
-        raise ArgumentError, 'application must be set' if @application.nil?
+        raise ArgumentError, "application must be set" if @application.nil?
         @target = @application if @target.nil?
         @wait_time = 0
       end
@@ -56,7 +56,7 @@ module Cura
       # @return [Cura::Attributes::HasEvents]
       
       attribute(:target) do |value|
-        raise TypeError, 'target must be a Cura::Attributes::HasEvents or nil' unless value.nil? || value.is_a?(Attributes::HasEvents)
+        raise TypeError, "target must be a Cura::Attributes::HasEvents or nil" unless value.nil? || value.is_a?(Attributes::HasEvents)
         
         value.nil? ? @application : value
       end
@@ -82,7 +82,7 @@ module Cura
       # @param [#to_i] milliseconds The amount of time to wait in milliseconds.
       # @return [nil, Event::Base] The event, if handled.
       def peek(milliseconds=100)
-        @application.adapter.peek_event( milliseconds.to_i )
+        @application.adapter.peek_event(milliseconds.to_i)
       end
       
       # Dispatch an event to the target or application, if the target is nil.
@@ -93,16 +93,12 @@ module Cura
       # @return [Event::Base] The dispatched event.
       def dispatch_event(event, options={})
         event = Event.new_from_name(event) if event.respond_to?(:to_sym)
-        raise TypeError, 'event must be an Event::Base' unless event.is_a?(Event::Base)
+        raise TypeError, "event must be an Event::Base" unless event.is_a?(Event::Base)
         
-        options = options.to_hash rescue options.to_h
-        
-        if event.is_a?(Event::MouseDown) || event.is_a?(Event::MouseUp)
-          component = @application.top_most_component_at( x: event.x , y: event.y )
-          
-          event.target = component
-        end
+        options = options.to_h
          
+        event.target = options[:target]
+        event.target = @application.top_most_component_at(x: event.x, y: event.y) if event.target.nil? && event.is_a?(Event::MouseDown) || event.is_a?(Event::MouseUp)
         event.target ||= @target
         
         event.target.event_handler.handle(event)

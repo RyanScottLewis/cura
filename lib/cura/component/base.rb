@@ -1,11 +1,11 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_focusability'
-  require 'cura/attributes/has_colors'
-  require 'cura/attributes/has_dimensions'
-  require 'cura/attributes/has_events'
-  require 'cura/attributes/has_offsets'
-  require 'cura/attributes/has_relative_coordinates'
+  require "cura/attributes/has_initialize"
+  require "cura/attributes/has_focusability"
+  require "cura/attributes/has_colors"
+  require "cura/attributes/has_dimensions"
+  require "cura/attributes/has_events"
+  require "cura/attributes/has_offsets"
+  require "cura/attributes/has_relative_coordinates"
 end
 
 module Cura
@@ -101,12 +101,12 @@ module Cura
       
       # Translate absolute coordinates to relative coordinates.
       #
-      # @param [#to_hash, #to_h] options
+      # @param [#to_h] options
       # @option options [#to_i] :x
       # @option options [#to_i] :y
       # @return [Hash] The new coordinates.
       def translate(options={})
-        options = options.to_hash rescue options.to_h
+        options = options.to_h
         
         {
           x: absolute_x + options[:x].to_i,
@@ -118,14 +118,14 @@ module Cura
       #
       # @return [Color]
       def foreground
-        get_or_inherit_color( :foreground, Color.black )
+        get_or_inherit_color(:foreground, Color.black)
       end
       
       # Get the background color of this object.
       #
       # @return [Color]
       def background
-        get_or_inherit_color( :background, Color.white )
+        get_or_inherit_color(:background, Color.white)
       end
       
       # Instance inspection.
@@ -139,30 +139,32 @@ module Cura
       
       # Draw the background of this component.
       def draw_background
-        options = translate( x: @offsets.left, y: @offsets.top ).merge( width: width + @padding.width, height: height + @padding.height, foreground: foreground, background: background )
+        options = translate(x: @offsets.left, y: @offsets.top).merge(width: width + @padding.width, height: height + @padding.height, foreground: foreground, background: background)
         
-        pencil.draw_rectangle( options )
+        pencil.draw_rectangle(options)
       end
       
       # Draw the border of this component.
       def draw_border # TODO
-        if border.top > 0 # TODO: :none
-          options = translate( x: margin.left, y: margin.top ).merge( width: width + margin.width, height: border.top, foreground: border.foreground, background: Color.red )
-          
-          pencil.draw_rectangle( options )
-        end
-        
-        if border.bottom > 0 # TODO: :none
-          options = translate( x: margin.left, y: offsets.top + padding.bottom ).merge( width: width + margin.width, height: border.bottom, foreground: border.foreground, background: Color.red )
-          
-          pencil.draw_rectangle( options )
-        end
+        # if border.top > 0 # TODO: :none
+        #   options = translate( x: margin.left, y: margin.top ).merge( width: width + margin.width, height: border.top, foreground: border.foreground, background: Color.red )
+        #
+        #   pencil.draw_rectangle( options )
+        # end
+        #
+        # if border.bottom > 0 # TODO: :none
+        #   options = translate( x: margin.left, y: offsets.top + padding.bottom ).merge( width: width + margin.width, height: border.bottom, foreground: border.foreground, background: Color.red )
+        #
+        #   pencil.draw_rectangle( options )
+        # end
       end
       
       def switch_colors
-        f, b = foreground, background
+        f = foreground
+        b = background
         
-        self.foreground, self.background = b, f
+        self.foreground = b
+        self.background = f
       end
       
       def get_or_inherit_color(name, default)

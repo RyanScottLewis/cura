@@ -1,6 +1,6 @@
 if Kernel.respond_to?(:require)
-  require 'cura/attributes/has_initialize'
-  require 'cura/attributes/has_attributes'
+  require "cura/attributes/has_initialize"
+  require "cura/attributes/has_attributes"
 end
 
 module Cura
@@ -11,7 +11,7 @@ module Cura
     class << self
       
       # The list of all Adapter subclasses.
-      # 
+      #
       # @return [Array]
       def all
         @all ||= []
@@ -26,9 +26,7 @@ module Cura
       end
       
       def mixin(value)
-        value = value.to_hash rescue value.to_h 
-        
-        mixins.merge!(value)
+        mixins.merge!(value.to_h)
       end
       
     end
@@ -45,7 +43,7 @@ module Cura
     def setup
       @setup = true
       
-      self.class.mixins.each { |type, mod| type.send( :include, mod ) }
+      self.class.mixins.each { |type, mod| type.send(:include, mod) }
       
       self
     end
