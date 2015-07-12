@@ -187,7 +187,19 @@ module Cura
     def inspect
       "#<#{self.class}>"
     end
-    
+
+    # TODO: Should be in Window
+    def top_most_component_at(options = {})
+      options = options.to_hash rescue options.to_h
+      options = { x: 0, y: 0 }.merge(options)
+
+      # TODO: Focused window? Or some way of determining which window so use top_most_component_at with
+      windows.first.children(true).reverse.find do |child|
+        (child.absolute_x..child.absolute_x + child.width).include?(options[:x]) &&
+          (child.absolute_y..child.absolute_y + child.width).include?(options[:y])
+      end
+    end
+
     protected
     
     def setup_adapter
