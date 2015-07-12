@@ -1,5 +1,7 @@
 if Kernel.respond_to?(:require)
   require 'cura/component/base'
+
+  require 'cura/error/invalid_component'
 end
 
 module Cura
@@ -30,9 +32,7 @@ module Cura
       # @return [<Component>]
       def children(recursive=false)
         if recursive
-          @children.collect do |child|
-            child.respond_to?(:children) ? [ child ] + child.children(true) : child
-          end.flatten
+          @children.collect { |child| child.respond_to?(:children) ? [child] + child.children(true) : child }.flatten
         else
           @children
         end
@@ -71,17 +71,17 @@ module Cura
       # @param [Component] component
       # @return [Component]
       def delete_child(component)
-        raise TypeError, 'component must be a Cura::Component' unless component.is_a?(Component::Base)
-        
-        delete_child_at( @children.index(component) )
+        validate_component(component)
+
+        delete_child_at(@children.index(component))
       end
       
       # Remove all children.
       #
       # @return [Group]
       def delete_children
-        (0...@children.count).to_a.reverse.each { |index| delete_child_at(index) }
         
+        (0...@children.count).to_a.reverse_each { |index| delete_child_at(index) } # TODO: Why reverse?
         self
       end
     
@@ -94,6 +94,11 @@ module Cura
       
       protected
       
+
+      def validate_component(component)
+        fail Error::InvalidComponent unless component.is_a?(Component::Base)
+      end
+
       def update_children
         children.each(&:update)
       end
