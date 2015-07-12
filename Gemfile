@@ -1,12 +1,14 @@
 source "https://rubygems.org"
 
 group :development do
-  gem "rubocop", "~> 0.32.1"
-  gem "rake", "~> 10.4.2"
-  gem "rspec", "~> 3.3.0"
   gem "fuubar", "~> 2.0.0"
-  gem "yard", "~> 0.8.7.6"
+  gem "mutant-rspec", "~> 0.8.0"
+  gem "rake", "~> 10.4.2"
   gem "reek", "~> 3.0.4"
-  # s.add_development_dependency 'guard-rspec', '~> 3.1.0'
-  # s.add_development_dependency 'rb-fsevent', '~> 0.9.0'
+  gem "rspec", "~> 3.3.0"
+  gem "rubocop", "~> 0.32.1"
+  gem "simplecov-json", "~> 0.2"
+  gem "simplecov", "~> 0.10.0"
+  gem "yard", "~> 0.8.7.6"
+  gem "yardstick", "~> 0.9.9"
 end
