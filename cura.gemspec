@@ -12,13 +12,7 @@ Gem::Specification.new do |s|
   s.version = Cura::VERSION
 
   # Dependencies
-  # s.add_development_dependency 'fuubar', '~> 1.2.1'
-  # s.add_development_dependency 'guard-rspec', '~> 3.1.0'
-  s.add_development_dependency 'rake', '~> 10.4.2'
-  s.add_development_dependency 'rspec', '~> 3.3.0'
-  s.add_development_dependency 'fuubar', '~> 2.0.0'
-  s.add_development_dependency 'yard', '~> 0.8.7.6'
-  # s.add_development_dependency 'rb-fsevent', '~> 0.9.0'
+  s.add_development_dependency 'builder', '~> 3.2.2'
   
   # Pragmatically set variables
   s.homepage      = "http://github.com/RyanScottLewis/#{s.name}"
