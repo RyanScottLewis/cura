@@ -81,6 +81,7 @@ module TodoList
     end
     
     def list=(list)
+            LOGGER.debug( list.inspect )
       @list = list
       @listbox_header_label.text = @list.name
       @listbox_header_label.text << ' ' * (width - @list.name.length) unless @list.name.length >= width

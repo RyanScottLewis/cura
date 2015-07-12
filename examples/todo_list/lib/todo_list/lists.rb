@@ -26,7 +26,7 @@ module TodoList
       add_child(@listbox_header_label)
       
       @listbox = Cura::Component::Listbox.new( width: @width )
-      @listbox.on_event(:selected) { |event| application.list_items.list = selected_object }
+      @listbox.on_event(:selected) { |event| application.list_items.list = selected_object unless selected_object.nil? }
       @listbox.on_event(:key_down, self) do |event, model_list|
         if event.target == self && event.control? && event.name == :D && !selected_object.nil?
           selected_object.destroy
