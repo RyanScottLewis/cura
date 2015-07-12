@@ -16,6 +16,7 @@ module Cura
       def initialize(attributes={})
         @fill, @spacing = false, 0
         
+        # @child_modifiers
         super
       end
       
@@ -40,6 +41,12 @@ module Cura
       # Add a child to this group.
       #
       # @param [Component] component
+      # @param [#to_hash, #to_h] options
+      # @option options [#to_i] :expand
+      #   The new child is to be given extra space. The extra space will be divided evenly between all children that use this option.
+      # @option options [#to_i] :fill
+      #   The space given to child by the expand option is actually allocated to child, rather than just padding it.
+      #   This parameter has no effect if expand is set to false.
       # @return [Component]
       def add_child(component)
         child = super
