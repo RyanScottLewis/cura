@@ -2,11 +2,6 @@ Lint/UnusedMethodArgument:
   Exclude:
     - lib/cura/attributes/has_initialize.rb
 
-Metrics/CyclomaticComplexity:
-  Exclude:
-    - lib/cura/attributes/has_side_attributes.rb
-    - lib/cura/event/dispatcher.rb
-
 Style/CaseIndentation:
   IndentOneStep: true
 
@@ -23,6 +18,9 @@ Style/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
 
 # -=-=-=-=-=- TODO -=-=-=-=-=- #
+
+Metrics/CyclomaticComplexity:
+Enabled: false
 
 # Offense count: 18
 Metrics/AbcSize:

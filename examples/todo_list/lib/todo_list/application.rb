@@ -1,8 +1,8 @@
 require "cura"
 
-require "todo_list/header"
-require "todo_list/lists"
-require "todo_list/list_items"
+require "todo_list/component/header"
+require "todo_list/component/lists"
+require "todo_list/component/list_items"
 
 module TodoList
   
@@ -31,17 +31,17 @@ module TodoList
       main_pack = Cura::Component::Pack.new(width: window.width, height: window.height, fill: true)
       window.add_child(main_pack)
       
-      header = Header.new
+      header = Component::Header.new
       main_pack.add_child(header)
       
       middle_pack = Cura::Component::Pack.new(height: window.height - 1, orientation: :horizontal, fill: true)
       main_pack.add_child(middle_pack)
       
-      sidebar = Lists.new(width: 30, padding: 1)
+      sidebar = Component::Lists.new(width: 30, padding: 1)
       middle_pack.add_child(sidebar)
       
-      @list_items = ListItems.new(width: 100, padding: 1)
-      middle_pack.add_child(@list_items, expand: true, fill: true)
+      @list_items = Component::ListItems.new(width: 100, padding: 1)
+      middle_pack.add_child(@list_items) # , expand: true, fill: true) # TODO
       
       #-
       
