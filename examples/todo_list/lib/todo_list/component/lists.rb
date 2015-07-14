@@ -72,6 +72,8 @@ module TodoList
         
         @create_list_textbox.clear
         @create_list_textbox.focus
+        
+        application.list_items.list = @listbox.selected_object unless @listbox.selected_object.nil?
       end
       
       def fill_listbox

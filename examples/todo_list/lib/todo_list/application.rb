@@ -40,7 +40,7 @@ module TodoList
       sidebar = Component::Lists.new(width: 30, padding: 1)
       middle_pack.add_child(sidebar)
       
-      @list_items = Component::ListItems.new(width: 100, padding: 1)
+      @list_items = Component::ListItems.new(width: window.width - 30 - 4, padding: 1)
       middle_pack.add_child(@list_items) # , expand: true, fill: true) # TODO
       
       #-
