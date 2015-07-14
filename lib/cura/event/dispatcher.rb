@@ -97,7 +97,7 @@ module Cura
         
         options = options.to_h
          
-        event.target = options[:target]
+        event.target = options[:target] if options.key?(:target)
         event.target = @application.top_most_component_at(x: event.x, y: event.y) if event.target.nil? && event.is_a?(Event::MouseDown) || event.is_a?(Event::MouseUp)
         event.target ||= @target
         
