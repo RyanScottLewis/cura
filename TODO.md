@@ -37,8 +37,10 @@
 * * Remove Component#outer_*
 * Offsets shouldn't ignore padding as it does now
 * Selected event should just be Select (Focus isn't "Focused")
+* Instead of running #update on all items on each cycle, it should only do that once when started
+* * When an event is handled by a component, it should update it and it's parents after all events have executed
+* Textbox moving cursor around
+* Hide/show components
 
 # Current Issues
 * typing in textboxes is offset by 1
-* todo_list is duplicating list items?
-* todo_list list names get a bunch of spaces added after them?

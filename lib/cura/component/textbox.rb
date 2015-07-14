@@ -20,7 +20,7 @@ module Cura
       on_event(:key_down) do |event|
         if event.target == self
           if event.name == :backspace
-            self.text = text[0..-2]
+            self.text = text[0..-2] # TODO: Should delete the charactor before the cursor when it is movable
           elsif event.name == :space
             text << " "
           # elsif event.name == :enter # TODO: if multiline?

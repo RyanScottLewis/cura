@@ -16,7 +16,8 @@ module TodoList
           Cura::Component::Label.new(text: "^-E to edit item", margin: { right: 3 }),
           Cura::Component::Label.new(text: "^-D to delete item", margin: { right: 3 }),
           Cura::Component::Label.new(text: "^-F to move focus forwards", margin: { right: 3 }),
-          Cura::Component::Label.new(text: "^-B to move focus backwards", margin: { right: 3 })
+          Cura::Component::Label.new(text: "^-B to move focus backwards", margin: { right: 3 }),
+          Cura::Component::Label.new(text: "Enter to select list/toggle list item completed", margin: { right: 3 })
         )
       end
       
