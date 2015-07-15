@@ -3,7 +3,10 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_attributes"
   require "cura/attributes/has_application"
   require "cura/attributes/has_events"
+  
   require "cura/event/base"
+  
+  require "cura/error/invalid_middleware"
 end
 
 module Cura
@@ -20,8 +23,10 @@ module Cura
         super
         
         raise ArgumentError, "application must be set" if @application.nil?
-        @target = @application if @target.nil?
+        
         @wait_time = 0
+        @target = @application if @target.nil?
+        @middleware = []
       end
       
       # @method wait_time
@@ -61,6 +66,12 @@ module Cura
         value.nil? ? @application : value
       end
       
+      # The middleware stack which an event will pass through before being dispatched.
+      # Middleware must be an object responding to #call.
+      #
+      # @return [Array]
+      attr_reader :middleware
+      
       # Poll or peek for events and dispatch it if one was found.
       #
       # @return [Event::Dispatcher]
@@ -95,15 +106,11 @@ module Cura
         event = Event.new_from_name(event) if event.respond_to?(:to_sym)
         raise TypeError, "event must be an Event::Base" unless event.is_a?(Event::Base)
         
-        options = options.to_h
-         
-        event.target = options[:target] if options.key?(:target)
-        event.target = @application.top_most_component_at(x: event.x, y: event.y) if event.target.nil? && event.is_a?(Event::MouseDown) || event.is_a?(Event::MouseUp)
-        event.target ||= @target
+        options = { dispatcher: self, event: event }.merge(options.to_h)
         
-        event.target.event_handler.handle(event)
+        @middleware.each { |middleware| middleware.call(options) }
         
-        event
+        event.dispatch
       end
       
     end

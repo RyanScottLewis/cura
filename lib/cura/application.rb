@@ -20,6 +20,9 @@ if Kernel.respond_to?(:require)
   require "cura/event/resize"
   require "cura/event/selected"
   
+  require "cura/event/middleware/aimer/target_option"
+  require "cura/event/middleware/aimer/dispatcher_target"
+  
   require "cura/error/invalid_adapter"
     
   require "cura/cursor"
@@ -52,7 +55,8 @@ module Cura
       @running = false
       @cursor = Cursor.new(application: self)
       @pencil = Pencil.new
-      @event_dispatcher = Event::Dispatcher.new(application: self)
+      
+      setup_dispatcher
     end
     
     # Get the adapter used for running this application.
@@ -188,17 +192,6 @@ module Cura
       "#<#{self.class}>"
     end
 
-    # TODO: Should be in Window
-    def top_most_component_at(options={})
-      options = { x: 0, y: 0 }.merge(options.to_h)
-
-      # TODO: Focused window? Or some way of determining which window so use top_most_component_at with
-      windows.first.children(true).reverse.find do |child|
-        (child.absolute_x..child.absolute_x + child.width).include?(options[:x]) &&
-          (child.absolute_y..child.absolute_y + child.width).include?(options[:y])
-      end
-    end
-
     protected
     
     def setup_adapter
@@ -210,6 +203,14 @@ module Cura
       end
       
       @adapter.setup
+    end
+    
+    def setup_dispatcher
+      @event_dispatcher = Event::Dispatcher.new(application: self)
+      
+      # @event_dispatcher.add_middleware(Event::Middleware::MouseFocus.new)
+      @event_dispatcher.middleware << Event::Middleware::Aimer::TargetOption.new
+      @event_dispatcher.middleware << Event::Middleware::Aimer::DispatcherTarget.new
     end
     
     def run_event_loop

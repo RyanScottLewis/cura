@@ -45,7 +45,7 @@ module Cura
       # @param [Cura::Attributes::HasEvents] value
       # @return [Cura::Attributes::HasEvents]
       def target=(value)
-        raise TypeError, "target must be a Cura::Attributes::HasEvents" unless value.is_a?(Cura::Attributes::HasEvents)
+        raise TypeError, "target must be a Cura::Attributes::HasEvents" unless value.is_a?(Cura::Attributes::HasEvents) # TODO: Error::Event::InvalidTarget
         
         @target = value
       end
@@ -69,6 +69,15 @@ module Cura
         other = other.to_h if other.respond_to?(:to_h)
         
         other == to_h
+      end
+      
+      # Dispatches this event directly to it's target.
+      #
+      # @return [Event::Base] This event.
+      def dispatch
+        target.event_handler.handle(self)
+        
+        self
       end
       
     end
