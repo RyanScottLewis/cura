@@ -5,8 +5,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_coordinates"
   require "cura/attributes/has_dimensions"
   require "cura/attributes/has_events"
-  
-  require "cura/component/group"
+  require "cura/attributes/has_root"
 end
 
 module Cura
@@ -15,14 +14,14 @@ module Cura
   class Window
     
     include Attributes::HasInitialize
-    include Attributes::HasAttributes
     include Attributes::HasApplication
     include Attributes::HasCoordinates
     include Attributes::HasDimensions
     include Attributes::HasEvents
+    include Attributes::HasRoot
     
     on_event(:focus) do |event|
-      update_focused_index(event)
+      update_focused_index(event.target)
     end
     
     on_event(:key_down) do |event|
@@ -30,7 +29,6 @@ module Cura
     end
     
     def initialize(attributes={})
-      @root = Component::Group.new(parent: self)
       @focused_index = 0
       
       super
@@ -60,14 +58,14 @@ module Cura
     #
     # @return [Window]
     def show
-      self
+      self # TODO
     end
     
     # Hide this window.
     #
     # @return [Window]
     def hide
-      self
+      self # TODO
     end
     
     # Return this window's parent.
@@ -84,80 +82,6 @@ module Cura
       "#<#{self.class}:0x#{__id__.to_s(16)} application=#{@application.class}:0x#{@application.__id__.to_s(16)}>"
     end
     
-    # Get root component for this window.
-    #
-    # @return [Component::Group]
-    attr_reader :root
-    
-    # Set root component for this window.
-    #
-    # @param [Component::Group] component
-    # @return [Component::Group]
-    def root=(component)
-      raise TypeError, "root must be a Component::Group" unless component.is_a?(Component::Group)
-      
-      @root.parent = nil unless @root.nil?
-      @root = component
-      @root.parent = self
-      
-      @root
-    end
-    
-    # Root Delegates -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    
-    # Get the children of this object.
-    #
-    # @return [<Component>]
-    def children(recursive=false)
-      @root.children(recursive)
-    end
-    
-    # Add a child to this window's root component.
-    #
-    # @param [Component] component
-    # @return [Component]
-    def add_child(component)
-      @root.add_child(component)
-    end
-    
-    # Add multiple children to this window's root component.
-    #
-    # @param [<Component>] children
-    # @return [<Component>]
-    def add_children(*children)
-      @root.add_children(*children)
-    end
-    
-    # Remove a child from window's root component at the given index.
-    #
-    # @param [Integer] index
-    # @return [Component]
-    def delete_child_at(index)
-      @root.delete_child_at(index)
-    end
-    
-    # Remove a child from this window's root component.
-    #
-    # @param [Component] component
-    # @return [Component]
-    def delete_child(component)
-      @root.delete_child(component)
-    end
-    
-    # Remove all children from window's root component.
-    #
-    # @return [HasChildren]
-    def delete_children
-      @root.delete_children
-    end
-  
-    # Determine if this window's root component has children.
-    #
-    # @return [Boolean]
-    def children?
-      @root.children?
-    end
-    
     # TODO: Focus controller -==-=--=-=-=-==--=-=-==--=-==--=-==-=--=-==--=-==--=-=-=-=-=-==--=
     
     # Get the index of the currently focused component.
@@ -172,7 +96,7 @@ module Cura
     # @return [Integer]
     def focused_index=(value)
       @focused_index = value.to_i
-      focusable_children = focusable_children_of(self)
+      focusable_children = focusable_children_of(@root)
       @focused_index %= focusable_children.length
       
       application.focus(focusable_children[@focused_index])
@@ -180,10 +104,10 @@ module Cura
     
     protected
     
-    def update_focused_index(event)
-      focusable_children = focusable_children_of(self)
+    def update_focused_index(component)
+      focusable_children = focusable_children_of(@root)
       
-      @focused_index = focusable_children.index(event.target)
+      @focused_index = focusable_children.index(component)
     end
     
     # Recursively find all children which are focusable.
