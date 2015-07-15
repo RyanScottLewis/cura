@@ -16,11 +16,14 @@ Style/SignalException:
   
 Style/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
+  
+Style/AccessorMethodName:
+  Enabled: false
 
 # -=-=-=-=-=- TODO -=-=-=-=-=- #
 
 Metrics/CyclomaticComplexity:
-Enabled: false
+  Enabled: false
 
 # Offense count: 18
 Metrics/AbcSize:

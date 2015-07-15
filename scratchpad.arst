@@ -1,0 +1,43 @@
+module Cura
+  class Application
+    #focused_window
+  module Event
+    module Middleware
+      class Base
+      class MouseFocus < Base
+      module Translator
+        class Base < Middleware::Base
+        class MouseClick < Base
+        class KeyPress < Base
+      module Aimer
+        class Base < Middleware::Base
+        class TargetOption < Base
+        class DispatcherTarget < Base
+
+    module Window
+      class Base
+      class Resize < Base
+      class Minimize < Base
+      class Maximize < Base
+    module Action
+      class Base
+      class Click < Base
+      class Selected < Base
+    module Input
+      class Base
+      module Key
+        class Base < Input::Base
+        class Down < Base
+        class Up < Base
+        class Press < Base
+      module Mouse
+        class Base < Input::Base
+        module Button
+          class Base < Mouse::Base
+          class Down < Base
+          class Up < Base
+          class Click < Base
+        module Wheel
+          class Base < Mouse::Base
+          class Down < Base # Scroll
+          class Up < Base # Scroll
