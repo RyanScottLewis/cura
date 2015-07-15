@@ -7,5 +7,13 @@ $LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "lib").expand_path.to
 
 require "todo_list"
 require "cura/termbox_ffi/adapter"
+# require "ruby-prof"
+#
+# RubyProf.start
 
 TodoList.run
+
+# result = RubyProf.stop
+# printer = RubyProf::GraphHtmlPrinter.new(result)
+#
+# Pathname.new(__FILE__).join("..", "..", "profile.html").expand_path.open("w+") { |file| printer.print(file) }

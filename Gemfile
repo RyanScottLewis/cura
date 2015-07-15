@@ -7,6 +7,7 @@ group :development do
   gem "reek", "~> 3.0.4"
   gem "rspec", "~> 3.3.0"
   gem "rubocop", "~> 0.32.1"
+  gem "ruby-prof", "~> 0.15.8"
   gem "simplecov-json", "~> 0.2"
   gem "simplecov", "~> 0.10.0"
   gem "yard", "~> 0.8.7.6"
