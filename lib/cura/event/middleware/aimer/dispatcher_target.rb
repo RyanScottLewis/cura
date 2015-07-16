@@ -7,7 +7,7 @@ module Cura
     module Middleware
       module Aimer
         
-        # Aims the event at the dispatcher's target, if it isn't already set.
+        # Sets the event's target to the dispatcher's target, if it isn't already set.
         class DispatcherTarget < Base
           
           protected

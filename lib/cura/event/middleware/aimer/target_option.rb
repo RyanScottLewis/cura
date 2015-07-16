@@ -7,7 +7,7 @@ module Cura
     module Middleware
       module Aimer
         
-        # Aims the event at the component passed by an optional :target option.
+        # Sets the event's target to the component passed by an optional :target option.
         class TargetOption < Base
           
           # Call this middleware.
