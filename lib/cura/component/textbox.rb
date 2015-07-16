@@ -64,7 +64,7 @@ module Cura
       # Set the mask character for this textbox.
       # Set to anything for a "password" textbox. Only the first character of whatever is given is used.
       #
-      # @param [String] value
+      # @param [#to_s] value
       # @return [String]
       def mask_character=(value)
         value = value.to_s.strip[0]
