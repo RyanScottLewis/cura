@@ -17,7 +17,7 @@ module TodoList
         create_form_pack = Cura::Component::Pack.new(orientation: :horizontal)
         add_child(create_form_pack)
         
-        @create_list_item_textbox = Cura::Component::Textbox.new(width: width - 21, padding: { left: 1, right: 1 }, margin: { right: 1 })
+        @create_list_item_textbox = Cura::Component::Textbox.new(width: width - 21, margin: { right: 1 })
         @create_list_item_textbox.on_event(:key_down, self) { |event, model_list| model_list.create_list_item if event.name == :enter }
         create_form_pack.add_child(@create_list_item_textbox)
         

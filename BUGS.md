@@ -1,4 +1,4 @@
-* typing in textboxes is offset by 1
+* Mouse cursor doesn't listen to padding within Textbox
 * Mouse scrolling with termbox-ffi sometimes gets converted into text and then KeyDown  events:
   Happened when scrolling up, perhaps solvable with a middleware in the terbox-ffi project?
   
