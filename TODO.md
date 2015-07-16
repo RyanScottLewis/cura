@@ -37,6 +37,7 @@
 * * When an event is handled by a component, it should update it and it's parents after all events have executed
 * Textbox moving cursor around
 * Hide/show components
-
-# Current Issues
-* typing in textboxes is offset by 1
+* Submenu opening slope
+* * When the mouse is moved within the triangle area with points at the mouse, the top-left submenu corner and the bottom-left submenu corner, then it should keep the submenu open.
+    http://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown
+    https://github.com/kamens/jQuery-menu-aim/blob/master/jquery.menu-aim.js#L198-L307

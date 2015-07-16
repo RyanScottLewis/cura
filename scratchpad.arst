@@ -4,14 +4,15 @@ module Cura
   module Event
     module Middleware
       class Base
-      class MouseFocus < Base
       module Translator
         class Base < Middleware::Base
         class MouseClick < Base
         class KeyPress < Base
       module Aimer
         class Base < Middleware::Base
+        class MouseFocus < Base
         class TargetOption < Base
+        class CurrentWindowFocused < Base
         class DispatcherTarget < Base
 
     module Window
