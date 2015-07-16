@@ -89,14 +89,14 @@ module Cura
       def focus
         return nil unless @focusable
         
-        application.focus(self)
+        application.event_dispatcher.target = self
       end
       
       # Check whether this component is focused.
       #
       # @return [Boolean]
       def focused?
-        application.focused == self # TODO: application.focused?(self)
+        application.event_dispatcher.target == self
       end
       
       # Translate absolute coordinates to relative coordinates.

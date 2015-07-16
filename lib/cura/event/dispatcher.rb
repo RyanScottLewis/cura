@@ -52,6 +52,7 @@ module Cura
       # Get the object with an event handler to dispatch events to.
       #
       # @return [Cura::Attributes::HasEvents]
+      attr_reader :target
       
       # @method target=(value)
       # Set the object with an event handler to dispatch events to.
@@ -59,11 +60,14 @@ module Cura
       #
       # @param [nil, Cura::Attributes::HasEvents] value
       # @return [Cura::Attributes::HasEvents]
-      
-      attribute(:target) do |value|
+      def target=(value)
         raise TypeError, "target must be a Cura::Attributes::HasEvents or nil" unless value.nil? || value.is_a?(Attributes::HasEvents)
         
-        value.nil? ? @application : value
+        dispatch_event(:unfocus)
+        @target = value.nil? ? @application : value
+        dispatch_event(:focus)
+        
+        value
       end
       
       # The middleware stack which an event will pass through before being dispatched.
@@ -99,8 +103,7 @@ module Cura
       # Dispatch an event to the target or application, if the target is nil.
       #
       # @param [#to_sym] event The name of the event class to create an instance of or an event instance.
-      # @param [#to_hash, #to_h] options
-      # @option options [#to_i] :target The optional target of the event, overrides this dispatcher's #target value.
+      # @param [#to_hash, #to_h] options The options to pass through the middleware.
       # @return [Event::Base] The dispatched event.
       def dispatch_event(event, options={})
         event = Event.new_from_name(event) if event.respond_to?(:to_sym)
