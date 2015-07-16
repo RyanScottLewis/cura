@@ -43,6 +43,20 @@ module Cura
       
       attribute(:height) { |value| validate_size_attribute(value) }
       
+      # Set one or both of the dimensions of this object.
+      # @param [#to_h] options
+      # @option options [#to_i] :width
+      # @option options [#to_i] :height
+      # @return [Object] This object
+      def resize(options)
+        options = options.to_h
+        
+        self.width = options[:width] if options.key?(:width)
+        self.height = options[:height] if options.key?(:height)
+        
+        self
+      end
+      
     end
     
   end
