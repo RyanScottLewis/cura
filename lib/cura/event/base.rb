@@ -32,6 +32,17 @@ module Cura
       include Attributes::HasInitialize
       include Attributes::HasAttributes
       
+      def initialize(attributes={})
+        @created_at = Time.now
+        
+        super
+      end
+      
+      # Get the time this event was created.
+      #
+      # @return [Time]
+      attr_reader :created_at
+      
       # Get the target this event was dispatched to.
       # TODO: Rename to source.
       #       The source is the component the event was originally sent to.
