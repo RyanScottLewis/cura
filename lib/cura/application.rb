@@ -19,9 +19,11 @@ if Kernel.respond_to?(:require)
   require "cura/event/resize"
   require "cura/event/selected"
   
+  require "cura/event/middleware/dispatch"
   require "cura/event/middleware/aimer/mouse_focus"
   require "cura/event/middleware/aimer/target_option"
   require "cura/event/middleware/aimer/dispatcher_target"
+  require "cura/event/middleware/translator/mouse_click"
   
   require "cura/error/invalid_adapter"
     
@@ -211,6 +213,8 @@ module Cura
       @event_dispatcher.middleware << Event::Middleware::Aimer::MouseFocus.new
       @event_dispatcher.middleware << Event::Middleware::Aimer::TargetOption.new
       @event_dispatcher.middleware << Event::Middleware::Aimer::DispatcherTarget.new
+      @event_dispatcher.middleware << Event::Middleware::Dispatch.new
+      @event_dispatcher.middleware << Event::Middleware::Translator::MouseClick.new
     end
     
     def run_event_loop

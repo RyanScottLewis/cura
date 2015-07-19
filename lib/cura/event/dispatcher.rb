@@ -106,14 +106,14 @@ module Cura
       # @param [#to_hash, #to_h] options The options to pass through the middleware.
       # @return [Event::Base] The dispatched event.
       def dispatch_event(event, options={})
-        event = Event.new_from_name(event) if event.respond_to?(:to_sym)
+        event = Event.new_from_name(event, options) if event.respond_to?(:to_sym)
         raise TypeError, "event must be an Event::Base" unless event.is_a?(Event::Base)
         
-        options = { dispatcher: self, event: event }.merge(options.to_h)
+        options = { dispatcher: self, event: event, dispatch_queue: [] }.merge(options.to_h)
         
         @middleware.each { |middleware| middleware.call(options) }
         
-        event.dispatch
+        options[:dispatch_queue].each(&:dispatch)
       end
       
     end
