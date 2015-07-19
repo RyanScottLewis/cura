@@ -169,14 +169,6 @@ module Cura
         # end
       end
       
-      def switch_colors
-        f = foreground
-        b = background
-        
-        self.foreground = b
-        self.background = f
-      end
-      
       def get_or_inherit_color(name, default)
         value = instance_variable_get("@#{name}")
         

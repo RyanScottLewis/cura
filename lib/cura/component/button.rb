@@ -9,11 +9,11 @@ module Cura
     class Button < Label
       
       on_event(:focus) do |event|
-        switch_colors if event.target == self
+        @inverted = true if event.target == self
       end
       
       on_event(:unfocus) do |event|
-        switch_colors if event.target == self
+        @inverted = false if event.target == self
       end
       
       on_event(:key_down) do |event|
@@ -28,8 +28,17 @@ module Cura
         @focusable = true
         @foreground = Cura::Color.black
         @background = Cura::Color.white
+        @inverted = false
         
         super
+      end
+      
+      def background
+        @inverted ? get_or_inherit_color(:foreground, Color.white) : get_or_inherit_color(:background, Color.black)
+      end
+      
+      def foreground
+        @inverted ? get_or_inherit_color(:background, Color.black) : get_or_inherit_color(:foreground, Color.white)
       end
       
       # Click this button.
