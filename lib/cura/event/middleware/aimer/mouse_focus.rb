@@ -1,6 +1,5 @@
 if Kernel.respond_to?(:require)
-  require "cura/event/mouse_down"
-  require "cura/event/mouse_up"
+  require "cura/event/mouse_button"
   
   require "cura/event/middleware/aimer/base"
 end
@@ -16,7 +15,7 @@ module Cura
           protected
           
           def should_aim?(options={})
-            options[:event].is_a?(Event::MouseDown)
+            options[:event].is_a?(Event::MouseButton) && options[:event].down?
           end
           
           def set_target(options={})

@@ -20,8 +20,8 @@ module Cura
         click if event.target == self && event.name == :enter
       end
       
-      on_event(:mouse_down) do |event|
-        click if event.target == self
+      on_event(:mouse_button) do |event|
+        click if event.target == self && event.up? && contains_coordinates?(x: event.x, y: event.y)
       end
       
       def initialize(attributes={})
