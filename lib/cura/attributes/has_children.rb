@@ -32,7 +32,7 @@ module Cura
       # @return [<Component>]
       def children(recursive=false)
         if recursive
-          @children.collect { |child| child.respond_to?(:children) ? [child] + child.children(true) : child }.flatten
+          @children.collect { |child| child.respond_to?(:children) ? [child] + child.children(true) : child }.flatten # TODO: Shouldn't flatten?
         else
           @children
         end

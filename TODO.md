@@ -41,3 +41,11 @@
 * * When the mouse is moved within the triangle area with points at the mouse, the top-left submenu corner and the bottom-left submenu corner, then it should keep the submenu open.
     http://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown
     https://github.com/kamens/jQuery-menu-aim/blob/master/jquery.menu-aim.js#L198-L307
+* Listbox on mouse down should select the child that was clicked.
+  on_event(:mouse_down) do |event|
+    if event.target == self
+      clicked_child = children.find { |child| child.contains_coordinates?(x: event.x, y: event.y) }
+      
+      self.selected_index = children.index(clicked_child) unless clicked_child.nil?
+    end
+  end

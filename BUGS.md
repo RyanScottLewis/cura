@@ -10,3 +10,4 @@
   #<Cura::Event::KeyDown:0x007fad52b17900 @control=false, @name=:left_bracket>
   #<Cura::Event::KeyDown:0x007fad529becc0 @control=false, @name=:M>
   #<Cura::Event::KeyDown:0x007fad5138f378 @control=false, @name=:a>
+* todo_list edit list items no longer works
