@@ -7,7 +7,7 @@ module Cura
     module Middleware
       module Aimer
         
-        # The base class for event middleware which set's the event's target, if needed.
+        # The base class for event middleware which set's a target, if needed.
         class Base
           
           # Call this middleware.

@@ -20,6 +20,7 @@ if Kernel.respond_to?(:require)
   require "cura/event/resize"
   require "cura/event/selected"
   
+  require "cura/event/middleware/aimer/mouse_focus"
   require "cura/event/middleware/aimer/target_option"
   require "cura/event/middleware/aimer/dispatcher_target"
   
@@ -208,7 +209,7 @@ module Cura
     def setup_dispatcher
       @event_dispatcher = Event::Dispatcher.new(application: self)
       
-      # @event_dispatcher.add_middleware(Event::Middleware::MouseFocus.new)
+      @event_dispatcher.middleware << Event::Middleware::Aimer::MouseFocus.new
       @event_dispatcher.middleware << Event::Middleware::Aimer::TargetOption.new
       @event_dispatcher.middleware << Event::Middleware::Aimer::DispatcherTarget.new
     end
