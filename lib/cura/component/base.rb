@@ -114,6 +114,16 @@ module Cura
         }
       end
       
+      # Determine if the given absolute coordinates are within the bounds of this component.
+      #
+      # @param [#to_h] options
+      # @option options [#to_i] :x
+      # @option options [#to_i] :y
+      # @return [Boolean]
+      def contains_coordinates?(options={})
+        (absolute_x..absolute_x + width).include?(options[:x].to_i) && (absolute_y..absolute_y + width).include?(options[:y].to_i)
+      end
+      
       # Get the foreground color of this object.
       #
       # @return [Color]
