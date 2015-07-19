@@ -28,7 +28,7 @@ module Cura
             if event.down?
               @last_mouse_down_at = event.created_at
               @last_target = event.target
-            elsif event.up? && event.created_at > @last_mouse_down_at && event.target = @last_target
+            elsif event.up? && event.created_at > @last_mouse_down_at && @last_target.contains_coordinates?(x: event.x, y: event.y)
               @last_mouse_down_at = nil
               @last_target = nil
               
