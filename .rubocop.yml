@@ -20,6 +20,9 @@ Style/SpaceAroundEqualsInParameterDefault:
 Style/AccessorMethodName:
   Enabled: false
 
+Lint/ShadowingOuterLocalVariable:
+  Enabled: false
+
 # -=-=-=-=-=- TODO -=-=-=-=-=- #
 
 Metrics/CyclomaticComplexity:
