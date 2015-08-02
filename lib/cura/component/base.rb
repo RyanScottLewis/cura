@@ -121,6 +121,8 @@ module Cura
       # @option options [#to_i] :y
       # @return [Boolean]
       def contains_coordinates?(options={})
+        options = options.to_h
+        
         (absolute_x..absolute_x + width).include?(options[:x].to_i) && (absolute_y..absolute_y + width).include?(options[:y].to_i)
       end
       
