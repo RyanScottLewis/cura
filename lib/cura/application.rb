@@ -106,11 +106,21 @@ module Cura
       @adapter.cleanup
     end
     
-    # Stop the application.
+    # Stop the application after the current run cycle.
     #
     # @return [Application] This application.
     def stop
       @running = false
+      
+      self
+    end
+    
+    # Stop the application immediently.
+    #
+    # @return [Application] This application.
+    def stop!
+      stop
+      @adapter.cleanup
       
       self
     end
