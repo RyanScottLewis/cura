@@ -43,11 +43,25 @@ module Cura
     end
     
     def initialize(attributes={})
+      @alpha = 255
       @red = 0
       @green = 0
       @blue = 0
       
       super
+    end
+    
+    # Get the alpha channel of this color.
+    #
+    # @return [Integer]
+    attr_reader :alpha
+    
+    # Set the alpha channel of this color.
+    #
+    # @param [#to_i] value
+    # @return [Integer]
+    def alpha=(value)
+      @alpha = convert_and_constrain_value(value)
     end
     
     # The amount of red in this color.
