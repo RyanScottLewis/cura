@@ -61,22 +61,19 @@ module Cura
       setup_dispatcher
     end
     
+    # @method adapter
     # Get the adapter used for running this application.
     #
     # @return [Adapter]
-    attr_reader :adapter
     
+    # @method adapter=(adapter)
     # Set the adapter used for running this application.
     # This cannot be set after #run is used.
     #
     # @param [Adapter] value The new adapter.
     # @return [Adapter]
-    def adapter=(value)
-      # TODO: Raise error if ever set more than once
-      raise TypeError, "adapter must be a Cura::Adapter" unless value.is_a?(Cura::Adapter)
-      
-      @adapter = value
-    end
+    
+    attribute(:adapter) { |adapter| validate_adapter(adapter) }
     
     # Get the text cursor.
     #
@@ -97,8 +94,6 @@ module Cura
     #
     # @return [Application] This application.
     def run
-      @running = true
-      
       run_event_loop
       
       self
@@ -227,7 +222,16 @@ module Cura
       @event_dispatcher.middleware << Event::Middleware::Translator::MouseClick.new
     end
     
+    def validate_adapter(adapter)
+      # TODO: Raise error if ever set more than once
+      raise Error::InvalidAdapter unless adapter.is_a?(Cura::Adapter)
+      
+      adapter
+    end
+    
     def run_event_loop
+      @running = true
+      
       while @running
         update
         draw
