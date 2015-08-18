@@ -4,10 +4,14 @@ A library written in pure Ruby for building user interfaces.
 
 Cura provides:
 
-* Widget system
-* Widget hierarchy
-* Box model layouts
+* Component system
+* * Tree hierarchy
+* * Box model layouts
 * Event system
+* * Dispatching
+* * Middleware (aiming & translating)
+* * Handling
+* * Delegation
 * Adapter system
 
 ## Install
