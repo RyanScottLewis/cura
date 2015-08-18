@@ -44,63 +44,59 @@ module Cura
     
     def initialize(attributes={})
       @alpha = 255
-      @red = 0
+      @red   = 0
       @green = 0
-      @blue = 0
+      @blue  = 0
       
       super
     end
     
+    # @method alpha
     # Get the alpha channel of this color.
     #
     # @return [Integer]
-    attr_reader :alpha
     
+    # @method alpha=(value)
     # Set the alpha channel of this color.
     #
     # @param [#to_i] value
     # @return [Integer]
-    def alpha=(value)
-      @alpha = convert_and_constrain_value(value)
-    end
     
-    # The amount of red in this color.
+    # @method red
+    # Get the red channel of this color.
     #
     # @return [Integer]
-    attr_reader :red
     
-    # Set the amount of red in this color.
+    # @method red=(value)
+    # Set the red channel of this color.
     #
     # @param [#to_i] value
     # @return [Integer]
-    def red=(value)
-      @red = convert_and_constrain_value(value)
-    end
     
-    # The amount of green in this color.
+    # @method green
+    # Get the green channel of this color.
     #
     # @return [Integer]
-    attr_reader :green
     
-    # Set the amount of green in this color.
+    # @method green=(value)
+    # Set the green channel of this color.
     #
     # @param [#to_i] value
     # @return [Integer]
-    def green=(value)
-      @green = convert_and_constrain_value(value)
-    end
     
-    # The amount of blue in this color.
+    # @method blue=(value)
+    # Get the blue channel of this color.
     #
     # @return [Integer]
-    attr_reader :blue
     
-    # Set the amount of blue in this color.
+    # @method blue=(value)
+    # Set the blue channel of this color.
     #
     # @param [#to_i] value
     # @return [Integer]
-    def blue=(value)
-      @blue = convert_and_constrain_value(value)
+    
+    [:alpha, :red, :green, :blue].each do |channel|
+      attribute(channel) { |value| convert_and_constrain_value(value) }
     end
     
     # Determing if this color is equivalent to another object.
@@ -108,16 +104,16 @@ module Cura
     # @param [Object] other
     # @return [Boolean]
     def ==(other)
-      if other.is_a?(Color)
-        red == other.red && green == other.green && blue && other.blue
-      else
-        super
-      end
+      other.is_a?(Color) ? matches_color?(other) : super
     end
     
     protected
     
-    # Convert the input to an Integer and constrain in or between 0 and 255
+    def matches_color?(other)
+      @alpha == other.alpha && @red == other.red && @green == other.green && @blue && other.blue
+    end
+    
+    # Convert the input to an Integer and constrain in or between 0 and 255.
     def convert_and_constrain_value(value)
       value = value.to_i
       
