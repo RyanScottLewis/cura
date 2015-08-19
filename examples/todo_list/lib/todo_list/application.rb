@@ -1,3 +1,5 @@
+require "pry"
+
 require "cura"
 
 require "todo_list/component/header"
@@ -22,8 +24,12 @@ module TodoList
       add_window(window)
       
       window.on_event(:key_down) do |event|
-        self.focused_index += 1 if event.control? && event.name == :F
-        self.focused_index -= 1 if event.control? && event.name == :B
+        @focus_controller.index += 1 if event.control? && event.name == :F
+        @focus_controller.index -= 1 if event.control? && event.name == :B
+        if event.control? && event.name == :P
+          application.stop!
+          pry
+        end
       end
       
       #-

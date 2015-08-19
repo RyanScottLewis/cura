@@ -31,7 +31,7 @@ module TodoList
       def create_lists_table
         @connection.create_table(:lists) do
           primary_key :id
-          String :name
+          String :text
         end unless @connection.table_exists?(:lists)
       end
       

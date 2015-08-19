@@ -48,7 +48,6 @@ module TodoList
             end
             
             if event.control? && event.name == :E
-              selected_child.focusable = true
               selected_child.focus
             end
             
@@ -64,9 +63,7 @@ module TodoList
       end
       
       def create_list
-        name = @create_list_textbox.text
-        
-        Model::List.create(name: name)
+        Model::List.create(text: @create_list_textbox.text)
         
         fill_listbox
         
@@ -80,7 +77,7 @@ module TodoList
         @listbox.delete_children
         
         Model::List.all.each do |list|
-          list_component = Component::List.new(listbox: @listbox, model: list, text_method: :name, width: @listbox.width)
+          list_component = Component::List.new(listbox: @listbox, model: list, width: @listbox.width)
           
           @listbox.add_child(list_component, list)
         end

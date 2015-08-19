@@ -73,7 +73,7 @@ module TodoList
         return nil if @list.nil?
         
         @list.list_items.each do |list_item|
-          list_item_component = Component::ListItem.new(listbox: @listbox, model: list_item, text_method: :text, width: @listbox.width)
+          list_item_component = Component::ListItem.new(listbox: @listbox, model: list_item, width: @listbox.width)
           
           @listbox.add_child(list_item_component, list_item)
         end unless @list.nil?
@@ -85,7 +85,7 @@ module TodoList
         if @list.nil?
           @listbox_header_label.text = " " * width
         else
-          @listbox_header_label.text = @list.name + " " * (width - @list.name.length) unless @list.name.length >= width
+          @listbox_header_label.text = @list.text + " " * (width - @list.text.length) unless @list.text.length >= width
         end
         
         fill_listbox

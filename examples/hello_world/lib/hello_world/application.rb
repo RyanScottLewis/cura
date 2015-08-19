@@ -30,8 +30,8 @@ module HelloWorld
       window = Cura::Window.new
       add_window(window)
       window.on_event(:key_down) do |event|
-        self.focused_index += 1 if event.control? && event.name == :F
-        self.focused_index -= 1 if event.control? && event.name == :B
+        @focus_controller.index += 1 if event.control? && event.name == :F
+        @focus_controller.index -= 1 if event.control? && event.name == :B
       end
 
       pack = Cura::Component::Pack.new(width: window.width, height: window.height, fill: true)
