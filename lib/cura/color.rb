@@ -25,42 +25,33 @@ module Cura
       end
       
       def white
-        new(red: 255, green: 255, blue: 255)
+        new(255, 255, 255)
       end
       
       def red
-        new(red: 255, green: 0, blue: 0)
+        new(255, 0, 0)
       end
       
       def green
-        new(red: 0, green: 255, blue: 0)
+        new(0, 255, 0)
       end
       
       def blue
-        new(red: 0, green: 0, blue: 255)
+        new(0, 0, 255)
       end
       
     end
     
-    def initialize(attributes={})
-      @alpha = 255
-      @red   = 0
-      @green = 0
-      @blue  = 0
-      
-      super
+    def initialize(r=0, g=0, b=0, a=255)
+      if r.respond_to?(:to_h)
+        super(r.to_h)
+      else
+        @red   = r
+        @green = g
+        @blue  = b
+        @alpha = a
+      end
     end
-    
-    # @method alpha
-    # Get the alpha channel of this color.
-    #
-    # @return [Integer]
-    
-    # @method alpha=(value)
-    # Set the alpha channel of this color.
-    #
-    # @param [#to_i] value
-    # @return [Integer]
     
     # @method red
     # Get the red channel of this color.
@@ -95,7 +86,18 @@ module Cura
     # @param [#to_i] value
     # @return [Integer]
     
-    [:alpha, :red, :green, :blue].each do |channel|
+    # @method alpha
+    # Get the alpha channel of this color.
+    #
+    # @return [Integer]
+    
+    # @method alpha=(value)
+    # Set the alpha channel of this color.
+    #
+    # @param [#to_i] value
+    # @return [Integer]
+    
+    [:red, :green, :blue, :alpha].each do |channel|
       attribute(channel) { |value| convert_and_constrain_value(value) }
     end
     
