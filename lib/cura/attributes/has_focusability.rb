@@ -17,14 +17,14 @@ module Cura
       end
       
       # Get whether this object is focusable or not.
-      # 
+      #
       # @return [Boolean]
       def focusable?
         @focusable
       end
       
       # Set whether this object is focusable or not.
-      # 
+      #
       # @param [Object] value
       # @return [Boolean]
       def focusable=(value)

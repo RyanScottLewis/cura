@@ -18,24 +18,18 @@ module Cura
         super
       end
       
+      # @method root
       # Get root component for this object.
       #
       # @return [Component::Group]
-      attr_reader :root
       
+      # @method root=(component)
       # Set root component for this object.
       #
       # @param [Component::Group] component
       # @return [Component::Group]
-      def root=(component)
-        raise TypeError, "root must be a Component::Group" unless component.is_a?(Component::Group)
-        
-        @root.parent = nil unless @root.nil?
-        @root = component
-        @root.parent = self
-        
-        @root
-      end
+      
+      attribute(:root) { |component| set_root(component) }
       
       # Delegates -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
       
@@ -90,6 +84,18 @@ module Cura
       # @return [Boolean]
       def children?
         @root.children?
+      end
+      
+      protected
+      
+      def set_root(component)
+        raise TypeError, "root must be a Component::Group" unless component.is_a?(Component::Group)
+        
+        @root.parent = nil unless @root.nil?
+        @root = component
+        @root.parent = self
+        
+        @root
       end
       
     end
