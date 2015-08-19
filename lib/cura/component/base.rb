@@ -85,10 +85,8 @@ module Cura
       
       # Focus on this component.
       #
-      # @return [nil, Component] This component or nil if it isn't focusable.
+      # @return [Component]
       def focus
-        return nil unless @focusable
-        
         application.event_dispatcher.target = self
       end
       
