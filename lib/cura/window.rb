@@ -6,6 +6,8 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_dimensions"
   require "cura/attributes/has_events"
   require "cura/attributes/has_root"
+  
+  require "cura/focus_controller"
 end
 
 module Cura
@@ -20,18 +22,14 @@ module Cura
     include Attributes::HasEvents
     include Attributes::HasRoot
     
-    on_event(:focus) do |event|
-      update_focused_index(event.target)
-    end
-    
     on_event(:key_down) do |event|
-      self.focused_index += 1 if event.name == :tab
+      @focus_controller.index += 1 if event.name == :tab
     end
     
     def initialize(attributes={})
-      @focused_index = 0
-      
       super
+      
+      @focus_controller = FocusController.new(window: self)
     end
     
     # Update this window's components.
@@ -80,46 +78,6 @@ module Cura
     # @return [String]
     def inspect
       "#<#{self.class}:0x#{__id__.to_s(16)} application=#{@application.class}:0x#{@application.__id__.to_s(16)}>"
-    end
-    
-    # TODO: Focus controller -==-=--=-=-=-==--=-=-==--=-==--=-==-=--=-==--=-==--=-=-=-=-=-==--=
-    
-    # Get the index of the currently focused component.
-    #
-    # @return [Integer]
-    attr_reader :focused_index
-    
-    # Set the index of the currently focused component.
-    # This will send dispatch a Event::Focus instance to the object.
-    #
-    # @param [#to_i] value
-    # @return [Integer]
-    def focused_index=(value)
-      @focused_index = value.to_i
-      focusable_children = focusable_children_of(@root)
-      @focused_index %= focusable_children.length
-      
-      application.event_dispatcher.target = focusable_children[@focused_index]
-    end
-    
-    protected
-    
-    def update_focused_index(component)
-      focusable_children = focusable_children_of(@root)
-      
-      @focused_index = focusable_children.index(component)
-    end
-    
-    # Recursively find all children which are focusable.
-    def focusable_children_of(component)
-      result = []
-      
-      component.children.each do |child|
-        result << child if child.focusable?
-        result << focusable_children_of(child) if child.respond_to?(:children)
-      end
-      
-      result.flatten
     end
     
   end
