@@ -151,21 +151,25 @@ module Cura
       
       # Draw the background of this component.
       def draw_background
-        options = translate(x: @offsets.left, y: @offsets.top).merge(width: width + @padding.width, height: height + @padding.height, foreground: foreground, background: background)
+        x      = absolute_x + @offsets.left
+        y      = absolute_y + @offsets.top
+        width  = self.width + @padding.width
+        height = self.height + @padding.height
+        color  = background
         
-        pencil.draw_rectangle(options)
+        pencil.draw_rectangle(x, y, width, height, color)
       end
       
       # Draw the border of this component.
       def draw_border # TODO
         # if border.top > 0 # TODO: :none
-        #   options = translate( x: margin.left, y: margin.top ).merge( width: width + margin.width, height: border.top, foreground: border.foreground, background: Color.red )
+        #   options = translate(margin.left, margin.top).merge( width: width + margin.width, height: border.top, foreground: border.foreground, background: Color.red )
         #
         #   pencil.draw_rectangle( options )
         # end
         #
         # if border.bottom > 0 # TODO: :none
-        #   options = translate( x: margin.left, y: offsets.top + padding.bottom ).merge( width: width + margin.width, height: border.bottom, foreground: border.foreground, background: Color.red )
+        #   options = translate(margin.left, offsets.top + padding.bottom).merge( width: width + margin.width, height: border.bottom, foreground: border.foreground, background: Color.red )
         #
         #   pencil.draw_rectangle( options )
         # end
