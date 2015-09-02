@@ -52,7 +52,7 @@ module Cura
       # Get the object with an event handler to dispatch events to.
       #
       # @return [Cura::Attributes::HasEvents]
-      attr_reader :target
+      attr_reader :target # TODO: use .attribute() { |value| ... }
       
       # @method target=(value)
       # Set the object with an event handler to dispatch events to.

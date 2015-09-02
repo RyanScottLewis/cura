@@ -65,11 +65,12 @@ module Cura
       index
     end
     
-    def update_focused_index(component)
-      focusable_children = focusable_children_of(@window.root)
-      
-      @index = focusable_children.index(component)
-    end
+    # TODO: When on a focusable component, set the index. When not on a focusable component, find nearest focusable component and set the index.
+    # def update_focused_index(component)
+    #   focusable_children = focusable_children_of(@window.root)
+    #
+    #   @index = focusable_children.index(component)
+    # end
     
     # Recursively find all children which are focusable.
     def focusable_children_of(component)

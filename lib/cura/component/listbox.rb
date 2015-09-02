@@ -27,6 +27,14 @@ module Cura
         end
       end
       
+      on_event(:mouse_button) do |event|
+        if event.target == self && event.down?
+          child = @children.find { |child| child.contains_coordinates?(x: event.x, y: event.y) }
+          
+          self.selected_index = @children.index(child) unless child.nil?
+        end
+      end
+      
       on_event(:selected) do |event|
         set_cursor_position if event.target == self && focused?
       end

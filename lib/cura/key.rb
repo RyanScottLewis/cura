@@ -278,8 +278,6 @@ module Cura
       :xor => nil
     }
     
-    private_constant :NAMES
-    
     class << self
       
       # Check if the given name is valid.
