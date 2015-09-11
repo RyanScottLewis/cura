@@ -209,6 +209,8 @@ module Cura
         @adapter = adapter_class.new
       end
       
+      # TODO: If a class is given, run .new on it first
+      
       @adapter.setup
     end
     

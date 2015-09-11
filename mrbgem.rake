@@ -1,6 +1,6 @@
 MRuby::Gem::Specification.new('mruby-cura') do |spec|
   spec.authors = 'Ryan Scott Lewis <ryanscottlewis@lewis-software.com>'
-  spec.summary = 'MRuby binding for Cura.'
+  spec.summary = 'A component toolkit for creating both graphical and text-based user interfaces.'
   spec.license = 'MIT'
   spec.version = '0.0.1'
   

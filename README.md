@@ -1,6 +1,6 @@
 # Cura
 
-A library written in pure Ruby for building user interfaces.
+A component toolkit for creating both graphical and text-based user interfaces.
 
 Cura provides:
 
