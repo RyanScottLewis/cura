@@ -151,13 +151,13 @@ module Cura
       
       # TODO: Should use instance vars
       def draw_text
-        x_offset = x_offset_start = x_offset_from_alignment + @padding.left
-        y_offset = y_offset_from_alignment + @padding.top
+        x_offset = x_offset_start = x_offset_from_alignment
+        y_offset = y_offset_from_alignment
         absolute_x = self.absolute_x
         absolute_y = self.absolute_y
         
         text_to_draw.each_char do |character|
-          if character == "\n"
+          if character == "\n" # TODO: If multiline? Also check if outside the bounds of the drawing area
             x_offset = x_offset_start
             
             y_offset += 1
