@@ -1,5 +1,6 @@
 if Kernel.respond_to?(:require)
   require "cura/component/base"
+  require "cura/attributes/has_attributes"
 end
 
 module Cura
@@ -7,6 +8,8 @@ module Cura
     
     # A component displaying text.
     class Label < Base
+      
+      include Attributes::HasAttributes
       
       # Note that you can pass the following:
       #   alignment: { horizontal: true, vertical: true }
@@ -42,18 +45,17 @@ module Cura
         @height
       end
       
+      # @method text
       # Get the text of this label.
       #
       # @return [String]
-      attr_reader :text
       
+      # @method text=(value)
       # Set the text of this label.
       #
       # @param [#to_s] value
       # @return [String]
-      def text=(value)
-        @text = value.to_s
-      end
+      attribute(:text) { |value| value.to_s }
       
       # Get the lines of this label.
       #
@@ -80,68 +82,54 @@ module Cura
         value == 0 ? 1 : value
       end
       
+      # @method bold?
       # Get whether the text is bold.
       #
       # @return [Boolean]
-      def bold?
-        @bold
-      end
       
+      # @method bold=(value)
       # Set whether the text is bold.
       #
       # @return [Boolean]
-      def bold=(value)
-        @bold = !!value
-      end
+      attribute(:bold, query: true)
       
+      # @method underline?
       # Get whether the text is underlined.
       #
       # @return [Boolean]
-      def underlined?
-        @underline
-      end
       
+      # @method underlined=(value)
       # Set whether the text is underlined.
       #
       # @return [Boolean]
-      def underline=(value)
-        @underline = !!value
-      end
+      attribute(:underline, query: true)
       
+      # @method horizontal_alignment
       # Get the horizontal alignment of this label.
       #
       # @return [Symbol]
-      attr_reader :horizontal_alignment
       
+      # @method horizontal_alignment=(value)
       # Set the horizontal alignment of this label.
       # Must be :left, :center, or :right.
       #
       # @param [#to_sym] value
       # @return [Symbol]
-      def horizontal_alignment=(value)
-        value = value.to_sym
-        raise ArgumentError, "horizontal_alignment must be one of :left, :center, or :right" unless [:left, :center, :right].include?(value)
-        
-        @horizontal_alignment = value
-      end
+      attribute(:horizontal_alignment) { |value| convert_horizontal_alignment_attribute(value) }
       
+      # @method vertical_alignment
       # Get the vertical alignment of this label.
       # Will be :left, :center, or :right.
       #
       # @return [Symbol]
-      attr_reader :vertical_alignment
       
+      # @method vertical_alignment=(value)
       # Set the vertical alignment of this label.
       # Must be :left, :center, or :right.
       #
       # @param [#to_sym] value
       # @return [Symbol]
-      def vertical_alignment=(value)
-        value = value.to_sym
-        raise ArgumentError, "vertical_alignment must be one of :top, :center, or :bottom" unless [:top, :center, :bottom].include?(value)
-        
-        @vertical_alignment = value
-      end
+      attribute(:vertical_alignment) { |value| convert_vertical_alignment_attribute(value) }
       
       def draw
         super
@@ -216,6 +204,20 @@ module Cura
         end
         
         attributes
+      end
+      
+      def convert_horizontal_alignment_attribute(value)
+        value = value.to_sym
+        raise ArgumentError, "must be :left, :center, or :right" unless [:left, :center, :right].include?(value)
+        
+        value
+      end
+      
+      def convert_vertical_alignment_attribute(value)
+        value = value.to_sym
+        raise ArgumentError, "must be :top, :center, or :bottom" unless [:top, :center, :bottom].include?(value)
+        
+        value
       end
       
     end
