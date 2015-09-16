@@ -10,12 +10,24 @@ module Cura
         def attribute(name, options={}, &block)
           options = options.to_h
           
-          attr_reader(name)
+          if options[:query]
+            define_method("#{name}?") { instance_variable_get("@#{name}") }
+          else
+            attr_reader(name)
+          end
           
-          define_method("#{name}=") do |value|
-            value = instance_exec(value, options, &block) if block_given?
-            
-            instance_variable_set("@#{name}", value)
+          if options[:query]
+            define_method("#{name}=") do |value|
+              value = instance_exec(value, options, &block) if block_given?
+              
+              instance_variable_set("@#{name}", !!value)
+            end
+          else
+            define_method("#{name}=") do |value|
+              value = instance_exec(value, options, &block) if block_given?
+              
+              instance_variable_set("@#{name}", value)
+            end
           end
         end
         
