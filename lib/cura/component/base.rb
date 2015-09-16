@@ -41,23 +41,6 @@ module Cura
         application.pencil
       end
       
-      # Update this component.
-      #
-      # @return [Component]
-      def update
-        self
-      end
-      
-      # Draw this component.
-      #
-      # @return [Component]
-      def draw
-        draw_background
-        draw_border
-        
-        self
-      end
-      
       # Get the application of this object.
       #
       # @return [Application]
@@ -79,21 +62,6 @@ module Cura
       # @return [Boolean]
       def focused?
         application.dispatcher.target == self
-      end
-      
-      # Translate absolute coordinates to relative coordinates.
-      #
-      # @param [#to_h] options
-      # @option options [#to_i] :x
-      # @option options [#to_i] :y
-      # @return [Hash] The new coordinates.
-      def translate(options={})
-        options = options.to_h
-        
-        {
-          x: absolute_x + options[:x].to_i,
-          y: absolute_y + options[:y].to_i
-        }
       end
       
       # Determine if the given absolute coordinates are within the bounds of this component.
@@ -129,7 +97,31 @@ module Cura
         "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
       end
       
+      # Update this component.
+      #
+      # @return [Component]
+      def update
+        self
+      end
+      
+      # Draw this component.
+      #
+      # @return [Component]
+      def draw
+        draw_background
+        draw_border
+        
+        self
+      end
+      
       protected
+      
+      def draw_character(x, y, character, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
+        x = absolute_x + @offsets.left + x
+        y = absolute_y + @offsets.top + y
+        
+        pencil.draw_character(x, y, character, foreground, background, bold, underline)
+      end
       
       # Draw the background of this component.
       def draw_background
@@ -144,17 +136,6 @@ module Cura
       
       # Draw the border of this component.
       def draw_border # TODO
-        # if border.top > 0 # TODO: :none
-        #   options = translate(margin.left, margin.top).merge( width: width + margin.width, height: border.top, foreground: border.foreground, background: Color.red )
-        #
-        #   pencil.draw_rectangle( options )
-        # end
-        #
-        # if border.bottom > 0 # TODO: :none
-        #   options = translate(margin.left, offsets.top + padding.bottom).merge( width: width + margin.width, height: border.bottom, foreground: border.foreground, background: Color.red )
-        #
-        #   pencil.draw_rectangle( options )
-        # end
       end
       
       def get_or_inherit_color(name, default)

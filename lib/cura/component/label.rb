@@ -151,8 +151,8 @@ module Cura
       
       # TODO: Should use instance vars
       def draw_text
-        x_offset = x_offset_start = x_offset_from_alignment
-        y_offset = y_offset_from_alignment
+        x_offset = x_offset_start = x_offset_from_alignment# + @offsets.left
+        y_offset = y_offset_from_alignment# + @offsets.top
         absolute_x = self.absolute_x
         absolute_y = self.absolute_y
         
@@ -163,10 +163,7 @@ module Cura
             y_offset += 1
           else
             unless x_offset > width || y_offset > height
-              x = absolute_x + x_offset
-              y = absolute_y + y_offset
-              
-              pencil.draw_character(x, y, character, foreground, background, @bold, @underline)
+              draw_character(x_offset, y_offset, character, foreground, background, @bold, @underline)
             end
             
             x_offset += 1
@@ -176,7 +173,7 @@ module Cura
       
       def x_offset_from_alignment
         case horizontal_alignment
-          when :left   then offsets.left
+          when :left   then 0
           when :center then ((text_width - width).abs / 2).to_i
           when :right  then (text_width - width).abs
         end
@@ -184,7 +181,7 @@ module Cura
       
       def y_offset_from_alignment
         case vertical_alignment
-          when :top    then offsets.top
+          when :top    then 0
           when :center then ((text_height - height).abs / 2).to_i
           when :bottom then (text_height - height).abs
         end
