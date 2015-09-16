@@ -22,10 +22,10 @@ module Cura
       # @method border=(value)
       # Set the borders of this object.
       #
-      # @param [Borders, #to_hash, #to_h] value
+      # @param [Borders, #to_h] value
       # @return [Borders]
       
-      attribute(:border, type: Borders) { |value, options| validate_offset_attribute(value, options) }
+      attribute(:border, type: Borders) { |value, options| validate_offset_attribute(value, options[:type]) }
       
       # @method margin
       # Get the margins of this object.
@@ -35,10 +35,10 @@ module Cura
       # @method margin=(value)
       # Set the margins of this object.
       #
-      # @param [Margins, #to_hash, #to_h] value
+      # @param [Margins, #to_h] value
       # @return [Margins]
       
-      attribute(:margin, type: Margins) { |value, options| validate_offset_attribute(value, options) }
+      attribute(:margin, type: Margins) { |value, options| validate_offset_attribute(value, options[:type]) }
       
       # @method padding
       # Get the padding of this object.
@@ -48,16 +48,16 @@ module Cura
       # @method padding=(value)
       # Set the padding of this object.
       #
-      # @param [Padding, #to_hash, #to_h] value
+      # @param [Padding, #to_h] value
       # @return [Padding]
       
-      attribute(:padding, type: Padding) { |value, options| validate_offset_attribute(value, options) }
+      attribute(:padding, type: Padding) { |value, options| validate_offset_attribute(value, options[:type]) }
       
       def initialize(attributes={})
         @offsets = Offsets.new(component: self)
         
-        self.margin = attributes[:margin]
-        self.border = attributes[:border]
+        self.margin  = attributes[:margin]
+        self.border  = attributes[:border]
         self.padding = attributes[:padding]
         
         super
@@ -70,10 +70,10 @@ module Cura
       
       protected
       
-      def validate_offset_attribute(value, options={})
+      def validate_offset_attribute(value, type)
         value ||= {}
         
-        value.is_a?(options[:type]) ? value : options[:type].new(value)
+        value.is_a?(type) ? value : type.new(value)
       end
       
     end
