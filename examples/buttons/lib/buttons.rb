@@ -25,10 +25,10 @@ class Buttons < Cura::Application
     pack = Cura::Component::Pack.new(orientation: :horizontal)
     window.add_child(pack)
     
-    clear_button = Cura::Component::Label.new(text: "Clear", padding: { left: 1, right: 1 }, background: Cura::Color.white, foreground: Cura::Color.black)
+    clear_button = Cura::Component::Button.new(text: "Clear", padding: { left: 1, right: 1 }, background: Cura::Color.white, foreground: Cura::Color.black)
     pack.add_child(clear_button)
     
-    submit_button = Cura::Component::Label.new(text: "Submit", padding: { left: 1, right: 1 }, margin: { left: 1 }, background: Cura::Color.white, foreground: Cura::Color.black)
+    submit_button = Cura::Component::Button.new(text: "Submit", padding: { left: 1, right: 1 }, margin: { left: 1 }, background: Cura::Color.white, foreground: Cura::Color.black)
     pack.add_child(submit_button)
   end
   

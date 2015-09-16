@@ -65,7 +65,7 @@ class HelloWorld < Cura::Application
   def initialize(attributes={})
     super
     
-    @event_dispatcher.wait_time = 100 # Update every 100 milliseconds instead of waiting forever for events
+    @dispatcher.wait_time = 100 # Update every 100 milliseconds instead of waiting forever for events
 
     window = Cura::Window.new
     add_window(window)

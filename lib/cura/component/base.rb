@@ -87,14 +87,14 @@ module Cura
       #
       # @return [Component]
       def focus
-        application.event_dispatcher.target = self
+        application.dispatcher.target = self
       end
       
       # Check whether this component is focused.
       #
       # @return [Boolean]
       def focused?
-        application.event_dispatcher.target == self
+        application.dispatcher.target == self
       end
       
       # Translate absolute coordinates to relative coordinates.

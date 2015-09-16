@@ -60,7 +60,7 @@ module Cura
       focusable_children = focusable_children_of(@window.root)
       index %= focusable_children.length
       
-      @window.application.event_dispatcher.target = focusable_children[index]
+      @window.application.dispatcher.target = focusable_children[index]
       
       index
     end

@@ -88,7 +88,7 @@ module Cura
     # Get the event dispatcher.
     #
     # @return [Event::Dispatcher]
-    attr_reader :event_dispatcher
+    attr_reader :dispatcher
     
     # Run this application.
     #
@@ -131,7 +131,7 @@ module Cura
     #
     # @return [Component::Base]
     def focused
-      @event_dispatcher.target
+      @dispatcher.target
     end
     
     # Set focus to a component.
@@ -145,7 +145,7 @@ module Cura
       raise TypeError, "component must be nil or be a Cura::Component::Base" unless component.nil? || component.is_a?(Cura::Component::Base)
       
       dispatch_event(:unfocus)
-      @event_dispatcher.target = component
+      @dispatcher.target = component
       dispatch_event(:focus)
       
       component
@@ -158,7 +158,7 @@ module Cura
     # @option options [#to_i] :target The optional target of the event.
     # @return [Event::Base] The dispatched event.
     def dispatch_event(event, options={})
-      @event_dispatcher.dispatch_event(event, options)
+      @dispatcher.dispatch_event(event, options)
     end
     
     # Add a window to this application.
@@ -215,13 +215,13 @@ module Cura
     end
     
     def setup_dispatcher
-      @event_dispatcher = Event::Dispatcher.new(application: self)
+      @dispatcher = Event::Dispatcher.new(application: self)
       
-      @event_dispatcher.middleware << Event::Middleware::Aimer::MouseFocus.new
-      @event_dispatcher.middleware << Event::Middleware::Aimer::TargetOption.new
-      @event_dispatcher.middleware << Event::Middleware::Aimer::DispatcherTarget.new
-      @event_dispatcher.middleware << Event::Middleware::Dispatch.new
-      @event_dispatcher.middleware << Event::Middleware::Translator::MouseClick.new
+      @dispatcher.middleware << Event::Middleware::Aimer::MouseFocus.new
+      @dispatcher.middleware << Event::Middleware::Aimer::TargetOption.new
+      @dispatcher.middleware << Event::Middleware::Aimer::DispatcherTarget.new
+      @dispatcher.middleware << Event::Middleware::Dispatch.new
+      @dispatcher.middleware << Event::Middleware::Translator::MouseClick.new
     end
     
     def validate_adapter(adapter)
@@ -237,7 +237,7 @@ module Cura
       while @running
         update
         draw
-        event_dispatcher.run
+        dispatcher.run
       end
     end
     
