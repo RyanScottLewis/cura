@@ -126,12 +126,12 @@ module Cura
         children.each do |child|
           if horizontal?
             child.x = child_x
-            child_x += child.outer_width + spacing
+            child_x += child.width + child.offsets.width + spacing
             
             child.height = height if fill?
           elsif vertical?
             child.y = child_y if vertical?
-            child_y += child.outer_height + spacing
+            child_y += child.height + child.offsets.height + spacing
             
             child.width = width if fill?
           end

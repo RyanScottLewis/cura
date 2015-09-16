@@ -25,24 +25,8 @@ module Cura
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
       
-      # Get the outer width of this component.
-      # This is the dimension including any borders, margins, or padding sizes.
-      #
-      # @return [Integer]
-      def outer_width # TODO: Remove
-        width + offsets.width + padding.width
-      end
-      
-      # Get the outer width of this component.
-      # This is the dimension including any borders, margins, or padding sizes.
-      #
-      # @return [Integer]
-      def outer_height # TODO: Remove
-        height + offsets.height + padding.height
-      end
-      
       # Get the cursor for this application.
-      # TODO: Delegate
+      # TODO: Delegate something like: def_delegate(:cursor) { application }
       #
       # @return [Cursor]
       def cursor
@@ -149,8 +133,8 @@ module Cura
       
       # Draw the background of this component.
       def draw_background
-        x      = absolute_x + @offsets.left
-        y      = absolute_y + @offsets.top
+        x      = absolute_x + @margin.left + @border.left
+        y      = absolute_y + @margin.top + @border.top
         width  = self.width + @padding.width
         height = self.height + @padding.height
         color  = background

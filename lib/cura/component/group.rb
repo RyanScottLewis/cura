@@ -19,7 +19,7 @@ module Cura
         return @width unless @width == :auto
         return 0 if children.empty?
         
-        children.collect { |child| child.x + child.width + child.offsets.width + child.padding.width }.max
+        children.collect { |child| child.x + child.width + child.offsets.width }.max
       end
       
       # Get the height of this group.
@@ -29,7 +29,7 @@ module Cura
         return @height unless @height == :auto
         return 0 if children.empty?
         
-        children.collect { |child| child.y + child.height + child.offsets.height + child.padding.height }.max
+        children.collect { |child| child.y + child.height + child.offsets.height }.max
       end
       
       # Add a child to this group and set it's parent to this Group.
