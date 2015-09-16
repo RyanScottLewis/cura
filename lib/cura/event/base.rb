@@ -19,7 +19,18 @@ module Cura
         #
         # @return [Symbol]
         def name
-          to_s.split(/::/).last.gsub(/([a-z])([A-Z])/, '\1_\2').downcase.to_sym
+          # Note: 1.3 times faster but relys on Regexp and is the only usage of regexp throughout cura.
+          #       Using non regexp version until multiple usages of regexp occur within cura.
+          # to_s.split(/::/).last.gsub(/([a-z])([A-Z])/, '\1_\2').downcase.to_sym
+          
+          # Note: MRuby does not have a #chars method so this is now 2.6 times slower instead of 1.3
+          caps = ("A".."Z")
+          index = 0
+          to_s.split("::").last.split("").each_with_object("") { |char, memo|
+            memo << "_" if index > 0 && caps.include?(char)
+            memo << char
+            index += 1
+          }.downcase.to_sym
         end
         
         # Add the subclass to `Event.all`, when inherited.

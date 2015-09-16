@@ -1,7 +1,7 @@
 if Kernel.respond_to?(:require)
   require "cura"
   # require 'cura-adapter-termbox'
-  require "cura/termbox_ffi/adapter"
+  require "cura/termbox/adapter"
   # require 'cura-adapter-curses'
   # require 'cura-adapter-sdl'
   # require 'cura-adapter-sdl-ffi'

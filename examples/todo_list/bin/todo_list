@@ -2,11 +2,11 @@
 
 require "pathname"
 $LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "lib").expand_path.to_s)
-$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "..", "ruby-cura-termbox_ffi", "lib").expand_path.to_s)
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "..", "cura-termbox", "lib").expand_path.to_s)
 $LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "lib").expand_path.to_s)
 
 require "todo_list"
-require "cura/termbox_ffi/adapter"
+require "cura/termbox/adapter"
 
 profile = false
 
