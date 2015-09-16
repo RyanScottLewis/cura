@@ -18,13 +18,13 @@ module Cura
           
           if options[:query]
             define_method("#{name}=") do |value|
-              value = instance_exec(value, options, &block) if block_given?
+              value = instance_exec(value, options, &block) unless block.nil?
               
               instance_variable_set("@#{name}", !!value)
             end
           else
             define_method("#{name}=") do |value|
-              value = instance_exec(value, options, &block) if block_given?
+              value = instance_exec(value, options, &block) unless block.nil?
               
               instance_variable_set("@#{name}", value)
             end

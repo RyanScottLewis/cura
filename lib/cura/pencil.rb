@@ -15,7 +15,7 @@ module Cura
     end
     
     # Draw a single character.
-    def draw_character(x, y, text, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
+    def draw_character(x, y, character, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
       super
     end
     
