@@ -153,7 +153,7 @@ module Cura
       
       # Helper method for subclasses
       def text_to_draw
-        text
+        @text
       end
       
       # Helper method for subclasses
@@ -165,6 +165,8 @@ module Cura
       def draw_text
         x_offset = x_offset_start = x_offset_from_alignment + @padding.left
         y_offset = y_offset_from_alignment + @padding.top
+        absolute_x = self.absolute_x
+        absolute_y = self.absolute_y
         
         text_to_draw.each_char do |character|
           if character == "\n"
