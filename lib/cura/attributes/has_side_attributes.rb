@@ -69,7 +69,7 @@ module Cura
         @left = 0 unless instance_variable_defined?(:@left)
         
         unless attributes.respond_to?(:to_hash) || attributes.respond_to?(:to_h)
-          attributes = { top: attributes, right: attributes, bottom: attributes, left: attributes }
+          attributes = { top: attributes, right: attributes, bottom: attributes, left: attributes } # Set all side attributes to the argument given
         end
         
         super
