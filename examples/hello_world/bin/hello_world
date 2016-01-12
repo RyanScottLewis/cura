@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require "pathname"
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "lib").expand_path.to_s)
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "..", "cura-termbox", "lib").expand_path.to_s)
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "lib").expand_path.to_s)
+
+require "hello_world"
+
+HelloWorld.run

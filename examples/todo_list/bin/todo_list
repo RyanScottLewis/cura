@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require "pathname"
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "lib").expand_path.to_s)
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "..", "..", "..", "cura-termbox", "lib").expand_path.to_s)
+$LOAD_PATH.unshift(Pathname.new(__FILE__).join("..", "..", "lib").expand_path.to_s)
+
+require "todo_list"
+require "cura/termbox/adapter"
+
+profile = false
+
+if profile
+  require "ruby-prof"
+
+  RubyProf.start
+
+  TodoList.run
+
+  result = RubyProf.stop
+  printer = RubyProf::CallStackPrinter.new(result)
+
+  Pathname.new(__FILE__).join("..", "..", "profile.html").expand_path.open("w+") { |file| printer.print(file) }
+else
+  TodoList.run
+end
