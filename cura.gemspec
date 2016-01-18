@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.version = Cura::VERSION
 
   # Dependencies
-  s.add_development_dependency "builder", "~> 3.2.2"
-  
+  s.add_development_dependency "builder", "~> 3.2.2" # TODO: Needed? Reallllyyy?
+
   # Pragmatically set variables
   s.homepage      = "http://github.com/RyanScottLewis/#{s.name}"
   s.description   = s.summary

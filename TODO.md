@@ -1,11 +1,11 @@
 # TODO
 
-* Tests !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* Tests
 * See if XUL (or HTML... why not?) can be used as document structure, if not:
-* * CCML Cura Component Markup Language specification (CCML). XML extension?
-* * Parser which parses CCML into Cura Component AST (CC-AST)
-* * TreeTransformer which transforms CC-AST into a Cura Component Tree
+* * CCML Cura Component Markup Language specification (CCML) XML extension
+* * TreeTransformer which transforms CCML into a Cura Component Tree
 * Ability to use CSS so document structure and presentation are separate
+* * CSS can be applied to any XML
 * Smart & fast redraw aglorithm
 * Clipping & Z order
 * Double buffering? Or will this be handled by the adapters?
@@ -19,6 +19,7 @@
 * * Automatic by default, but should be able to be set to manual.
 * Right now, events propagate up the tree from the target to the root (bubbling).  
 * * W3C defines propagation as going down from the root to the target (capturing) first, then back up from the target to the root. http://www.w3.org/TR/DOM-Level-3-Events/#h3_event-flow
+* * See: http://www.quirksmode.org/js/events_order.html
 * Better adapter system.
 * Threaded event loop and event queue and threaded handlers
 * Always update, only draw when needed (backing data has changed, a character needs to be draw, cursor needs to move...)
@@ -44,3 +45,4 @@
     http://bjk5.com/post/44698559168/breaking-down-amazons-mega-dropdown
     https://github.com/kamens/jQuery-menu-aim/blob/master/jquery.menu-aim.js#L198-L307
 * contains_coordinates tests because I'm sure this is borked
+* Use middleware for event propagation?
