@@ -4,13 +4,9 @@ if Kernel.respond_to?(:require)
 end
 
 module Cura
-  
   # The margin side attributes of a component.
   class Margins
-    
     include Attributes::HasInitialize
     include Attributes::HasSideAttributes
-    
   end
-  
 end

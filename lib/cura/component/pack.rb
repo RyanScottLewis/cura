@@ -5,22 +5,20 @@ end
 
 module Cura
   module Component
-    
     # A component with children which moves and optionally resizes them.
     # TODO: Expand attribute - See: http://www.pygtk.org/pygtk2tutorial/sec-DetailsOfBoxes.html
     # TODO: I think the only time it needs to pack_children is right before drawing? Would that get messy?
     class Pack < Group
-      
       include Attributes::HasOrientation
-      
+
       def initialize(attributes={})
         @fill = false
         @spacing = 0
-        
+
         # @child_modifiers
         super
       end
-      
+
       # Set the width dimension of this pack.
       def width=(value)
         result = super
@@ -68,7 +66,7 @@ module Cura
 
         child
       end
-      
+
       # Get whether children will be filled.
       # If this pack's orientation is set to :vertical, then the children's width will be set to this pack's width.
       # If this pack's orientation is set to :horizontal, then the children's height will be set to this pack's width.
@@ -77,7 +75,7 @@ module Cura
       def fill?
         @fill
       end
-      
+
       # Set whether children will be filled.
       # Must be truthy or falsey.
       #
@@ -90,12 +88,12 @@ module Cura
       def fill=(value)
         @fill = !!value
       end
-      
+
       # Get the spacing between children.
       #
       # @return [Integer]
       attr_reader :spacing
-      
+
       # Set the spacing between children.
       #
       # @param [#to_i] value
@@ -103,10 +101,10 @@ module Cura
       def spacing=(value)
         value = value.to_i
         value = 0 if value < 0
-        
+
         @spacing = value
       end
-      
+
       # Draw this pack.
       #
       # @return [Pack]
@@ -115,30 +113,28 @@ module Cura
 
         super
       end
-      
+
       protected
-      
+
       # Position and resize this pack's children based on it's attributes.
       def pack_children
         child_x = 0
         child_y = 0
-        
+
         children.each do |child|
           if horizontal?
             child.x = child_x
             child_x += child.width + child.offsets.width + spacing
-            
+
             child.height = height if fill?
           elsif vertical?
             child.y = child_y if vertical?
             child_y += child.height + child.offsets.height + spacing
-            
+
             child.width = width if fill?
           end
         end
       end
-      
     end
-    
   end
 end

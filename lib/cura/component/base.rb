@@ -10,13 +10,11 @@ end
 
 module Cura
   module Component
-    
     # The base class for all components.
     #
     # All components use a box model similar to CSS.
     # Margins, borders, paddings, then content.
     class Base
-      
       include Attributes::HasInitialize
       include Attributes::HasAttributes
       include Attributes::HasDimensions
@@ -25,7 +23,7 @@ module Cura
       include Attributes::HasColors
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
-      
+
       # Get the cursor for this application.
       # TODO: Delegate something like: def_delegate(:cursor) { application }
       #
@@ -33,7 +31,7 @@ module Cura
       def cursor
         application.cursor
       end
-      
+
       # Get the pencil for this application.
       # TODO: Delegate
       #
@@ -41,30 +39,30 @@ module Cura
       def pencil
         application.pencil
       end
-      
+
       # Get the application of this object.
       #
       # @return [Application]
       def application
         return nil if parent.nil?
-        
+
         parent.application
       end
-      
+
       # Focus on this component.
       #
       # @return [Component]
       def focus
         application.dispatcher.target = self
       end
-      
+
       # Check whether this component is focused.
       #
       # @return [Boolean]
       def focused?
         application.dispatcher.target == self
       end
-      
+
       # Determine if the given absolute coordinates are within the bounds of this component.
       #
       # @param [#to_h] options
@@ -73,83 +71,83 @@ module Cura
       # @return [Boolean]
       def contains_coordinates?(options={})
         options = options.to_h
-        
+
         (absolute_x..absolute_x + width).include?(options[:x].to_i) && (absolute_y..absolute_y + width).include?(options[:y].to_i)
       end
-      
+
       # Get the foreground color of this object.
       #
       # @return [Color]
       def foreground
         get_or_inherit_color(:foreground, Color.black)
       end
-      
+
       # Get the background color of this object.
       #
       # @return [Color]
       def background
         get_or_inherit_color(:background, Color.white)
       end
-      
+
       # Instance inspection.
       #
       # @return [String]
       def inspect
         "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
       end
-      
+
       # Update this component.
       #
       # @return [Component]
       def update
         self
       end
-      
+
       # Draw this component.
       #
       # @return [Component]
       def draw
         draw_background
         draw_border
-        
+
         self
       end
-      
+
       protected
-      
+
       # Draw a point.
       def draw_point(x, y, color=Cura::Color.black)
         x = absolute_x + @offsets.left + x
         y = absolute_y + @offsets.top + y
-        
+
         pencil.draw_point(x, y, color)
       end
-      
+
       # Draw a rectangle.
       # TODO: filled argument
       def draw_rectangle(x, y, width, height, color=Cura::Color.black)
         x = absolute_x + @offsets.left + x
         y = absolute_y + @offsets.top + y
-        
+
         pencil.draw_rectangle(x, y, width, height, color)
       end
-      
+
       # Draw a single character.
       def draw_character(x, y, character, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
         x = absolute_x + @offsets.left + x
         y = absolute_y + @offsets.top + y
-        
+
         pencil.draw_character(x, y, character, foreground, background, bold, underline)
       end
-      
+
       # Draw text.
       def draw_text(x, y, text, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
         x = absolute_x + @offsets.left + x
         y = absolute_y + @offsets.top + y
-        
+
         pencil.draw_text(x, y, text, foreground, background, bold, underline)
       end
-      
+
       # Draw the background of this component.
       def draw_background
         x      = absolute_x + @margin.left + @border.left
@@ -157,24 +155,22 @@ module Cura
         width  = self.width + @padding.width
         height = self.height + @padding.height
         color  = background
-        
+
         pencil.draw_rectangle(x, y, width, height, color)
       end
-      
+
       # Draw the border of this component.
       def draw_border # TODO
       end
-      
+
       def get_or_inherit_color(name, default)
         value = instance_variable_get("@#{name}")
-        
+
         return value unless value == :inherit
         return default unless respond_to?(:parent) && parent.respond_to?(name)
-        
+
         parent.send(name)
       end
-      
     end
-    
   end
 end

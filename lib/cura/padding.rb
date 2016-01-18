@@ -4,13 +4,9 @@ if Kernel.respond_to?(:require)
 end
 
 module Cura
-  
   # The padding side attributes of a component.
   class Padding
-    
     include Attributes::HasInitialize
     include Attributes::HasSideAttributes
-    
   end
-  
 end

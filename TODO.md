@@ -9,6 +9,10 @@
 * Smart & fast redraw aglorithm
 * Clipping & Z order
 * Double buffering? Or will this be handled by the adapters?
+* Event translator. Before dispatching events (or before they are added to the queue?), see if they can be translated into higher-level events such as a MouseDown then a MouseUp could translate to a MouseClick.  
+* * Have this be optional per Component.
+* Event translator. Before dispatching events (or before they are added to the queue?), see if they can be translated into higher-level events such as a MouseDown then a MouseUp could translate to a MouseClick.  
+* * Have this be optional per Component.
 * Event::Propagator? Right now, Event::Handler#delegate_event does this but look how much it has to know about it's `host`.  
 * Event "consumption" configuration.
 * * The event stops propagating automatically (because some component handles it) or manual (keeps going unless explicitly stopped).
@@ -28,6 +32,7 @@
 * border.left.size, border.right.color
 * Split attributes in key with dashes so margin-left: 10 breaks out to margin: { left: 10 }
 * Component dimension attribute arguments, by default return's it's width, with `width(:border, :margin, :padding)` it'd return the width plus it's offsets
+* * Remove Component#outer_*
 * Offsets shouldn't ignore padding as it does now
 * Selected event should just be Select (Focus isn't "Focused")
 * Instead of running #update on all items on each cycle, it should only do that once when started

@@ -1,10 +1,8 @@
 module Cura
   module Event
     module Middleware
-      
       # Dispatches the event.
       class Dispatch < Base
-        
         # Dispatch the event.
         #
         # @param [#to_h] options
@@ -12,9 +10,7 @@ module Cura
         def call(options={})
           options[:dispatch_queue] << options[:event]
         end
-        
       end
-      
     end
   end
 end

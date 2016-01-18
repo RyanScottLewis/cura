@@ -48,7 +48,7 @@ class HelloWorld < Cura::Application
   #   end
   #
   # end
-  
+
   on_event(:key_down) do |event|
     stop if event.control? && event.name == :C # CTRL+C
   end
@@ -61,10 +61,10 @@ class HelloWorld < Cura::Application
   attr_reader :form_zip_textbox
   attr_reader :form_submit_button
   attr_reader :people_listbox
-  
+
   def initialize(attributes={})
     super
-    
+
     @dispatcher.wait_time = 100 # Update every 100 milliseconds instead of waiting forever for events
 
     window = Cura::Window.new
@@ -72,7 +72,7 @@ class HelloWorld < Cura::Application
 
     pack = Cura::Component::Pack.new(width: window.width, height: window.height, fill: true)
     window.add_child(pack)
-    
+
     label_header = Cura::Component::Label.new(text: "Cura", bold: true, underline: true, alignment: { horizontal: :center }, margin: { top: 1 })
     pack.add_child(label_header)
 
@@ -155,13 +155,13 @@ class HelloWorld < Cura::Application
       zip   = application.form_zip_textbox.text
 
       application.clear_form
-      
+
       label_text_segments = []
       label_text_segments << "First: #{first}" unless first.empty?
       label_text_segments << "Last: #{last}" unless last.empty?
       label_text_segments << "Age: #{age}" unless age.empty?
       label_text_segments << "ZIP: #{zip}" unless zip.empty?
-      
+
       label = Cura::Component::Label.new(text: label_text_segments.join(" - "))
       application.people_listbox.add_child(label)
     end
@@ -169,13 +169,13 @@ class HelloWorld < Cura::Application
 
     people_label = Cura::Component::Label.new(text: "People:")
     pack.add_child(people_label)
-    
+
     @people_listbox = Cura::Component::Listbox.new
     @people_listbox.on_event(:key_down) { |event| delete_child(selected_child) if event.control? && event.name == :D }
 
     pack.add_child(@people_listbox)
-    
-    
+
+
 
     input_textbox.focus
   end
@@ -197,5 +197,5 @@ class HelloWorld < Cura::Application
 
     @form_first_name_textbox.focus
   end
-  
+
 end
