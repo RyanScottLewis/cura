@@ -10,6 +10,8 @@ module Cura
     include Attributes::HasAttributes
 
     class << self
+      # TODO: All standard color names
+
       # The default color to be overidden by adapters.
       # Usually, for TUI's to use the terminal theme's colors.
       # TODO: Remove.
