@@ -6,6 +6,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_events"
   require "cura/attributes/has_offsets"
   require "cura/attributes/has_relative_coordinates"
+  require "cura/component"
 end
 
 module Cura
@@ -15,6 +16,24 @@ module Cura
     # All components use a box model similar to CSS.
     # Margins, borders, paddings, then content.
     class Base
+      class << self
+        # On subclass hook.
+        def inherited(subclass)
+          Component.all << subclass
+        end
+
+        # The type of this component class.
+        #
+        # @example
+        #   Cura::Component::XMLTools::AttributeLabel.type # => :xml_tools_attribute_label
+        # @return [Symbol]
+        def type # TODO: Helper method for this sort of thing
+          @type ||= to_s.gsub(/^Cura::Component::/, "")
+                        .gsub(/([A-Z][A-Za-z]*)([A-Z][A-Za-z0-9_]*)/, "\\1_\\2")
+                        .gsub(/::/, "_").downcase.to_sym
+        end
+      end
+
       include Attributes::HasInitialize
       include Attributes::HasAttributes
       include Attributes::HasDimensions
