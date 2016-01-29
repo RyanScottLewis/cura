@@ -1,6 +1,5 @@
 if Kernel.respond_to?(:require)
   require "cura/component/base"
-
   require "cura/error/invalid_component"
 end
 
@@ -38,10 +37,32 @@ module Cura
 
       # Add a child to this group.
       #
-      # @param [Component] component
+      # If a Hash-like object is given, it must have the `:type` key which will be used to
+      # determine which class to initialize. The rest of the Hash will be used to set the
+      # attributes of the instance.
+      #
+      # @param [#to_sym, Component] component_or_type
+      #   A Symbol representing the child component type or a {Component::Base} instance.
+      #   When a Symbol is given, a new child component will be initialized of that type. See {Component::Base.type}.
+      # @param [#to_h] attributes
+      #   When component_or_type is a Symbol, then these attributes will be used to initialize the child component.
+      #   When component_or_type is a {Component::Base}, then these attributes will be used to update the child component.
       # @return [Component]
-      def add_child(component)
-        raise TypeError, "component must be a Cura::Component" unless component.is_a?(Component::Base)
+      def add_child(component_or_type, attributes={})
+        component = if component_or_type.respond_to?(:to_sym)
+          type = component_or_type.to_sym
+          component_class = Component.find_by_type(type)
+
+          raise Error::InvalidComponent if component_class.nil?
+
+          component_class.new(attributes)
+        else
+          raise Error::InvalidComponent unless component_or_type.is_a?(Component::Base)
+
+          component_or_type.update_attributes(attributes)
+
+          component_or_type
+        end
 
         @children << component
 
