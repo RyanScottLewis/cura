@@ -96,7 +96,7 @@ module Cura
         @application.adapter.peek_event(milliseconds.to_i)
       end
 
-      # Dispatch an event to the target or application, if the target is nil.
+      # Send the event through the middleware stack and dispatch all events on the queue.
       #
       # @param [#to_sym] event The name of the event class to create an instance of or an event instance.
       # @param [#to_hash, #to_h] options The options to pass through the middleware.

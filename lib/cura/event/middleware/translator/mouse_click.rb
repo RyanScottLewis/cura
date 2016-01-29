@@ -10,7 +10,7 @@ module Cura
         # Translates MouseDown and MouseUp events into a MouseClick event.
         class MouseClick < Base
           def initialize
-            @last_mouse_down_at = Time.now
+            @last_mouse_down_at = Time.now # TODO: This is not a great solution. If/when events are threaded, this will be bad.
           end
 
           # Call this middleware.

@@ -6,15 +6,13 @@ module Cura
       module Aimer
         # Sets the event's target to the component passed by an optional :target option.
         class TargetOption < Base
+          # @method call
           # Call this middleware.
           #
           # @param [#to_h] options
           # @option options [Event::Dispatcher] :dispatcher
           # @option options [Event::Base] :event
           # @option options [Attributes::HasEvents] :target The optional target of the event.
-          def call(options={})
-            super # Only here for documentation
-          end
 
           protected
 

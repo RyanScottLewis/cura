@@ -1,9 +1,10 @@
 module Cura
   module Event
     module Middleware
-      # Dispatches the event.
+      # Adds the event to the dispatch queue.
+      # Should be the very last middleware in the chain.
       class Dispatch < Base
-        # Dispatch the event.
+        # Add the event to the dispatch queue.
         #
         # @param [#to_h] options
         # @option options [Event::Base] :event
