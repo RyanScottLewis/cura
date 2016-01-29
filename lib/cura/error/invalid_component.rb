@@ -5,7 +5,7 @@ module Cura
     # Raised when a component is invalid.
     class InvalidComponent < Base
       def to_s
-        "must be a Cura::Component::Base"
+        "invalid component"
       end
     end
   end

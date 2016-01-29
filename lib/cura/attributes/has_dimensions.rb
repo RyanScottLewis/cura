@@ -16,12 +16,12 @@ module Cura
       # @method width
       # Get the width dimension of this object.
       #
-      # @param [#to_i] value
       # @return [Integer]
 
       # @method width=(value)
       # Set the width dimension of this object.
       #
+      # @param [#to_i] value
       # @return [Integer]
 
       attribute(:width) { |value| validate_size_attribute(value) }
