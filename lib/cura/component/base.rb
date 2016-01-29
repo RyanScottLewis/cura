@@ -110,13 +110,6 @@ module Cura
         get_or_inherit_color(:background, Color.white)
       end
 
-      # Instance inspection.
-      #
-      # @return [String]
-      def inspect
-        "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
-      end
-
       # Update this component.
       #
       # @return [Component]
@@ -134,6 +127,13 @@ module Cura
         end
 
         self
+      end
+
+      # Instance inspection.
+      #
+      # @return [String]
+      def inspect
+        "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
       end
 
       protected
