@@ -6,6 +6,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_events"
   require "cura/attributes/has_offsets"
   require "cura/attributes/has_relative_coordinates"
+  require "cura/attributes/has_visibility"
   require "cura/component"
 end
 
@@ -42,6 +43,7 @@ module Cura
       include Attributes::HasColors
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
+      include Attributes::HasVisibility
 
       # Get the cursor for this application.
       # TODO: Delegate something like: def_delegate(:cursor) { application }
@@ -126,8 +128,10 @@ module Cura
       #
       # @return [Component]
       def draw
-        draw_background
-        draw_border
+        if @visible
+          draw_background
+          draw_border
+        end
 
         self
       end

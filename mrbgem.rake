@@ -26,6 +26,7 @@ MRuby::Gem::Specification.new("cura") do |spec|
   spec.rbfiles << "#{dir}/lib/cura/attributes/has_relative_coordinates.rb"
   spec.rbfiles << "#{dir}/lib/cura/attributes/has_root.rb"
   spec.rbfiles << "#{dir}/lib/cura/attributes/has_side_attributes.rb"
+  spec.rbfiles << "#{dir}/lib/cura/attributes/has_visibility.rb"
   spec.rbfiles << "#{dir}/lib/cura/attributes/has_windows.rb"
 
   spec.rbfiles << "#{dir}/lib/cura/padding.rb"
