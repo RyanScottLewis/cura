@@ -83,11 +83,17 @@ module Cura
 
       # Add a child to this group.
       #
-      # @param [Component] component
-      # @param [Object] object An arbitrary object to associate with the added child in this listbox.
+      # @param [#to_sym, Component] component_or_type
+      #   A Symbol representing the child component type or a {Component::Base} instance.
+      #   When a Symbol is given, a new child component will be initialized of that type. See {Component::Base.type}.
+      # @param [#to_h] attributes
+      #   When component_or_type is a Symbol, then these attributes will be used to initialize the child component.
+      #   When component_or_type is a {Component::Base}, then these attributes will be used to update the child component.
+      # @option attributes [Object] :object An arbitrary object to associate with the added child in this listbox.
       # @return [Component]
-      def add_child(component, object=nil)
-        child = super(component)
+      def add_child(component_or_type, attributes={})
+        object = attributes.delete(:object)
+        child = super
 
         @objects << object
 

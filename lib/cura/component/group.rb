@@ -32,9 +32,14 @@ module Cura
 
       # Add a child to this group and set it's parent to this Group.
       #
-      # @param [Component] component
+      # @param [#to_sym, Component] component_or_type
+      #   A Symbol representing the child component type or a {Component::Base} instance.
+      #   When a Symbol is given, a new child component will be initialized of that type. See {Component::Base.type}.
+      # @param [#to_h] attributes
+      #   When component_or_type is a Symbol, then these attributes will be used to initialize the child component.
+      #   When component_or_type is a {Component::Base}, then these attributes will be used to update the child component.
       # @return [Component]
-      def add_child(component)
+      def add_child(component_or_type, attributes={})
         component = super
 
         component.parent = self
