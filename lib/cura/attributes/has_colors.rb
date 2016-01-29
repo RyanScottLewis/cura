@@ -28,7 +28,7 @@ module Cura
       # @method foreground=(value)
       # Set the foreground color of this object.
       #
-      # @param [Color] value
+      # @param [Color, #to_sym] value
       # @return [Color]
 
       attribute(:foreground) { |value| validate_color_attribute(value) }
@@ -41,7 +41,7 @@ module Cura
       # @method background=(value)
       # Set the background color of this object.
       #
-      # @param [Color] value
+      # @param [Color, #to_sym] value
       # @return [Color]
 
       attribute(:background) { |value| validate_color_attribute(value) }
@@ -52,7 +52,11 @@ module Cura
         unless value.is_a?(Cura::Color)
           value = value.to_sym
 
-          raise Error::InvalidColor unless value == :inherit
+          if [:black, :white, :red, :green, :blue].include?(value)
+            value = Cura::Color.send(value)
+          else
+            raise Error::InvalidColor unless value == :inherit
+          end
         end
 
         value
