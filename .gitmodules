@@ -1,0 +1,3 @@
+[submodule "extensions/cura-termbox"]
+	path = extensions/cura-termbox
+	url = /Volumes/Media/Code/Ruby/Gems/cura/extensions/cura-termbox
