@@ -26,7 +26,7 @@ rules:
     enabled: true
     exclude: []
   Summary::Delimiter:
-    enabled: true
+    enabled: false
     exclude: []
   Summary::SingleLine:
     enabled: true

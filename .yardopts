@@ -1,0 +1,3 @@
+--output-dir doc/yard
+--markup-provider=redcarpet
+--markup=markdown
