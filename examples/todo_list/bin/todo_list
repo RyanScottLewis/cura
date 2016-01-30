@@ -20,7 +20,10 @@ if profile
   result = RubyProf.stop
   printer = RubyProf::CallStackPrinter.new(result)
 
-  Pathname.new(__FILE__).join("..", "..", "profile.html").expand_path.open("w+") { |file| printer.print(file) }
+  path = Pathname.new(__FILE__).join("..", "..", "..", "..", "doc", "coverage", "todo_list.html").expand_path
+  path.dirname.mkpath
+
+  path.open("w+") { |file| printer.print(file) }
 else
   TodoList.run
 end

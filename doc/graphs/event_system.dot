@@ -1,0 +1,144 @@
+digraph event_system {
+  fontsize=12;
+  fontname=Helvetica;
+  ranksep=0.3;
+  /*size="10,10";*/
+  rankdir=TB;
+
+  node[fontsize=10, fontname=Helvetica, shape=box];
+  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6];
+
+  subgraph cluster_run_loop {
+    label="Application Run Loop";
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Run Loop                                                                          //
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    run_loop_poll [label="Poll for user input events\nusing current adapter"];
+    run_loop_add_event [label="Add user event to dispatch queue"];
+    run_loop_dispatch [label="Dispatch events in dispatch queue"];
+    run_loop_update [label="Update the view tree"];
+    run_loop_draw [label="Render the view tree"];
+
+    run_loop_poll -> run_loop_add_event [label="If event"];
+    run_loop_poll -> run_loop_dispatch [label="If no event"];
+    run_loop_dispatch -> run_loop_update;
+    run_loop_draw -> run_loop_update [dir=back]; // To go backwards, reversed nodes on edges and added dir=back
+    run_loop_draw -> run_loop_poll;
+
+    { rank=same; run_loop_poll; run_loop_add_event; }
+    { rank=same; run_loop_update; run_loop_draw; }
+
+    // Update
+    subgraph cluster_run_loop_update {
+      label="Update";
+
+      run_loop_update_application [label="Call #update on the application"];
+      run_loop_update_window [label="Call #update on the window"];
+      run_loop_update_child [label="Call #update on the child"];
+
+      run_loop_update -> run_loop_update_application;
+      run_loop_update_application -> run_loop_update_window [label="Each window"];
+      run_loop_update_window -> run_loop_update_child [label="Each child in root"];
+      run_loop_update_child -> run_loop_update_child [label="Each child"];
+    }
+
+    // Render
+    subgraph cluster_run_loop_draw {
+      label="Draw";
+
+      run_loop_draw_application [label="Call #draw on the application"];
+      run_loop_draw_window [label="Call #draw on the window"];
+      run_loop_draw_child [label="Call #draw on the child"];
+
+      run_loop_draw -> run_loop_draw_application;
+      run_loop_draw_application -> run_loop_draw_window [label="Each window"];
+      run_loop_draw_window -> run_loop_draw_child [label="Each child in root"];
+      run_loop_draw_child -> run_loop_draw_child [label="Each child"];
+    }
+  }
+
+  subgraph cluster_event_system {
+    label="Event System";
+
+    subgraph cluster_event_system_middleware {
+      label="Middleware";
+
+      ///////////////////////////////////////////////////////////////////////////////////////
+      // Middleware                                                                        //
+      ///////////////////////////////////////////////////////////////////////////////////////
+
+      middleware_dispatch [label="Dispatch\nAdd event to dispatch queue"];
+      middleware_translation [label="Translation Middleware\nCreate events based on context\nand add to dispatch queue"];
+
+      middleware_dispatch -> middleware_translation;
+
+      run_loop_add_event -> middleware_aiming_mouse_focus [style=dashed];
+      run_loop_update -> middleware_aiming_mouse_focus [label="Any event dispatched\nin any #update call", style=dashed, constraint=false];
+
+      // Aiming
+      subgraph cluster_event_system_middleware_aiming {
+        label="Aiming";
+
+        {
+          rank=same;
+
+          middleware_aiming_mouse_focus [label="Aimer::MouseFocus\nSets the dispatcher's target to\nthe component underneath the cursor\non mouse button events."];
+          middleware_aiming_target_option [label="Aimer::TargetOption\nSets the event's target to the component\npassed by an optional :target option."];
+          middleware_aiming_dispatcher_target [label="Aimer::DispatcherTarget\nSets the event's target to the\ndispatcher's target, if it isn't already set."];
+
+          middleware_aiming_mouse_focus -> middleware_aiming_target_option;
+          middleware_aiming_target_option -> middleware_aiming_dispatcher_target;
+        }
+      }
+
+      middleware_aiming_mouse_focus -> middleware_dispatch [style=invis]; // INVISIBLE
+      middleware_aiming_target_option -> middleware_dispatch [style=invis]; // INVISIBLE
+      middleware_aiming_dispatcher_target -> middleware_dispatch;
+    }
+/*
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Propagation & Handling                                                         //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    middleware_propagation_phase_join [shape=point];
+    middleware_dispatch -> middleware_propagation_phase_join [label="Each event,\nbefore dispatching to event handlers", style="dashed"];
+
+    { rank=same; middleware_dispatch; middleware_propagation_phase_join; }
+
+    // "Each event" join
+    middleware_propagation_phase_join -> middleware_propagation_bubbling_handle [dir=none];
+    middleware_propagation_phase_join -> middleware_propagation_capturing_handle [dir=none, label="TODO: Go this way first", style="dotted"];
+
+    // Bubbling Phase
+    subgraph cluster_middleware_propagation_bubbling {
+      label="Bubbling Phase\nSent to target first";
+
+      middleware_propagation_bubbling_handle [label="Handle by event handler"];
+      middleware_propagation_bubbling_callbacks [label="Run all callbacks matching name\nin the order they were defined"];
+      middleware_propagation_bubbling_propagate [label="Propagate up to parent's\nevent handler"];
+
+      middleware_propagation_bubbling_handle -> middleware_propagation_bubbling_callbacks;
+      middleware_propagation_bubbling_callbacks -> middleware_propagation_bubbling_propagate;
+
+      middleware_propagation_bubbling_propagate -> middleware_propagation_bubbling_handle [label="If has parent,\nsend to parent", style="dashed"];
+    }
+
+    // Capturing Phase
+    subgraph cluster_middleware_propagation_capturing {
+      label="Capturing Phase\nSent to application first";
+
+      middleware_propagation_capturing_handle [label="Handle by event handler"];
+      middleware_propagation_capturing_callbacks [label="Run all callbacks matching name\nin the order they were defined"];
+      middleware_propagation_capturing_propagate [label="Propagate down to target's\nnext ancestor's event handler"];
+
+      middleware_propagation_capturing_handle -> middleware_propagation_capturing_callbacks;
+      middleware_propagation_capturing_callbacks -> middleware_propagation_capturing_propagate;
+
+      middleware_propagation_capturing_propagate -> middleware_propagation_capturing_handle [label="If not target"];
+      middleware_propagation_capturing_propagate -> middleware_propagation_bubbling_handle [label="If is target", constraint=false];
+    }
+    */
+  }
+}

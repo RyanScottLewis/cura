@@ -1,0 +1,61 @@
+digraph application_run_loop {
+  label="Application Run Loop";
+  labelloc="top";
+  fontsize=12;
+  fontname=Helvetica;
+  ranksep=0.3;
+  /*size="10,10";*/
+  rankdir=TB;
+
+  node[fontsize=10, fontname=Helvetica, shape=box];
+  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6];
+
+  run_loop_poll [label="Poll for user input events\nusing current adapter"];
+  run_loop_add_event [label="Add user event to dispatch queue"];
+  run_loop_dispatch [label="Dispatch events in dispatch queue"];
+  run_loop_update [label="Update the view tree"];
+  run_loop_draw [label="Render the view tree"];
+  event_system [label="Event System", style=dashed];
+
+  run_loop_poll -> run_loop_add_event [label="If event"];
+  run_loop_poll -> run_loop_dispatch [label="If no event"];
+  run_loop_dispatch -> run_loop_update;
+  run_loop_draw -> run_loop_update [dir=back]; // To go backwards, reversed nodes on edges and added dir=back
+  run_loop_draw -> run_loop_poll;
+
+  run_loop_add_event -> event_system [style=dashed];
+  run_loop_dispatch -> event_system [style=dashed];
+  run_loop_update -> event_system [label="Any event dispatched\nin any #update call", style=dashed, constraint=false];
+
+  { rank=same; run_loop_poll; run_loop_add_event; }
+  { rank=same; run_loop_update; run_loop_draw; }
+  { rank=same; run_loop_dispatch; event_system; }
+
+  // Update
+  subgraph cluster_run_loop_update {
+    label="Update";
+
+    run_loop_update_application [label="Call #update on the application"];
+    run_loop_update_window [label="Call #update on the window"];
+    run_loop_update_child [label="Call #update on the child"];
+
+    run_loop_update -> run_loop_update_application;
+    run_loop_update_application -> run_loop_update_window [label="Each window"];
+    run_loop_update_window -> run_loop_update_child [label="Each child in root"];
+    run_loop_update_child -> run_loop_update_child [label="Each child"];
+  }
+
+  // Render
+  subgraph cluster_run_loop_draw {
+    label="Draw";
+
+    run_loop_draw_application [label="Call #draw on the application"];
+    run_loop_draw_window [label="Call #draw on the window"];
+    run_loop_draw_child [label="Call #draw on the child"];
+
+    run_loop_draw -> run_loop_draw_application;
+    run_loop_draw_application -> run_loop_draw_window [label="Each window"];
+    run_loop_draw_window -> run_loop_draw_child [label="Each child in root"];
+    run_loop_draw_child -> run_loop_draw_child [label="Each child"];
+  }
+}

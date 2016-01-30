@@ -2,8 +2,9 @@
 *.db
 *.log
 *.yardoc
-doc/
-coverage/
-pkg/
+
 Gemfile.lock
-profile.html
+
+pkg/
+doc/yard
+spec/coverage

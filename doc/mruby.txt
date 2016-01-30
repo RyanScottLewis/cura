@@ -1,0 +1,8 @@
+IN SPEC OR GEMBOX
+
+  conf.gem '../../cura'
+
+  conf.gem '../../../../MRuby/Gems/mruby-termbox'
+  conf.gem '../../cura-termbox'
+
+  conf.gem '../../cura/examples/mruby-examples'
