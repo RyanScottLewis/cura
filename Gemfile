@@ -18,6 +18,7 @@ group :development do
   gem "guard"          # Filesystem event watching
 
   gem "guard-bundler"
+  gem "guard-shell"
   gem "guard-rake"
   gem "guard-rspec"
   # gem "guard-mutant" # TODO: Broken, custom guard
