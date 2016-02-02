@@ -1,0 +1,119 @@
+digraph event_system {
+  label="Event System";
+  labelloc="top";
+  fontsize=12;
+  fontname=Helvetica;
+  ranksep=0.3;
+  rankdir=TB;
+
+  node[fontsize=10, fontname=Helvetica, shape=box];
+  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6, color="#00000064"];
+
+  run_loop_event [label="Run loop event", style=dashed];
+
+  run_loop_event -> middleware_aiming_mouse_focus [style=dashed];
+  run_loop_event -> middleware_aiming_target_option [style=invis]; // INVISIBLE
+  run_loop_event -> middleware_aiming_dispatcher_target [style=invis]; // INVISIBLE
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  // Middleware                                                                        //
+  ///////////////////////////////////////////////////////////////////////////////////////
+  subgraph cluster_middleware {
+    label="Middleware";
+
+    // Aiming
+    subgraph cluster_middleware_aiming {
+      label="Aiming Middleware\nSet event target based on context";
+
+      {
+        rank=same;
+
+        middleware_aiming_mouse_focus [label="Aimer::MouseFocus\nSets the dispatcher's target to\nthe component underneath the cursor\non mouse button events."];
+        middleware_aiming_target_option [label="Aimer::TargetOption\nSets the event's target to the component\npassed by an optional :target option."];
+        middleware_aiming_dispatcher_target [label="Aimer::DispatcherTarget\nSets the event's target to the\ndispatcher's target, if it isn't already set."];
+
+        middleware_aiming_mouse_focus -> middleware_aiming_target_option;
+        middleware_aiming_target_option -> middleware_aiming_dispatcher_target;
+      }
+    }
+
+    middleware_dispatch [label="Dispatch\nAdd event to dispatch queue"];
+
+    middleware_aiming_mouse_focus -> middleware_dispatch [style=invis]; // INVISIBLE
+    middleware_aiming_target_option -> middleware_dispatch [style=invis]; // INVISIBLE
+    middleware_aiming_dispatcher_target -> middleware_dispatch;
+
+    // Translation
+    subgraph cluster_middleware_translation {
+      label="Translation Middleware\nCreate events based on context and add to dispatch queue";
+
+      {
+        rank=same;
+
+        middleware_translation_mouse_click [label="Translator::MouseClick"];
+        middleware_translation_mouse_double_click [label="Translator::MouseDoubleClick", style=dotted];
+        middleware_translation_key_press [label="Translator::KeyPress", style=dotted];
+
+        middleware_translation_mouse_click -> middleware_translation_mouse_double_click;
+        middleware_translation_mouse_double_click -> middleware_translation_key_press;
+      }
+    }
+
+    middleware_dispatch -> middleware_translation_mouse_click;
+    middleware_dispatch -> middleware_translation_mouse_double_click [style=invis]; // INVISIBLE
+    middleware_dispatch -> middleware_translation_key_press [style=invis]; // INVISIBLE
+  }
+
+  event_queue [label="Event queue"];
+
+  middleware_dispatch -> event_queue [style=dotted];
+  middleware_translation_mouse_click -> event_queue [style=dotted];
+  middleware_translation_mouse_double_click -> event_queue [style=dotted];
+  middleware_translation_key_press -> event_queue [style=dotted];
+
+  ////////////////////////////////////////////////////////////////////////////////////
+  // Propagation & Handling                                                         //
+  ////////////////////////////////////////////////////////////////////////////////////
+
+  event_queue -> handling_phase_join [label="Each event"];
+
+  subgraph cluster_handling {
+    label="Handling & Propagation";
+
+    handling_phase_join [shape=point];
+
+    handling_phase_join -> propagation_bubbling_handle [dir=none];
+    handling_phase_join -> propagation_capturing_handle [dir=none, label="TODO: Go this way first", style="dotted"];
+
+    /*{ rank=same; middleware_dispatch; handling_phase_join; }*/
+
+    // Bubbling Phase
+    subgraph cluster_propagation_bubbling {
+      label="Bubbling Phase\nSent to target first";
+
+      propagation_bubbling_handle [label="Handle by event handler"];
+      propagation_bubbling_callbacks [label="Run all callbacks matching name\nin the order they were defined"];
+      propagation_bubbling_propagate [label="Propagate up to parent's\nevent handler"];
+
+      propagation_bubbling_handle -> propagation_bubbling_callbacks;
+      propagation_bubbling_callbacks -> propagation_bubbling_propagate;
+
+      propagation_bubbling_propagate -> propagation_bubbling_handle [label="If has parent,\nsend to parent", style="dashed"];
+    }
+
+    // Capturing Phase
+    subgraph cluster_propagation_capturing {
+      label="Capturing Phase\nSent to application first";
+
+      propagation_capturing_handle [label="Handle by event handler"];
+      propagation_capturing_callbacks [label="Run all callbacks matching name\nin the order they were defined"];
+      propagation_capturing_propagate [label="Propagate down to target's\nnext ancestor's event handler"];
+
+      propagation_capturing_handle -> propagation_capturing_callbacks;
+      propagation_capturing_callbacks -> propagation_capturing_propagate;
+
+      propagation_capturing_propagate -> propagation_capturing_handle [label="If not target", color="#FF000064", fontcolor="#FF0000"];
+      propagation_capturing_propagate -> propagation_bubbling_handle [label="If is target", color="#00FF0064", fontcolor="#00FF00", constraint=false];
+    }
+  }
+}

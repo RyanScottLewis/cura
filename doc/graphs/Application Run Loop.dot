@@ -8,7 +8,7 @@ digraph application_run_loop {
   rankdir=TB;
 
   node[fontsize=10, fontname=Helvetica, shape=box];
-  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6];
+  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6, color="#00000064"];
 
   run_loop_poll [label="Poll for user input events\nusing current adapter"];
   run_loop_add_event [label="Add user event to dispatch queue"];

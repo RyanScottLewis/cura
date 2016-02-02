@@ -1,0 +1,28 @@
+digraph component_api {
+  label = "Component API Class Hierarchy";
+  labelloc="top";
+  fontsize=12;
+  fontname=Helvetica;
+  ranksep=0.3;
+  /*size="10,10";*/
+  rankdir=TB;
+
+  node[fontsize=10, fontname=Helvetica, shape=box, width=1, height=0.25, fixedsize=true]
+  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6, color="#00000064"];
+
+  "Dotted = TODO" [width=1.2, style=dotted]
+
+  "Base" -> "Label";
+  "Label" -> "Textbox";
+  "Label" -> "Button";
+  "Base" -> "Group";
+  "Group" -> "Pack";
+  "Group" -> "TableCell" [style=dotted];
+  "Group" -> "MenuItem" [style=dotted];
+  "Pack" -> "Listbox";
+  "Pack" -> "Form" [style=dotted];
+  "Pack" -> "FormField" [style=dotted];
+  "Pack" -> "Table" [style=dotted];
+  "Pack" -> "TableColumn" [style=dotted];
+  "Pack" -> "Menu" [style=dotted];
+}
