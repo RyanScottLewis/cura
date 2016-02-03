@@ -30,6 +30,18 @@ module Cura
         children.collect { |child| child.y + child.height + child.offsets.height }.max
       end
 
+      # # Set the parent of this object.
+      # # It's not recommended to set this directly as it may break the ancestory chain.
+      # #
+      # # @param [Object] value
+      # # @return [Object]
+      # def parent=(value)
+      #   @parent = value
+      #   @children.each
+      #
+      #   @parent
+      # end
+
       # Add a child to this group and set it's parent to this Group.
       #
       # @param [#to_sym, Component] component_or_type

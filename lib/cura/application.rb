@@ -207,6 +207,9 @@ module Cura
       end
 
       # TODO: If a class is given, run .new on it first
+      # TODO: Adapter.name(*arguments) which defaults to an underscore'd version of the class constant
+      # TODO: Adapter.find_by_name
+      # TODO: Use Adapter.find_by_name here to allow passing of a Symbol to #adapter=
 
       @adapter.setup
     end

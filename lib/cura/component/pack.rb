@@ -15,7 +15,6 @@ module Cura
         @fill = false
         @spacing = 0
 
-        # @child_modifiers
         super
       end
 

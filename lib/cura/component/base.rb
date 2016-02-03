@@ -37,6 +37,8 @@ module Cura
 
       include Attributes::HasInitialize
       include Attributes::HasAttributes
+
+      include Attributes::HasAncestry
       include Attributes::HasDimensions
       include Attributes::HasEvents
       include Attributes::HasFocusability

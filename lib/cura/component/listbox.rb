@@ -113,6 +113,11 @@ module Cura
         deleted_child
       end
 
+      # Get the objects stored.
+      #
+      # @return [Array]
+      attr_reader :objects
+
       # Get the associated object with the child at the given index.
       #
       # @param [#to_i] index

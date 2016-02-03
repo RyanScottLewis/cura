@@ -55,14 +55,14 @@ module Cura
 
           raise Error::InvalidComponent if component_class.nil?
 
-          component_class.new(attributes)
+          component_class.new
         else
           raise Error::InvalidComponent unless component_or_type.is_a?(Component::Base)
 
-          component_or_type.update_attributes(attributes)
-
           component_or_type
         end
+
+        component.update_attributes(attributes)
 
         @children << component
 

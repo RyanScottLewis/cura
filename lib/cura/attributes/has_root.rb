@@ -48,7 +48,7 @@ module Cura
       #   When component_or_type is a {Component::Base}, then these attributes will be used to update the child component.
       # @return [Component]
       def add_child(component_or_type, attributes={})
-        @root.add_child(component_or_type, attributes={})
+        @root.add_child(component_or_type, attributes)
       end
 
       # Add multiple children to this object's root component.
