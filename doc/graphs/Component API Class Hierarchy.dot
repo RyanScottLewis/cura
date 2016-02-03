@@ -1,28 +1,74 @@
-digraph component_api {
+digraph component_planned_api {
   label = "Component API Class Hierarchy";
   labelloc="top";
   fontsize=12;
   fontname=Helvetica;
   ranksep=0.3;
-  /*size="10,10";*/
   rankdir=TB;
 
   node[fontsize=10, fontname=Helvetica, shape=box, width=1, height=0.25, fixedsize=true]
   edge[fontsize=10, fontname=Helvetica, arrowsize=0.6, color="#00000064"];
 
-  "Dotted = TODO" [width=1.2, style=dotted]
+  component_base [label="Base"];
+  component_label [label="Label"];
+  component_textbox [label="Textbox"];
+  component_button [label="Button"];
+  component_group [label="Group"];
+  component_pack [label="Pack"];
+  component_listbox [label="Listbox"];
 
-  "Base" -> "Label";
-  "Label" -> "Textbox";
-  "Label" -> "Button";
-  "Base" -> "Group";
-  "Group" -> "Pack";
-  "Group" -> "TableCell" [style=dotted];
-  "Group" -> "MenuItem" [style=dotted];
-  "Pack" -> "Listbox";
-  "Pack" -> "Form" [style=dotted];
-  "Pack" -> "FormField" [style=dotted];
-  "Pack" -> "Table" [style=dotted];
-  "Pack" -> "TableColumn" [style=dotted];
-  "Pack" -> "Menu" [style=dotted];
+  component_base -> component_label;
+  component_label -> component_textbox;
+  component_label -> component_button;
+  component_base -> component_group;
+  component_group -> component_pack;
+  component_pack -> component_listbox;
+
+  subgraph cluster_planned {
+    label="Planned";
+
+
+    planned_base [label="Base"];
+    planned_label [label="Label"];
+
+    planned_group [label="Group"];
+    planned_pack [label="Pack"];
+    planned_listbox [label="Listbox"];
+
+    planned_input [label="Input"];
+    planned_textbox [label="Textbox"];
+    planned_button [label="Button"];
+    planned_checkbox [label="Checkbox"];
+    planned_color [label="Color"];
+    planned_date [label="Date"];
+    planned_date_time [label="DateTime"];
+
+
+    planned_base -> planned_label;
+
+    planned_base -> planned_group;
+    planned_group -> planned_pack;
+    planned_pack -> planned_listbox;
+
+    planned_base -> planned_input;
+    planned_input -> planned_textbox;
+    planned_input -> planned_button;
+    planned_input -> planned_checkbox;
+    planned_input -> planned_color;
+    planned_input -> planned_date;
+    planned_input -> planned_date_time;
+
+    /*"Label" -> "Textbox";
+    "Label" -> "Button";
+    "Base" -> "Group";
+    "Group" -> "Pack";
+    "Group" -> "TableCell" [style=dotted];
+    "Group" -> "MenuItem" [style=dotted];
+    "Pack" -> "Listbox";
+    "Pack" -> "Form" [style=dotted];
+    "Pack" -> "FormField" [style=dotted];
+    "Pack" -> "Table" [style=dotted];
+    "Pack" -> "TableColumn" [style=dotted];
+    "Pack" -> "Menu" [style=dotted];*/
+  }
 }
