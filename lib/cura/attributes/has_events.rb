@@ -56,7 +56,7 @@ module Cura
       # Get the event handler for this object.
       #
       # @return [Event::Handler]
-      attr_reader :event_handler
+      attr_reader :event_handler # TODO: Rename to #events ?
 
       # Register a callback for an event to this instance.
       #

@@ -36,7 +36,7 @@
 * `contains_coordinates` tests because I'm sure this is borked.
 * Use middleware for event propagation?
 * Application structure documents
-
+* Events are not inherited by component subclasses
 Cura XML specification (CXML) XML extension, converts into Cura AST and CCML.
 
 ```
