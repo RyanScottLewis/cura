@@ -20,6 +20,8 @@ module Cura
       class << self
         # On subclass hook.
         def inherited(subclass)
+          super
+
           Component.all << subclass
         end
 
