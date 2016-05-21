@@ -8,6 +8,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_relative_coordinates"
   require "cura/attributes/has_visibility"
   require "cura/component"
+  require "cura/window"
 end
 
 module Cura
@@ -72,6 +73,17 @@ module Cura
         return nil if parent.nil?
 
         parent.application
+      end
+
+      # Get the window of this object.
+      #
+      # @return [Application]
+      def window
+        return nil if parent.nil?
+        return nil if parent.is_a?(Cura::Application)
+        return parent if parent.is_a?(Cura::Window)
+
+        parent.window
       end
 
       # Focus on this component.
