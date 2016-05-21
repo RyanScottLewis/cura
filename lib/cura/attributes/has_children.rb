@@ -45,11 +45,16 @@ module Cura
       #   A Symbol representing the child component type or a {Component::Base} instance.
       #   When a Symbol is given, a new child component will be initialized of that type. See {Component::Base.type}.
       # @param [#to_h] attributes
+      #   When component_or_type is a Class, then these attributes will be used to initialize the child component.
       #   When component_or_type is a Symbol, then these attributes will be used to initialize the child component.
       #   When component_or_type is a {Component::Base}, then these attributes will be used to update the child component.
       # @return [Component]
       def add_child(component_or_type, attributes={})
-        component = if component_or_type.respond_to?(:to_sym)
+        component = if component_or_type.is_a?(Class)
+          raise Error::InvalidComponent unless component_or_type < Component::Base
+
+          component_or_type.new
+        elsif component_or_type.respond_to?(:to_sym)
           type = component_or_type.to_sym
           component_class = Component.find_by_type(type)
 
@@ -100,6 +105,7 @@ module Cura
       # @return [Group]
       def delete_children
         (0...@children.count).to_a.reverse_each { |index| delete_child_at(index) } # TODO: Why reverse?
+
         self
       end
 
