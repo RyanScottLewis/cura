@@ -81,6 +81,19 @@ module Cura
         @children[@selected_index]
       end
 
+      # Set the selected child.
+      #
+      # @param [Component] child
+      # @return [Component]
+      def selected_child=(child)
+        index = @children.index(child)
+
+        return nil if index.nil? # TODO: Raise error?
+        self.selected_index = index
+
+        selected_child
+      end
+
       # Add a child to this group.
       #
       # @param [#to_sym, Component] component_or_type
