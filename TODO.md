@@ -36,6 +36,8 @@
 * `contains_coordinates` tests because I'm sure this is borked.
 * Use middleware for event propagation?
 * Application structure documents
+* Ability to add to a Component.search_modules Array to allow add_child(:NAME_HERE) / Component.find_by_type
+  to work with custom components in developer's own namespace.
 
 Cura XML specification (CXML) XML extension, converts into Cura AST and CCML.
 
