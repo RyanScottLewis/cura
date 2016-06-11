@@ -143,3 +143,5 @@ on_event(:key_down) do |event|
   open_index unless event.match?("^-shift-i")
 end
 ```
+
+* Check if node is orphaned from the tree.
