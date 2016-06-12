@@ -145,3 +145,14 @@ end
 ```
 
 * Check if node is orphaned from the tree.
+* Optimization refactor? ComponentController which is sent an event when the tree changes and updates
+  component's @parent, @children, etc. So, instead of traversing the tree on every single call
+  we are simply reading a reference in an instance variable. Overall change is internal state of the
+  tree and it's nodes are controlled externally, rather than internally for better performance,
+  more efficient testing, better memory management as it will handle pruning with garbage collection.
+
+  This will also ensure there are no corrupt trees:
+
+  As a data structure, a linked tree is a group of nodes, where each node has a value and a list of references to other nodes (its children). This data structure actually defines a directed graph,[a] because it may have loops or several references to the same node, just as a linked list may have a loop. Thus there is also the requirement that no two references point to the same node (that each node has at most a single parent, and in fact exactly one parent, except for the root), and a tree that violates this is "corrupt".
+
+  See: /concepts/node_controller.rb
