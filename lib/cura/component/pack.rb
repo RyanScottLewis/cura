@@ -113,7 +113,7 @@ module Cura
       #
       # @return [Pack]
       def draw
-        pack_children
+        pack_children # TODO: Should be in #update?
 
         super
       end

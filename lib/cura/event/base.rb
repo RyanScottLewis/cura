@@ -88,7 +88,7 @@ module Cura
         other == to_h
       end
 
-      # Dispatches this event directly to it's target.
+      # Dispatches this event directly to it's target, if it has an application.
       #
       # @return [Event::Base] This event.
       def dispatch
