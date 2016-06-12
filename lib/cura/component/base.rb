@@ -7,6 +7,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_offsets"
   require "cura/attributes/has_relative_coordinates"
   require "cura/attributes/has_visibility"
+  require "cura/helpers/component/drawing"
   require "cura/component"
   require "cura/window"
 end
@@ -18,6 +19,7 @@ module Cura
     # All components use a box model similar to CSS.
     # Margins, borders, paddings, then content.
     class Base
+
       class << self
         # On subclass hook.
         def inherited(subclass)
@@ -49,6 +51,8 @@ module Cura
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
       include Attributes::HasVisibility
+
+      include Helpers::Component::Drawing
 
       # Get the cursor for this application.
       # TODO: Delegate something like: def_delegate(:cursor) { application }
@@ -130,6 +134,8 @@ module Cura
       #
       # @return [Component]
       def update
+        @draw = true
+
         self
       end
 
@@ -137,69 +143,32 @@ module Cura
       #
       # @return [Component]
       def draw
-        if @visible
-          draw_background
-          draw_border
-        end
+        return self unless @visible
+        return self unless draw?
+
+        draw_background
+        draw_border
 
         self
       end
+
+      # @method draw?
+      # Get whether this component should be drawn.
+      #
+      # @return [Boolean]
+
+      # @method draw=
+      # Set whether this component should be drawn.
+      #
+      # @param [Boolean] value
+      # @return [Boolean]
+      attribute(:draw, query: true)
 
       # Instance inspection.
       #
       # @return [String]
       def inspect
         "#<#{self.class}:0x#{__id__.to_s(16)} x=#{x} y=#{y} absolute_x=#{absolute_x} absolute_y=#{absolute_y} w=#{width} h=#{height} parent=#{@parent.class}:0x#{@parent.__id__.to_s(16)}>"
-      end
-
-      protected
-
-      # Draw a point.
-      def draw_point(x, y, color=Cura::Color.black)
-        x = absolute_x + @offsets.left + x
-        y = absolute_y + @offsets.top + y
-
-        pencil.draw_point(x, y, color)
-      end
-
-      # Draw a rectangle.
-      # TODO: filled argument
-      def draw_rectangle(x, y, width, height, color=Cura::Color.black)
-        x = absolute_x + @offsets.left + x
-        y = absolute_y + @offsets.top + y
-
-        pencil.draw_rectangle(x, y, width, height, color)
-      end
-
-      # Draw a single character.
-      def draw_character(x, y, character, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
-        x = absolute_x + @offsets.left + x
-        y = absolute_y + @offsets.top + y
-
-        pencil.draw_character(x, y, character, foreground, background, bold, underline)
-      end
-
-      # Draw text.
-      def draw_text(x, y, text, foreground=Cura::Color.black, background=Cura::Color.white, bold=false, underline=false)
-        x = absolute_x + @offsets.left + x
-        y = absolute_y + @offsets.top + y
-
-        pencil.draw_text(x, y, text, foreground, background, bold, underline)
-      end
-
-      # Draw the background of this component.
-      def draw_background
-        x      = absolute_x + @margin.left + @border.left
-        y      = absolute_y + @margin.top + @border.top
-        width  = self.width + @padding.width
-        height = self.height + @padding.height
-        color  = background
-
-        pencil.draw_rectangle(x, y, width, height, color)
-      end
-
-      # Draw the border of this component.
-      def draw_border # TODO
       end
 
       def get_or_inherit_color(name, default)
