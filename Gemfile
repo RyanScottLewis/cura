@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gemspec
 
 group :development do
+  gem "benchmark-ips"  # Benchmarking
   gem "rake"           # Project tasks
   gem "rspec"          # BDD Testing
   gem "fuubar"         # RSpec formatter
