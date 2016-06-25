@@ -155,6 +155,18 @@ end
 
   As a data structure, a linked tree is a group of nodes, where each node has a value and a list of references to other nodes (its children). This data structure actually defines a directed graph,[a] because it may have loops or several references to the same node, just as a linked list may have a loop. Thus there is also the requirement that no two references point to the same node (that each node has at most a single parent, and in fact exactly one parent, except for the root), and a tree that violates this is "corrupt".
 
+  * Phase 1: Proof of concept, profiling
+    * All components must be initialized with an application and held as a reference in an instance variable.
+    * Call the tree_controller through the app instance variable to signal.
+    * This decouples nodes from each other. Nodes in the tree are now coupled to the tree_controller.  
+      This is bad but works for proof of concept.
+    * Benchmark it
+  * Phase 2: Integration
+    * Since components should be decoupled, replace all references to the tree_controller with dispatched events.  
+      Maybe an Event::Tree class holding the method_name to send to the tree_controller.  
+      This decouples nodes from the tree controller.
+    * Benchmark it
+
   See: /concepts/node_controller.rb and BENCHMARK IT
 * Remove Aspect::HasAttributes ????
   See: https://www.reddit.com/r/ruby/comments/3sjb24/virtus_to_be_abandoned_by_its_creator/cwxwosb
