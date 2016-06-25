@@ -1,18 +1,32 @@
+require "cura/error/invalid_component"
+require "cura/component/base"
+
 module Cura
   module Attributes
     # Allows an object to have a `parent` and `ancestors`.
     module HasAncestry
+
       def initialize(attributes={})
-        @ancestors = []
+        @ancestors = [].freeze
 
         super
       end
 
-      # Get/set the parent of this object.
-      # It's not recommended to set this directly as it may break the ancestory chain.
+      # Get the parent of this object.
       #
-      # @return [Object]
+      # @return [Component::Base]
       attr_accessor :parent
+
+      # Set the parent of this object.
+      # This modifies the state of the view tree.
+      #
+      # @param [Component::Base] value
+      # @return [Component::Base]
+      def parent=(value)
+        raise Error::InvalidComponent unless value.is_a?(Component::Base)
+
+        @parent = value
+      end
 
       # Determine if this object has a parent.
       #
@@ -23,14 +37,18 @@ module Cura
 
       # Get the ancestors of this object.
       #
-      # @return [Array<Object>]
-      def ancestors
-        if @parent.nil?
-          []
-        else
-          @parent.respond_to?(:ancestors) ? [@parent] + @parent.ancestors : [@parent]
-        end
+      # @return [<Object>]
+      attr_reader :ancestors
+
+      # Set the ancestors of this object.
+      # This modifies the state of the view tree.
+      #
+      # @param [<Component::Base>] value
+      # @return [<Component::Base>]
+      def ancestors=(value)
+        @ancestors = value.to_a.keep_if { |object| object.is_a?(Component::Base) }.freeze
       end
+
     end
   end
 end
