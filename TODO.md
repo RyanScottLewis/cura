@@ -156,3 +156,5 @@ end
   As a data structure, a linked tree is a group of nodes, where each node has a value and a list of references to other nodes (its children). This data structure actually defines a directed graph,[a] because it may have loops or several references to the same node, just as a linked list may have a loop. Thus there is also the requirement that no two references point to the same node (that each node has at most a single parent, and in fact exactly one parent, except for the root), and a tree that violates this is "corrupt".
 
   See: /concepts/node_controller.rb and BENCHMARK IT
+* Remove Aspect::HasAttributes ????
+  See: https://www.reddit.com/r/ruby/comments/3sjb24/virtus_to_be_abandoned_by_its_creator/cwxwosb
