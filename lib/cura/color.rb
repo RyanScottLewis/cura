@@ -40,6 +40,8 @@ module Cura
       end
     end
 
+    RGB_TO_LAB_CACHE = {}
+
     def initialize(r=0, g=0, b=0, a=255)
       if r.respond_to?(:to_h)
         super(r.to_h)
@@ -50,7 +52,10 @@ module Cura
         @alpha = a
       end
 
-      @lab = rgb_to_lab([@red, @green, @blue]) # TODO: Update on rgb setters?
+      # TODO: Update on rgb setters?
+      rgb = [@red, @green, @blue]
+      @lab = (RGB_TO_LAB_CACHE[rgb] ||= rgb_to_lab(rgb))
+      # @lab = rgb_to_lab(rgb)
     end
 
     # @method red
