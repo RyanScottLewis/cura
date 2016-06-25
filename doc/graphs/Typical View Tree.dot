@@ -1,0 +1,40 @@
+digraph component_view_tree {
+  label = "Typical Component View Tree";
+  labelloc="top";
+  fontsize=12;
+  fontname=Helvetica;
+  ranksep=0.3;
+  rankdir=TB;
+
+  node[fontsize=10, fontname=Helvetica, shape=box, width=1, height=0.25, fixedsize=true]
+  edge[fontsize=10, fontname=Helvetica, arrowsize=0.6, color="#00000064"];
+
+  application_instance_00 [label="Application"];
+  window_instance_00 [label="Window"];
+  group_instance_00 [label="Group"];
+  pack_instance_00 [label="Pack"];
+  pack_instance_01 [label="Pack"];
+  label_instance_00 [label="Label"];
+  textbox_instance_00 [label="Textbox"];
+  label_instance_01 [label="Label"];
+  textbox_instance_01 [label="Textbox"];
+  pack_instance_03 [label="Pack"];
+  listbox_instance_00 [label="Listbox"];
+  label_instance_02 [label="Label"];
+  label_instance_03 [label="Label"];
+  label_instance_04 [label="Label"];
+
+  application_instance_00 -> window_instance_00;
+  window_instance_00 -> group_instance_00;
+  group_instance_00 -> pack_instance_00;
+  pack_instance_00 -> pack_instance_01;
+  pack_instance_01 -> label_instance_00;
+  pack_instance_01 -> textbox_instance_00;
+  pack_instance_01 -> label_instance_01;
+  pack_instance_01 -> textbox_instance_01;
+  pack_instance_00 -> pack_instance_03;
+  pack_instance_03 -> listbox_instance_00;
+  listbox_instance_00 -> label_instance_02;
+  listbox_instance_00 -> label_instance_03;
+  listbox_instance_00 -> label_instance_04;
+}
