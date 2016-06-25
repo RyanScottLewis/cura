@@ -70,6 +70,22 @@ module Cura
       @application
     end
 
+    # Set root component for this object.
+    #
+    # @param [Component::Group] component
+    # @return [Component::Group]
+    def root=(value)
+      raise TypeError, "root must be a Component::Group" unless value.is_a?(Component::Group)
+
+      @root.parent = nil unless @root.nil?
+
+      @root = value
+      @root.parent = self
+      @root.focus
+
+      @root
+    end
+
     # Instance inspection.
     #
     # @return [String]

@@ -8,6 +8,7 @@ module Cura
   module Attributes
     # Adds the `root` attribute to an object, which defaults to a Component::Group.
     module HasRoot
+
       include Attributes::HasAttributes
 
       def initialize(attributes={})
@@ -16,20 +17,23 @@ module Cura
         super
       end
 
-      # @method root
       # Get root component for this object.
       #
       # @return [Component::Group]
+      attr_reader :root
 
-      # @method root=(component)
       # Set root component for this object.
       #
       # @param [Component::Group] component
       # @return [Component::Group]
+      def root=(value)
+        raise TypeError, "root must be a Component::Group" unless value.is_a?(Component::Group)
 
-      attribute(:root) { |component| set_root(component) }
+        @root = value
+      end
 
       # Delegates -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+      # TODO: Use Forwardable
 
       # Get the children of this object.
       #
@@ -89,17 +93,6 @@ module Cura
         @root.children?
       end
 
-      protected
-
-      def set_root(component)
-        raise TypeError, "root must be a Component::Group" unless component.is_a?(Component::Group)
-
-        @root.parent = nil unless @root.nil?
-        @root = component
-        @root.parent = self
-
-        @root
-      end
     end
   end
 end
