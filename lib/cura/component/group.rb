@@ -82,6 +82,7 @@ module Cura
       # TODO: If the dimensions of this group of this group are less than the computed dimensions, the drawing will be clipped.
       def draw
         super
+        return self unless @draw
 
         draw_children
       end

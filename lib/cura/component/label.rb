@@ -131,6 +131,7 @@ module Cura
 
       def draw
         super
+        return self unless @draw
 
         draw_text unless text.empty?
       end

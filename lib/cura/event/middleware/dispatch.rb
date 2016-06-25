@@ -9,6 +9,11 @@ module Cura
         # @param [#to_h] options
         # @option options [Event::Base] :event
         def call(options={})
+          # TODO: !!!! Refactor
+          return nil if options[:event].nil?
+          return nil if options[:event].target.nil?
+          return nil if !options[:event].target.is_a?(Application) && options[:event].target.application.nil? # TODO: Check if orphaned, maybe log this?
+
           options[:dispatch_queue] << options[:event]
         end
       end
