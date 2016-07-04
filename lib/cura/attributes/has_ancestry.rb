@@ -1,5 +1,7 @@
-require "cura/error/invalid_component"
-require "cura/component/base"
+if Kernel.respond_to?(:require)
+  require "cura/error/invalid_component"
+  require "cura/component/base"
+end
 
 module Cura
   module Attributes
@@ -26,6 +28,9 @@ module Cura
         raise Error::InvalidComponent unless value.is_a?(Component::Base)
 
         @parent = value
+        @application.tree_controller.create_relation(@parent, self)
+
+        @parent
       end
 
       # Determine if this object has a parent.

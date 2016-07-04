@@ -116,6 +116,13 @@ module Cura
         @children.any?
       end
 
+      # Determine if this group's children contains the given `component`.
+      #
+      # @return [Boolean]
+      def has_child?(component)
+        @children.include?(component)
+      end
+
       protected
 
       def validate_component(component)
