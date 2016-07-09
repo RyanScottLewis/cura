@@ -13,31 +13,31 @@ module Cura
         super
       end
 
-      # @method width
       # Get the width dimension of this object.
       #
       # @return [Integer]
+      attr_reader :width
 
-      # @method width=(value)
       # Set the width dimension of this object.
       #
       # @param [#to_i] value
       # @return [Integer]
+      def width=(value)
+        @width = validate_size_attribute(value)
+      end
 
-      attribute(:width) { |value| validate_size_attribute(value) }
-
-      # @method height
       # Get the height dimension of this object.
       #
       # @return [Integer]
+      attr_reader :height
 
-      # @method height=(value)
       # Set the height dimension of this object.
       #
       # @param [#to_i] value
       # @return [Integer]
-
-      attribute(:height) { |value| validate_size_attribute(value) }
+      def height=(value)
+        @height = validate_size_attribute(value)
+      end
 
       # Set one or both of the dimensions of this object.
       # @param [#to_h] options

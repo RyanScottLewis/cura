@@ -20,34 +20,35 @@ module Cura
         super
       end
 
-      # @method foreground
       # Get the foreground color of this object.
       #
       # @return [Color]
+      attr_reader :foreground
 
-      # @method foreground=(value)
       # Set the foreground color of this object.
       #
       # @param [Color, #to_sym] value
       # @return [Color]
+      def foreground=(value)
+        @foreground = validate_color_attribute(value)
+      end
 
-      attribute(:foreground) { |value| validate_color_attribute(value) }
-
-      # @method background
       # Get the background color of this object.
       #
       # @return [Color]
+      attr_reader :background
 
-      # @method background=(value)
       # Set the background color of this object.
       #
       # @param [Color, #to_sym] value
       # @return [Color]
-
-      attribute(:background) { |value| validate_color_attribute(value) }
+      def background=(value)
+        @background = validate_color_attribute(value)
+      end
 
       protected
 
+      # TODO: Color class should have a helper for this
       def validate_color_attribute(value)
         unless value.is_a?(Cura::Color)
           value = value.to_sym

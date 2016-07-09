@@ -12,17 +12,19 @@ module Cura
         super
       end
 
-      # @method visible?
       # Get the visibility.
       #
       # @return [Boolean]
+      def visible?
+        @visible
+      end
 
-      # @method visible=
       # Set the visibility.
       #
       # @return [Boolean]
-
-      attribute(:visible, query: true)
+      def visible=(value)
+        @visible = !!value
+      end
     end
   end
 end

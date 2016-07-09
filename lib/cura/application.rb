@@ -58,19 +58,19 @@ module Cura
       setup_dispatcher
     end
 
-    # @method adapter
     # Get the adapter used for running this application.
     #
     # @return [Adapter]
+    attr_reader :adapter
 
-    # @method adapter=(adapter)
     # Set the adapter used for running this application.
     # This cannot be set after #run is used.
     #
     # @param [Adapter] value The new adapter.
     # @return [Adapter]
-
-    attribute(:adapter) { |adapter| validate_adapter(adapter) }
+    def adapter=(adapter)
+      @adapter = validate_adapter(adapter)
+    end
 
     # Get the text cursor.
     #
@@ -230,7 +230,7 @@ module Cura
     end
 
     def validate_adapter(adapter)
-      # TODO: Raise error if ever set more than once
+      # TODO: Raise error if ever set more than once?
       raise Error::InvalidAdapter unless adapter.is_a?(Cura::Adapter)
 
       adapter

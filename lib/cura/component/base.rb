@@ -152,17 +152,20 @@ module Cura
         self
       end
 
-      # @method draw?
       # Get whether this component should be drawn.
       #
       # @return [Boolean]
+      def draw?
+        @draw
+      end
 
-      # @method draw=
       # Set whether this component should be drawn.
       #
       # @param [Boolean] value
       # @return [Boolean]
-      attribute(:draw, query: true)
+      def draw=(value)
+        @draw = !!value
+      end
 
       # Instance inspection.
       #

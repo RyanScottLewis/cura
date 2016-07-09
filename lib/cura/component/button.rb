@@ -12,18 +12,18 @@ module Cura
         click if event.target == self && event.up? && contains_coordinates?(x: event.x, y: event.y)
       end
 
-      # @method focused_background
       # Get the focused background color of this object.
       #
       # @return [Color]
+      attr_reader :focused_background
 
-      # @method focused_background=(value)
       # Set the focused background color of this object.
       #
       # @param [Color] value
       # @return [Color]
-
-      attribute(:focused_background) { |value| validate_color_attribute(value) }
+      def focused_background=(value)
+        validate_color_attribute(value)
+      end
 
       def initialize(attributes={})
         @focusable = true
