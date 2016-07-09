@@ -1,14 +1,11 @@
 if Kernel.respond_to?(:require)
-  require "cura/adapter"
   require "cura/color"
-  require "cura/component/base"
-  require "cura/error/invalid_adapter"
   require "cura/error/invalid_color"
 end
 
 module Cura
   module Helpers
-    # Protected validations.
+    # Protected validations which always return the value passed for ease of use.
     module Validations
 
       VALID_SIZE_SYMBOLS = [:auto, :inherit]
@@ -25,25 +22,10 @@ module Cura
         value.to_sym
       end
 
-      # TODO: Replace all of the below and references with:
-      # def validate_type(value, type, exception=TypeError)
-
-      def validate_component(value)
-        raise TypeError, "value must be a Cura::Component::Base" unless value.is_a?(Cura::Component::Base)
+      def validate_type(value, type, exception=TypeError)
+        raise exception, "value must be a #{type}" unless value.is_a?(type)
 
         value
-      end
-
-      def validate_adapter(adapter)
-        raise Error::InvalidAdapter unless adapter.is_a?(Cura::Adapter)
-
-        adapter
-      end
-
-      def validate_window(window)
-        raise TypeError, "must be a Cura::Window" unless window.is_a?(Window)
-
-        window
       end
 
       # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #

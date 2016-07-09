@@ -97,7 +97,7 @@ module Cura
       # @param [Component] component
       # @return [Component]
       def delete_child(component)
-        validate_component(component)
+        validate_type(component, Component::Base)
 
         delete_child_at(@children.index(component))
       end

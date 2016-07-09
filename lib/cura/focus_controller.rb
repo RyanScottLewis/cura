@@ -1,13 +1,15 @@
 if Kernel.respond_to?(:require)
   require "cura/helpers/validations"
+
   require "cura/attributes/has_initialize"
   require "cura/attributes/has_attributes"
   require "cura/attributes/has_application"
+
+  require "cura/window"
 end
 
 module Cura
   class FocusController
-
     include Helpers::Validations
     include Attributes::HasInitialize
     include Attributes::HasAttributes
@@ -31,7 +33,7 @@ module Cura
     # @param [#to_i] value
     # @return [Window]
     def window=(value)
-      @window = validate_window(value)
+      @window = validate_type(value, Window)
     end
 
     # Get the index of the currently focused component.

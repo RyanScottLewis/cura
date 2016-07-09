@@ -8,6 +8,8 @@ if Kernel.respond_to?(:require)
 
   require "cura/component/base"
 
+  require "cura/error/invalid_adapter"
+
   require "cura/event/dispatcher"
 
   require "cura/event/click"
@@ -70,8 +72,8 @@ module Cura
     #
     # @param [Adapter] value The new adapter.
     # @return [Adapter]
-    def adapter=(adapter)
-      @adapter = validate_adapter(adapter) # TODO: Raise error if ever set more than once?
+    def adapter=(value) # TODO: Raise error if ever set more than once?
+      @adapter = validate_type(value, Adapter, Error::InvalidAdapter)
     end
 
     # Get the text cursor.
