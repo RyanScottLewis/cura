@@ -1,9 +1,13 @@
-require "cura/attributes/has_attributes" if Kernel.respond_to?(:require)
+if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
+  require "cura/attributes/has_attributes"
+end
 
 module Cura
   module Attributes
     # Adds the `top`, `right`, `bottom`, `left`, `width`, and `height` attributes to objects.
     module HasSideAttributes
+      include Helpers::Validations
       include HasAttributes
 
       def initialize(attributes={})

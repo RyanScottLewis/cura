@@ -4,6 +4,8 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_events"
   require "cura/attributes/has_initialize"
 
+  require "cura/helpers/validations"
+
   require "cura/component/base"
 
   require "cura/event/dispatcher"
@@ -25,8 +27,7 @@ if Kernel.respond_to?(:require)
   require "cura/event/middleware/aimer/dispatcher_target"
   require "cura/event/middleware/translator/mouse_click"
 
-  require "cura/error/invalid_adapter"
-
+  require "cura/adapter"
   require "cura/cursor"
   require "cura/pencil"
 end
@@ -40,6 +41,7 @@ module Cura
       end
     end
 
+    include Helpers::Validations
     include Attributes::HasInitialize
     include Attributes::HasAttributes
     include Attributes::HasWindows
@@ -69,7 +71,7 @@ module Cura
     # @param [Adapter] value The new adapter.
     # @return [Adapter]
     def adapter=(adapter)
-      @adapter = validate_adapter(adapter)
+      @adapter = validate_adapter(adapter) # TODO: Raise error if ever set more than once?
     end
 
     # Get the text cursor.
@@ -227,13 +229,6 @@ module Cura
       @dispatcher.middleware << Event::Middleware::Aimer::DispatcherTarget.new
       @dispatcher.middleware << Event::Middleware::Dispatch.new
       @dispatcher.middleware << Event::Middleware::Translator::MouseClick.new
-    end
-
-    def validate_adapter(adapter)
-      # TODO: Raise error if ever set more than once?
-      raise Error::InvalidAdapter unless adapter.is_a?(Cura::Adapter)
-
-      adapter
     end
 
     def run_event_loop

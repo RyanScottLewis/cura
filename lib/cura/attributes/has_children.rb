@@ -1,6 +1,7 @@
 if Kernel.respond_to?(:require)
   require "cura/component/base"
   require "cura/error/invalid_component"
+  require "cura/helpers/validations"
 end
 
 module Cura
@@ -9,6 +10,7 @@ module Cura
     # TODO: Lots of code is the same as HasWindows
     module HasChildren
       include Enumerable
+      include Helpers::Validations
 
       def initialize(*arguments)
         @children = []
@@ -117,10 +119,6 @@ module Cura
       end
 
       protected
-
-      def validate_component(component)
-        raise Error::InvalidComponent unless component.is_a?(Component::Base)
-      end
 
       def update_children
         children.each(&:update)

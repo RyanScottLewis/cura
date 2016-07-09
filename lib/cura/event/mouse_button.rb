@@ -1,9 +1,14 @@
-require "cura/event/mouse" if Kernel.respond_to?(:require)
+if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
+  require "cura/event/mouse"
+end
 
 module Cura
   module Event
     # Dispatched when a mouse's button state changes.
     class MouseButton < Mouse
+      include Helpers::Validations
+
       VALID_NAMES = [:left, :middle, :right]
       VALID_STATES = [:up, :down, :click, :double_click]
 
@@ -83,14 +88,6 @@ module Cura
 
       VALID_STATES.each do |state|
         define_method("#{state}?") { @state == state }
-      end
-
-      protected
-
-      def validate_list(value, list)
-        raise ArgumentError, "must be one of #{list.join(', ')}" unless list.include?(value)
-
-        value.to_sym
       end
     end
   end

@@ -1,15 +1,17 @@
 if Kernel.respond_to?(:require)
-  require "cura/attributes/has_attributes"
   require "cura/borders"
   require "cura/margins"
-  require "cura/padding"
   require "cura/offsets"
+  require "cura/padding"
+  require "cura/helpers/validations"
+  require "cura/attributes/has_attributes"
 end
 
 module Cura
   module Attributes
     # Adds the `offsets` attribute to objects.
     module HasOffsets
+      include Helpers::Validations
       include HasAttributes
 
       def initialize(attributes={})
@@ -65,14 +67,6 @@ module Cura
       #
       # @return [Offsets]
       attr_reader :offsets
-
-      protected
-
-      def validate_offset_attribute(value, type)
-        value ||= {}
-
-        value.is_a?(type) ? value : type.new(value)
-      end
     end
   end
 end

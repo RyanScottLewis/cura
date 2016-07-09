@@ -1,4 +1,5 @@
 if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
   require "cura/attributes/has_initialize"
   require "cura/attributes/has_attributes"
   require "cura/attributes/has_application"
@@ -6,6 +7,8 @@ end
 
 module Cura
   class FocusController
+
+    include Helpers::Validations
     include Attributes::HasInitialize
     include Attributes::HasAttributes
     include Attributes::HasApplication
@@ -46,12 +49,6 @@ module Cura
     end
 
     protected
-
-    def validate_window(window)
-      raise TypeError, "must be a Cura::Window" unless window.is_a?(Window)
-
-      window
-    end
 
     def set_index(value)
       index = value.to_i

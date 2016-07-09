@@ -1,9 +1,8 @@
 if Kernel.respond_to?(:require)
-  require "cura/attributes/has_attributes"
-
-  require "cura/error/invalid_color"
-
   require "cura/color"
+  require "cura/attributes/has_attributes"
+  require "cura/helpers/validations"
+  require "cura/error/invalid_color"
 end
 
 module Cura
@@ -11,6 +10,7 @@ module Cura
     # Adds the #foreground and #background attributes.
     # TODO: Should be color and background... HasBackground and HasColor
     module HasColors
+      include Helpers::Validations
       include HasAttributes
 
       def initialize(attributes={})
@@ -44,23 +44,6 @@ module Cura
       # @return [Color]
       def background=(value)
         @background = validate_color_attribute(value)
-      end
-
-      protected
-
-      # TODO: Color class should have a helper for this
-      def validate_color_attribute(value)
-        unless value.is_a?(Cura::Color)
-          value = value.to_sym
-
-          if [:black, :white, :red, :green, :blue].include?(value)
-            value = Cura::Color.send(value)
-          else
-            raise Error::InvalidColor unless value == :inherit
-          end
-        end
-
-        value
       end
     end
   end

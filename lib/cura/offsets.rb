@@ -1,12 +1,13 @@
 if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
   require "cura/attributes/has_initialize"
   require "cura/attributes/has_attributes"
-  require "cura/component/base"
 end
 
 module Cura
   # The offsets of a component's drawing area.
   class Offsets
+    include Helpers::Validations
     include Attributes::HasInitialize
     include Attributes::HasAttributes
 
@@ -81,12 +82,6 @@ module Cura
     # @return [Integer]
     def attribute_sum(method)
       @component.padding.send(method) + @component.border.send(method) + @component.margin.send(method)
-    end
-
-    def validate_component(value)
-      raise TypeError, "value must be a Cura::Component::Base" unless value.is_a?(Cura::Component::Base)
-
-      value
     end
   end
 end

@@ -23,19 +23,6 @@ module Cura
 
       protected
 
-      VALID_SIZE_SYMBOLS = [:auto, :inherit]
-
-      def validate_size_attribute(value)
-        if value.is_a?(Symbol)
-          raise ArgumentError, "must be one of #{VALID_SIZE_SYMBOLS.join(', ')}" unless VALID_SIZE_SYMBOLS.include?(value)
-        else
-          value = value.to_i
-          value = 0 if value < 0
-        end
-
-        value
-      end
-
       # Convert the attributes to a Hash and any other conversions that may need to happen.
       #
       # @param [#to_h] attributes

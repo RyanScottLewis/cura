@@ -7,6 +7,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_offsets"
   require "cura/attributes/has_relative_coordinates"
   require "cura/attributes/has_visibility"
+  require "cura/helpers/validations"
   require "cura/helpers/component/drawing"
   require "cura/component"
   require "cura/window"
@@ -40,6 +41,9 @@ module Cura
         end
       end
 
+      include Helpers::Validations
+      include Helpers::Component::Drawing
+
       include Attributes::HasInitialize
       include Attributes::HasAttributes
 
@@ -51,8 +55,6 @@ module Cura
       include Attributes::HasOffsets
       include Attributes::HasRelativeCoordinates
       include Attributes::HasVisibility
-
-      include Helpers::Component::Drawing
 
       # Get the cursor for this application.
       # TODO: Delegate something like: def_delegate(:cursor) { application }
