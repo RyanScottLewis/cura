@@ -1,9 +1,14 @@
-require "cura/event/mouse" if Kernel.respond_to?(:require)
+if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
+  require "cura/event/mouse"
+end
 
 module Cura
   module Event
     # Dispatched when a mouse's button state changes.
     class MouseButton < Mouse
+      include Helpers::Validations
+
       VALID_NAMES = [:left, :middle, :right]
       VALID_STATES = [:up, :down, :click, :double_click]
 
@@ -14,33 +19,33 @@ module Cura
         raise ArgumentError, "state must be set" if @state.nil?
       end
 
-      # @method state
       # Get the mouse button state.
       # Will return `:up`, `:down`, `:click`, or `:double_click`.
       #
       # @return [Symbol]
+      attr_reader :state
 
-      # @method state=(value)
       # Set the mouse button state.
       #
       # @param [#to_sym] value
       # @return [Symbol]
+      def state=(value)
+        @state = validate_list(value, VALID_STATES)
+      end
 
-      attribute(:state) { |value| validate_list(value, VALID_STATES) }
-
-      # @method name
       # Get the mouse button name.
       # Will return `:left`, `:middle`, or `:right`.
       #
       # @return [Symbol]
+      attr_reader :name
 
-      # @method name=(value)
       # Set the mouse button name.
       #
       # @param [#to_sym] value
       # @return [Symbol]
-
-      attribute(:name) { |value| validate_list(value, VALID_NAMES) }
+      def name=(value)
+        @name = validate_list(value, VALID_NAMES)
+      end
 
       # @method left?
       # Get whether the mouse button state occurred the left button.
@@ -83,14 +88,6 @@ module Cura
 
       VALID_STATES.each do |state|
         define_method("#{state}?") { @state == state }
-      end
-
-      protected
-
-      def validate_list(value, list)
-        raise ArgumentError, "must be one of #{list.join(', ')}" unless list.include?(value)
-
-        value.to_sym
       end
     end
   end

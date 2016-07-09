@@ -102,8 +102,12 @@ module Cura
     # @param [#to_i] value
     # @return [Integer]
 
-    [:red, :green, :blue, :alpha].each do |channel|
-      attribute(channel) { |value| convert_and_constrain_value(value) }
+    [:red, :green, :blue, :alpha].each do |method|
+      attr_reader(method)
+
+      define_method("#{method}=") do
+        convert_and_constrain_value(value)
+      end
     end
 
     attr_reader :lab

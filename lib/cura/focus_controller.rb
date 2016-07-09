@@ -1,11 +1,16 @@
 if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
+
   require "cura/attributes/has_initialize"
   require "cura/attributes/has_attributes"
   require "cura/attributes/has_application"
+
+  require "cura/window"
 end
 
 module Cura
   class FocusController
+    include Helpers::Validations
     include Attributes::HasInitialize
     include Attributes::HasAttributes
     include Attributes::HasApplication
@@ -18,40 +23,34 @@ module Cura
       # TODO: raise error if window or application is nil
     end
 
-    # @method window
     # Get the window of the currently focused component.
     #
     # @return [Window]
+    attr_reader :window
 
-    # @method window=(value)
     # Set the window of the currently focused component.
     #
     # @param [#to_i] value
     # @return [Window]
+    def window=(value)
+      @window = validate_type(value, Window)
+    end
 
-    attribute(:window) { |value| validate_window(value) }
-
-    # @method index
     # Get the index of the currently focused component.
     #
     # @return [Integer]
+    attr_reader :index
 
-    # @method index=(value)
     # Set the index of the currently focused component.
     # This will dispatch a Event::Focus instance to the object.
     #
     # @param [#to_i] value
     # @return [Integer]
-
-    attribute(:index) { |value| set_index(value) }
+    def index=(value)
+      @index = set_index(value)
+    end
 
     protected
-
-    def validate_window(window)
-      raise TypeError, "must be a Cura::Window" unless window.is_a?(Window)
-
-      window
-    end
 
     def set_index(value)
       index = value.to_i

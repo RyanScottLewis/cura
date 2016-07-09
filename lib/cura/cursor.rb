@@ -9,6 +9,7 @@ module Cura
   #
   # Should only ever have one single Cursor instance at one time.
   # TODO: Rename Cursor::Text, need Cursor::Mouse
+  # TODO: HasVisibility, remove hidden?, hidden=
   class Cursor
     include Attributes::HasInitialize
     include Attributes::HasAttributes
@@ -23,17 +24,20 @@ module Cura
       raise ArgumentError, "application must be set" if application.nil?
     end
 
-    # @method hidden?
     # Check if the cursor is hidden.
     #
     # @return [Boolean]
+    def hidden?
+      @hidden
+    end
 
-    # @method hidden=
     # Set if the cursor is hidden.
     #
     # @param [Boolean] value
     # @return [Boolean]
-    attribute(:hidden, query: true)
+    def hidden=(value)
+      @hidden = !!value
+    end
 
     # Show the cursor.
     #

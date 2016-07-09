@@ -1,74 +1,79 @@
-require "cura/attributes/has_attributes" if Kernel.respond_to?(:require)
+if Kernel.respond_to?(:require)
+  require "cura/helpers/validations"
+  require "cura/attributes/has_attributes"
+end
 
 module Cura
   module Attributes
     # Adds the `top`, `right`, `bottom`, `left`, `width`, and `height` attributes to objects.
     module HasSideAttributes
+      include Helpers::Validations
       include HasAttributes
 
-      # @method top
+      def initialize(attributes={})
+        @top    = 0 unless instance_variable_defined?(:@top)
+        @right  = 0 unless instance_variable_defined?(:@right)
+        @bottom = 0 unless instance_variable_defined?(:@bottom)
+        @left   = 0 unless instance_variable_defined?(:@left)
+
+        # Set all side attributes to the argument given unless it is Hash-like.
+        unless attributes.respond_to?(:to_hash) || attributes.respond_to?(:to_h)
+          attributes = { top: attributes, right: attributes, bottom: attributes, left: attributes }
+        end
+
+        super
+      end
+
       # Get the top attribute.
       #
       # @return [Integer]
+      attr_reader :top
 
-      # @method top=(value)
       # Set the top attribute.
       #
       # @param [#to_i] value
       # @return [Integer]
+      def top=(value)
+        @top = validate_size_attribute(value)
+      end
 
-      attribute(:top) { |value| validate_size_attribute(value) }
-
-      # @method right
       # Get the right attribute.
       #
       # @return [Integer]
+      attr_reader :right
 
-      # @method right=(value)
       # Set the right attribute.
       #
       # @param [#to_i] value
       # @return [Integer]
+      def right=(value)
+        @right = validate_size_attribute(value)
+      end
 
-      attribute(:right) { |value| validate_size_attribute(value) }
-
-      # @method bottom
       # Get the bottom attribute.
       #
       # @return [Integer]
+      attr_reader :bottom
 
-      # @method bottom=(value)
       # Set the bottom attribute.
       #
       # @param [#to_i] value
       # @return [Integer]
+      def bottom=(value)
+        @bottom = validate_size_attribute(value)
+      end
 
-      attribute(:bottom) { |value| validate_size_attribute(value) }
-
-      # @method left
       # Get the left attribute.
       #
       # @return [Integer]
+      attr_reader :left
 
-      # @method left=(value)
       # Set the left attribute.
       #
       # @param [#to_i] value
       # @return [Integer]
-
-      attribute(:left) { |value| validate_size_attribute(value) }
-
-      def initialize(attributes={})
-        @top = 0 unless instance_variable_defined?(:@top)
-        @right = 0 unless instance_variable_defined?(:@right)
-        @bottom = 0 unless instance_variable_defined?(:@bottom)
-        @left = 0 unless instance_variable_defined?(:@left)
-
-        unless attributes.respond_to?(:to_hash) || attributes.respond_to?(:to_h)
-          attributes = { top: attributes, right: attributes, bottom: attributes, left: attributes } # Set all side attributes to the argument given
-        end
-
-        super
+      def left=(value)
+        @left = validate_size_attribute(value)
       end
 
       # Get the total height of the attributes.

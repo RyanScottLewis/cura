@@ -170,3 +170,6 @@ end
   See: /concepts/node_controller.rb and BENCHMARK IT
 * Remove Aspect::HasAttributes ????
   See: https://www.reddit.com/r/ruby/comments/3sjb24/virtus_to_be_abandoned_by_its_creator/cwxwosb
+* FocusController currently uses a window's child "index".
+  Just set the currently focused component and use that to figure out the window, app, next/previous
+  component to focus. BENCHMARK IT

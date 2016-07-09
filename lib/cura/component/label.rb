@@ -43,17 +43,18 @@ module Cura
         @height
       end
 
-      # @method text
       # Get the text of this label.
       #
       # @return [String]
+      attr_reader :text
 
-      # @method text=(value)
       # Set the text of this label.
       #
       # @param [#to_s] value
       # @return [String]
-      attribute(:text) { |value| value.to_s }
+      def text=(value)
+        @text = value.to_s
+      end
 
       # Get the lines of this label.
       #
@@ -80,54 +81,60 @@ module Cura
         value == 0 ? 1 : value
       end
 
-      # @method bold?
       # Get whether the text is bold.
       #
       # @return [Boolean]
+      attr_reader :bold?
 
-      # @method bold=(value)
       # Set whether the text is bold.
       #
       # @return [Boolean]
-      attribute(:bold, query: true)
+      def bold=(value)
+        @bold = !!value
+      end
 
-      # @method underline?
       # Get whether the text is underlined.
       #
       # @return [Boolean]
+      def underline?
+        @underline
+      end
 
-      # @method underlined=(value)
       # Set whether the text is underlined.
       #
       # @return [Boolean]
-      attribute(:underline, query: true)
+      def underline=(value)
+        @underline = !!value
+      end
 
-      # @method horizontal_alignment
       # Get the horizontal alignment of this label.
       #
       # @return [Symbol]
+      attr_reader :horizontal_alignment
 
-      # @method horizontal_alignment=(value)
       # Set the horizontal alignment of this label.
       # Must be :left, :center, or :right.
       #
       # @param [#to_sym] value
       # @return [Symbol]
-      attribute(:horizontal_alignment) { |value| convert_horizontal_alignment_attribute(value) }
+      def horizontal_alignment=(value)
+        @horizontal_alignment = convert_horizontal_alignment_attribute(value)
+      end
 
-      # @method vertical_alignment
       # Get the vertical alignment of this label.
       # Will be :left, :center, or :right.
       #
       # @return [Symbol]
+      attr_reader :vertical_alignment
 
-      # @method vertical_alignment=(value)
       # Set the vertical alignment of this label.
       # Must be :left, :center, or :right.
       #
       # @param [#to_sym] value
       # @return [Symbol]
-      attribute(:vertical_alignment) { |value| convert_vertical_alignment_attribute(value) }
+      def vertical_alignment=(value)
+        @vertical_alignment = convert_vertical_alignment_attribute(value)
+      end
 
       def draw
         super

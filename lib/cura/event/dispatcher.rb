@@ -25,32 +25,28 @@ module Cura
         @middleware = []
       end
 
-      # @method wait_time
       # Get the time to wait for events in milliseconds in the run loop.
       #
       # @return [Integer]
+      attr_reader :wait_time
 
-      # @method wait_time=(value)
       # Set the time to wait for events in milliseconds in the run loop.
       # Set to 0 to wait forever (poll instead of peek).
       #
       # @param [#to_i] value
       # @return [Integer]
-
-      attribute(:wait_time) do |value|
+      def wait_time=(value)
         value = value.to_i
         value = 0 if value < 0
 
-        value
+        @wait_time = value
       end
 
-      # @method target
       # Get the object with an event handler to dispatch events to.
       #
       # @return [Cura::Attributes::HasEvents]
-      attr_reader :target # TODO: use .attribute() { |value| ... }
+      attr_reader :target
 
-      # @method target=(value)
       # Set the object with an event handler to dispatch events to.
       # Setting to nil will automatially set the target to the application.
       #
