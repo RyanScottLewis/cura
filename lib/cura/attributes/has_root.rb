@@ -8,11 +8,11 @@ module Cura
   module Attributes
     # Adds the `root` attribute to an object, which defaults to a Component::Group.
     module HasRoot
-
+      include Attributes::HasApplication
       include Attributes::HasAttributes
 
       def initialize(attributes={})
-        @root = Component::Group.new(parent: self)
+        @root = Component::Group.new(parent: self, application: @application)
 
         super
       end

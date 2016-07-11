@@ -84,7 +84,7 @@ module Cura
       # Get whether the text is bold.
       #
       # @return [Boolean]
-      attr_reader :bold?
+      attr_reader :bold
 
       # Set whether the text is bold.
       #

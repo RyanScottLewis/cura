@@ -6,6 +6,7 @@ if Kernel.respond_to?(:require)
   require "cura/attributes/has_dimensions"
   require "cura/attributes/has_events"
   require "cura/attributes/has_root"
+
   require "cura/focus_controller"
 end
 
@@ -81,7 +82,7 @@ module Cura
 
       @root = value
       @root.parent = self
-      @root.focus
+      @root.focus # TODO: Why is this assumed? First focus should be done after all components are setup, by the dev
 
       @root
     end

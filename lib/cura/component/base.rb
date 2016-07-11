@@ -1,14 +1,18 @@
 if Kernel.respond_to?(:require)
   require "cura/attributes/has_initialize"
-  require "cura/attributes/has_focusability"
-  require "cura/attributes/has_colors"
+  require "cura/attributes/has_attributes"
+  require "cura/attributes/has_ancestry"
   require "cura/attributes/has_dimensions"
   require "cura/attributes/has_events"
+  require "cura/attributes/has_focusability"
+  require "cura/attributes/has_colors"
   require "cura/attributes/has_offsets"
   require "cura/attributes/has_relative_coordinates"
   require "cura/attributes/has_visibility"
+
   require "cura/helpers/validations"
   require "cura/helpers/component/drawing"
+
   require "cura/component"
   require "cura/window"
 end
