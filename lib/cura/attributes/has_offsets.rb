@@ -3,7 +3,9 @@ if Kernel.respond_to?(:require)
   require "cura/margins"
   require "cura/offsets"
   require "cura/padding"
-  require "cura/helpers/validations"
+  
+  require "cura/helpers/conversions"
+
   require "cura/attributes/has_attributes"
 end
 
@@ -11,7 +13,7 @@ module Cura
   module Attributes
     # Adds the `offsets` attribute to objects.
     module HasOffsets
-      include Helpers::Validations
+      include Helpers::Conversions
       include HasAttributes
 
       def initialize(attributes={})
@@ -34,7 +36,7 @@ module Cura
       # @param [Borders, #to_h] value
       # @return [Borders]
       def border=(value)
-        @border = validate_offset_attribute(value, Borders)
+        @border = convert_instance(value, Borders)
       end
 
       # Get the margins of this object.
@@ -47,7 +49,7 @@ module Cura
       # @param [Margins, #to_h] value
       # @return [Margins]
       def margin=(value)
-        @margin = validate_offset_attribute(value, Margins)
+        @margin = convert_instance(value, Margins)
       end
 
       # Get the padding of this object.
@@ -60,7 +62,7 @@ module Cura
       # @param [Padding, #to_h] value
       # @return [Padding]
       def padding=(value)
-        @padding = validate_offset_attribute(value, Padding)
+        @padding = convert_instance(value, Padding)
       end
 
       # Get the offsets of this object.
