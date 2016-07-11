@@ -157,6 +157,8 @@ end
 
   * Phase 1: Proof of concept, profiling
     * All components must be initialized with an application and held as a reference in an instance variable.
+      * When done through #add_child method, the application is optional and assumed from the parent.
+        If it is passed with an application option, it should raise an error.
     * Call the tree_controller through the app instance variable to signal.
     * This decouples nodes from each other. Nodes in the tree are now coupled to the tree_controller.  
       This is bad but works for proof of concept.
@@ -165,6 +167,7 @@ end
     * Since components should be decoupled, replace all references to the tree_controller with dispatched events.  
       Maybe an Event::Tree class holding the method_name to send to the tree_controller.  
       This decouples nodes from the tree controller.
+      TODO: Is this needed?
     * Benchmark it
 
   See: /concepts/node_controller.rb and BENCHMARK IT
@@ -173,3 +176,5 @@ end
 * FocusController currently uses a window's child "index".
   Just set the currently focused component and use that to figure out the window, app, next/previous
   component to focus. BENCHMARK IT
+* `Component::Base#siblings`
+  * Could be used by FocusController to figure out next/previous component to focus.

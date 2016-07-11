@@ -9,17 +9,21 @@ digraph yard {
     subgraph cluster_Cura_Color {
       label = "Color"; labelloc=b;
     }
-    Cura_Pencil [label="{class Pencil||+ \#draw_character\l+ \#draw_point\l+ \#draw_rectangle\l+ \#draw_text\l}" rank=sink];
-    subgraph cluster_Cura_Pencil {
-      label = "Pencil"; labelloc=b;
-    }
     Cura_Cursor [label="{class Cursor||+ \#hidden\=\ \:\ Boolean\l+ \#hidden\?\ \:\ Boolean\l+ \#hide\ \:\ Cursor\l+ \#initialize\ \:\ Cursor\l+ \#show\ \:\ Cursor\l+ \#update\ \:\ Cursor\l}" rank=sink];
     subgraph cluster_Cura_Cursor {
       label = "Cursor"; labelloc=b;
     }
-    Cura_Window [label="{class Window||+ \#draw\ \:\ Window\l+ \#hide\ \:\ Window\l+ \#initialize\ \:\ Window\l+ \#inspect\ \:\ String\l+ \#parent\ \:\ Window\l+ \#show\ \:\ Window\l+ \#update\ \:\ Window\l}" rank=sink];
+    Cura_Window [label="{class Window||+ \#draw\ \:\ Window\l+ \#hide\ \:\ Window\l+ \#initialize\ \:\ Window\l+ \#inspect\ \:\ String\l+ \#parent\ \:\ Window\l+ \#root\=\ \:\ Component\:\:Group\l+ \#show\ \:\ Window\l+ \#update\ \:\ Window\l}" rank=sink];
     subgraph cluster_Cura_Window {
       label = "Window"; labelloc=b;
+    }
+    Cura_Pencil [label="{class Pencil||+ \#draw_character\l+ \#draw_point\l+ \#draw_rectangle\l+ \#draw_text\l}" rank=sink];
+    subgraph cluster_Cura_Pencil {
+      label = "Pencil"; labelloc=b;
+    }
+    Cura_Padding [label="{class Padding||}" rank=sink];
+    subgraph cluster_Cura_Padding {
+      label = "Padding"; labelloc=b;
     }
     Cura_Adapter [label="{class Adapter||+ all\ \:\ Array\l+ inherited\l+ mixin\l+ mixins\l+ \#cleanup\l+ \#clear\l+ \#initialize\ \:\ Adapter\l+ \#setup\l+ \#setup\?\ \:\ Boolean\l}" rank=sink];
     subgraph cluster_Cura_Adapter {
@@ -33,10 +37,6 @@ digraph yard {
     subgraph cluster_Cura_Offsets {
       label = "Offsets"; labelloc=b;
     }
-    Cura_Padding [label="{class Padding||}" rank=sink];
-    subgraph cluster_Cura_Padding {
-      label = "Padding"; labelloc=b;
-    }
     Cura_Margins [label="{class Margins||}" rank=sink];
     subgraph cluster_Cura_Margins {
       label = "Margins"; labelloc=b;
@@ -44,6 +44,18 @@ digraph yard {
     Cura_Application [label="{class Application|+ \#cursor [R]\l+ \#dispatcher [R]\l+ \#pencil [R]\l|+ run\l+ \#adapter\ \:\ Adapter\l+ \#adapter\=\ \:\ Adapter\l+ \#add_window\ \:\ Window\l+ \#dispatch_event\ \:\ Event\:\:Base\l+ \#draw\ \:\ Application\l+ \#focus\ \:\ Component\:\:Base\l+ \#focused\ \:\ Component\:\:Base\l+ \#initialize\ \:\ Application\l+ \#inspect\ \:\ String\l+ \#run\ \:\ Application\l+ \#running\?\ \:\ Boolean\l+ \#stop\ \:\ Application\l+ \#stop\!\ \:\ Application\l+ \#update\ \:\ Application\l}" rank=sink];
     subgraph cluster_Cura_Application {
       label = "Application"; labelloc=b;
+    }
+    Cura_TreeController [label="{class TreeController||}" rank=sink];
+    subgraph cluster_Cura_TreeController {
+      label = "TreeController"; labelloc=b;
+      Cura_TreeController_Ancestry [label="{module Ancestry||+ \#add_child\l+ \#find_ancestors\l+ \#find_root\l}" rank=sink];
+      subgraph cluster_Cura_TreeController_Ancestry {
+        label = "Ancestry"; labelloc=b;
+      }
+      Cura_TreeController_AttributeInheritence [label="{module AttributeInheritence||+ \#bestow_attribute\l+ \#inherit_attribute\ \:\ Object\l+ \#inherit_attributes\l}" rank=sink];
+      subgraph cluster_Cura_TreeController_AttributeInheritence {
+        label = "AttributeInheritence"; labelloc=b;
+      }
     }
     Cura_FocusController [label="{class FocusController||+ \#index\ \:\ Integer\l+ \#index\=\ \:\ Integer\l+ \#initialize\ \:\ FocusController\l+ \#window\ \:\ Window\l+ \#window\=\ \:\ Window\l}" rank=sink];
     subgraph cluster_Cura_FocusController {
@@ -60,21 +72,21 @@ digraph yard {
       subgraph cluster_Cura_Event_Base {
         label = "Base"; labelloc=b;
       }
-      Cura_Event_Focus [label="{class Focus||}" rank=sink];
-      subgraph cluster_Cura_Event_Focus {
-        label = "Focus"; labelloc=b;
-      }
-      Cura_Event_Focus -> Cura_Event_Base;
-      Cura_Event_Click [label="{class Click||}" rank=sink];
-      subgraph cluster_Cura_Event_Click {
-        label = "Click"; labelloc=b;
-      }
-      Cura_Event_Click -> Cura_Event_Base;
       Cura_Event_Mouse [label="{class Mouse|+ \#x [RW]\l+ \#y [RW]\l|}" rank=sink];
       subgraph cluster_Cura_Event_Mouse {
         label = "Mouse"; labelloc=b;
       }
       Cura_Event_Mouse -> Cura_Event_Base;
+      Cura_Event_Click [label="{class Click||}" rank=sink];
+      subgraph cluster_Cura_Event_Click {
+        label = "Click"; labelloc=b;
+      }
+      Cura_Event_Click -> Cura_Event_Base;
+      Cura_Event_Focus [label="{class Focus||}" rank=sink];
+      subgraph cluster_Cura_Event_Focus {
+        label = "Focus"; labelloc=b;
+      }
+      Cura_Event_Focus -> Cura_Event_Base;
       Cura_Event_Resize [label="{class Resize||}" rank=sink];
       subgraph cluster_Cura_Event_Resize {
         label = "Resize"; labelloc=b;
@@ -89,16 +101,16 @@ digraph yard {
         label = "Unfocus"; labelloc=b;
       }
       Cura_Event_Unfocus -> Cura_Event_Base;
-      Cura_Event_Selected [label="{class Selected||}" rank=sink];
-      subgraph cluster_Cura_Event_Selected {
-        label = "Selected"; labelloc=b;
-      }
-      Cura_Event_Selected -> Cura_Event_Base;
       Cura_Event_KeyDown [label="{class KeyDown|+ \#name [RW]\l|+ \#character\ \:\ nil\l+ \#control\?\ \:\ Boolean\l+ \#initialize\ \:\ KeyDown\l+ \#printable\?\ \:\ Boolean\l}" rank=sink];
       subgraph cluster_Cura_Event_KeyDown {
         label = "KeyDown"; labelloc=b;
       }
       Cura_Event_KeyDown -> Cura_Event_Base;
+      Cura_Event_Selected [label="{class Selected||}" rank=sink];
+      subgraph cluster_Cura_Event_Selected {
+        label = "Selected"; labelloc=b;
+      }
+      Cura_Event_Selected -> Cura_Event_Base;
       Cura_Event_Dispatcher [label="{class Dispatcher|+ \#middleware [R]\l+ \#target [RW]\l|+ \#dispatch_event\ \:\ Event\:\:Base\l+ \#initialize\ \:\ Dispatcher\l+ \#peek\ \:\ nil\l+ \#poll\ \:\ Event\:\:Base\l+ \#run\ \:\ Event\:\:Dispatcher\l+ \#wait_time\ \:\ Integer\l+ \#wait_time\=\ \:\ Integer\l}" rank=sink];
       subgraph cluster_Cura_Event_Dispatcher {
         label = "Dispatcher"; labelloc=b;
@@ -171,40 +183,40 @@ digraph yard {
         }
       }
       Cura_Component [label="{module Component||+ all\ \:\ \<Class\>\l+ find_by_type\ \:\ nil\l}" rank=sink];
+      Cura_Component_Base [label="{class Base||+ inherited\l+ type\ \:\ Symbol\l+ \#application\ \:\ Application\l+ \#background\ \:\ Color\l+ \#contains_coordinates\?\ \:\ Boolean\l+ \#cursor\ \:\ Cursor\l+ \#draw\ \:\ Component\l+ \#draw\=\ \:\ Boolean\l+ \#draw\?\ \:\ Boolean\l+ \#focus\ \:\ Component\l+ \#focused\?\ \:\ Boolean\l+ \#foreground\ \:\ Color\l+ \#get_or_inherit_color\l+ \#inspect\ \:\ String\l+ \#pencil\ \:\ Pencil\l+ \#update\ \:\ Component\l+ \#window\ \:\ Application\l}" rank=sink];
+      subgraph cluster_Cura_Component_Base {
+        label = "Base"; labelloc=b;
+      }
       Cura_Component_Pack [label="{class Pack|+ \#spacing [RW]\l|+ \#add_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#draw\ \:\ Pack\l+ \#fill\=\ \:\ Boolean\l+ \#fill\?\ \:\ Boolean\l+ \#height\=\l+ \#initialize\ \:\ Pack\l+ \#width\=\l}" rank=sink];
       subgraph cluster_Cura_Component_Pack {
         label = "Pack"; labelloc=b;
       }
       Cura_Component_Pack -> Cura_Component_Group;
-      Cura_Component_Base [label="{class Base||+ inherited\l+ type\ \:\ Symbol\l+ \#application\ \:\ Application\l+ \#background\ \:\ Color\l+ \#contains_coordinates\?\ \:\ Boolean\l+ \#cursor\ \:\ Cursor\l+ \#draw\ \:\ Component\l+ \#focus\ \:\ Component\l+ \#focused\?\ \:\ Boolean\l+ \#foreground\ \:\ Color\l+ \#inspect\ \:\ String\l+ \#pencil\ \:\ Pencil\l+ \#update\ \:\ Component\l}" rank=sink];
-      subgraph cluster_Cura_Component_Base {
-        label = "Base"; labelloc=b;
-      }
-      Cura_Component_Label [label="{class Label||+ \#bold\=\ \:\ Boolean\l+ \#bold\?\ \:\ Boolean\l+ \#draw\l+ \#height\ \:\ Integer\l+ \#horizontal_alignment\ \:\ Symbol\l+ \#horizontal_alignment\=\ \:\ Symbol\l+ \#initialize\ \:\ Label\l+ \#lines\ \:\ \<String\>\l+ \#text\ \:\ String\l+ \#text\=\ \:\ String\l+ \#text_height\ \:\ Integer\l+ \#text_width\ \:\ Integer\l+ \#underline\?\ \:\ Boolean\l+ \#underlined\=\ \:\ Boolean\l+ \#vertical_alignment\ \:\ Symbol\l+ \#vertical_alignment\=\ \:\ Symbol\l+ \#width\ \:\ Integer\l}" rank=sink];
-      subgraph cluster_Cura_Component_Label {
-        label = "Label"; labelloc=b;
-      }
-      Cura_Component_Label -> Cura_Component_Base;
       Cura_Component_Group [label="{class Group||+ \#add_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#draw\l+ \#height\ \:\ Integer\l+ \#update\l+ \#width\ \:\ Integer\l}" rank=sink];
       subgraph cluster_Cura_Component_Group {
         label = "Group"; labelloc=b;
       }
       Cura_Component_Group -> Cura_Component_Base;
+      Cura_Component_Label [label="{class Label||+ \#bold\=\ \:\ Boolean\l+ \#bold\?\ \:\ Boolean\l+ \#draw\l+ \#height\ \:\ Integer\l+ \#horizontal_alignment\ \:\ Symbol\l+ \#horizontal_alignment\=\ \:\ Symbol\l+ \#initialize\ \:\ Label\l+ \#lines\ \:\ \<String\>\l+ \#text\ \:\ String\l+ \#text\=\ \:\ String\l+ \#text_height\ \:\ Integer\l+ \#text_width\ \:\ Integer\l+ \#underline\?\ \:\ Boolean\l+ \#underlined\=\ \:\ Boolean\l+ \#vertical_alignment\ \:\ Symbol\l+ \#vertical_alignment\=\ \:\ Symbol\l+ \#width\ \:\ Integer\l}" rank=sink];
+      subgraph cluster_Cura_Component_Label {
+        label = "Label"; labelloc=b;
+      }
+      Cura_Component_Label -> Cura_Component_Base;
       Cura_Component_Button [label="{class Button||+ \#background\l+ \#click\ \:\ Button\l+ \#focused_background\ \:\ Color\l+ \#focused_background\=\ \:\ Color\l+ \#initialize\ \:\ Button\l}" rank=sink];
       subgraph cluster_Cura_Component_Button {
         label = "Button"; labelloc=b;
       }
       Cura_Component_Button -> Cura_Component_Label;
+      Cura_Component_Listbox [label="{class Listbox|+ \#objects [R]\l+ \#selected_index [RW]\l|+ \#add_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#initialize\ \:\ Listbox\l+ \#loopable\=\ \:\ Boolean\l+ \#loopable\?\ \:\ Boolean\l+ \#object_at\ \:\ Object\l+ \#selected_child\ \:\ Component\l+ \#selected_child\=\ \:\ Component\l+ \#selected_object\ \:\ Component\l}" rank=sink];
+      subgraph cluster_Cura_Component_Listbox {
+        label = "Listbox"; labelloc=b;
+      }
+      Cura_Component_Listbox -> Cura_Component_Pack;
       Cura_Component_Textbox [label="{class Textbox|+ \#mask_character [RW]\l|+ \#clear\ \:\ Textbox\l+ \#height\=\ \:\ Integer\l+ \#initialize\ \:\ Textbox\l+ \#width\=\ \:\ Integer\l}" rank=sink];
       subgraph cluster_Cura_Component_Textbox {
         label = "Textbox"; labelloc=b;
       }
       Cura_Component_Textbox -> Cura_Component_Label;
-      Cura_Component_Listbox [label="{class Listbox|+ \#selected_index [RW]\l|+ \#add_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#initialize\ \:\ Listbox\l+ \#loopable\=\ \:\ Boolean\l+ \#loopable\?\ \:\ Boolean\l+ \#object_at\ \:\ Object\l+ \#selected_child\ \:\ Component\l+ \#selected_object\ \:\ Component\l}" rank=sink];
-      subgraph cluster_Cura_Component_Listbox {
-        label = "Listbox"; labelloc=b;
-      }
-      Cura_Component_Listbox -> Cura_Component_Pack;
       Cura_Component_Scrollbar [label="{class Scrollbar|+ \#buttons [R]\l+ \#max [RW]\l+ \#min [RW]\l+ \#percent [R]\l+ \#value [RW]\l|+ \#decrement\l+ \#height\=\l+ \#increment\l+ \#initialize\ \:\ Scrollbar\l+ \#orientation\=\l+ \#width\=\l}" rank=sink];
       subgraph cluster_Cura_Component_Scrollbar {
         label = "Scrollbar"; labelloc=b;
@@ -250,7 +262,7 @@ digraph yard {
       Cura_Attributes [label="{module Attributes||}" rank=sink];
       subgraph cluster_Cura_Attributes {
         label = "Attributes"; labelloc=b;
-        Cura_Attributes_HasRoot [label="{module HasRoot||+ \#add_child\ \:\ Component\l+ \#add_children\ \:\ \<Component\>\l+ \#children\ \:\ \<Component\>\l+ \#children\?\ \:\ Boolean\l+ \#delete_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#delete_children\ \:\ HasChildren\l+ \#initialize\l+ \#root\ \:\ Component\:\:Group\l+ \#root\=\ \:\ Component\:\:Group\l}" rank=sink];
+        Cura_Attributes_HasRoot [label="{module HasRoot|+ \#root [RW]\l|+ \#add_child\ \:\ Component\l+ \#add_children\ \:\ \<Component\>\l+ \#children\ \:\ \<Component\>\l+ \#children\?\ \:\ Boolean\l+ \#delete_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#delete_children\ \:\ HasChildren\l+ \#initialize\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasRoot {
           label = "HasRoot"; labelloc=b;
         }
@@ -274,21 +286,13 @@ digraph yard {
         subgraph cluster_Cura_Attributes_HasOffsets {
           label = "HasOffsets"; labelloc=b;
         }
-        Cura_Attributes_HasAncestry [label="{module HasAncestry|+ \#parent [RW]\l|+ \#ancestors\ \:\ Array\<Object\>\l+ \#initialize\l+ \#parent\?\ \:\ Boolean\l}" rank=sink];
+        Cura_Attributes_HasAncestry [label="{module HasAncestry|+ \#ancestors [RW]\l+ \#parent [RW]\l|+ \#initialize\l+ \#parent\?\ \:\ Boolean\l+ \#set_parent\ \:\ Component\:\:Base\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasAncestry {
           label = "HasAncestry"; labelloc=b;
         }
-        Cura_Attributes_HasChildren [label="{module HasChildren||+ \#add_child\ \:\ Component\l+ \#add_children\ \:\ \<Component\>\l+ \#children\ \:\ \<Component\>\l+ \#children\?\ \:\ Boolean\l+ \#delete_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#delete_children\ \:\ Group\l+ \#each\ \:\ Array\l+ \#initialize\l+ \#insert_child\l+ \#insert_child_after\l+ \#insert_child_at\l+ \#insert_child_before\l}" rank=sink];
+        Cura_Attributes_HasChildren [label="{module HasChildren||+ \#add_child\ \:\ Component\l+ \#add_children\ \:\ \<Component\>\l+ \#children\ \:\ \<Component\>\l+ \#children\?\ \:\ Boolean\l+ \#delete_child\ \:\ Component\l+ \#delete_child_at\ \:\ Component\l+ \#delete_children\ \:\ Group\l+ \#each\ \:\ Array\l+ \#initialize\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasChildren {
           label = "HasChildren"; labelloc=b;
-        }
-        Cura_Attributes_HasInitialize [label="{module HasInitialize||+ \#initialize\l}" rank=sink];
-        subgraph cluster_Cura_Attributes_HasInitialize {
-          label = "HasInitialize"; labelloc=b;
-        }
-        Cura_Attributes_HasVisibility [label="{module HasVisibility||+ \#initialize\l+ \#visible\=\ \:\ Boolean\l+ \#visible\?\ \:\ Boolean\l}" rank=sink];
-        subgraph cluster_Cura_Attributes_HasVisibility {
-          label = "HasVisibility"; labelloc=b;
         }
         Cura_Attributes_HasDimensions [label="{module HasDimensions||+ \#height\ \:\ Integer\l+ \#height\=\ \:\ Integer\l+ \#initialize\l+ \#resize\ \:\ Object\l+ \#width\ \:\ Integer\l+ \#width\=\ \:\ Integer\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasDimensions {
@@ -302,6 +306,18 @@ digraph yard {
             label = "ClassMethods"; labelloc=b;
           }
         }
+        Cura_Attributes_HasInitialize [label="{module HasInitialize||+ \#initialize\l}" rank=sink];
+        subgraph cluster_Cura_Attributes_HasInitialize {
+          label = "HasInitialize"; labelloc=b;
+        }
+        Cura_Attributes_HasVisibility [label="{module HasVisibility||+ \#initialize\l+ \#visible\=\ \:\ Boolean\l+ \#visible\?\ \:\ Boolean\l}" rank=sink];
+        subgraph cluster_Cura_Attributes_HasVisibility {
+          label = "HasVisibility"; labelloc=b;
+        }
+        Cura_Attributes_HasApplication [label="{module HasApplication|+ \#application [RW]\l|}" rank=sink];
+        subgraph cluster_Cura_Attributes_HasApplication {
+          label = "HasApplication"; labelloc=b;
+        }
         Cura_Attributes_HasOrientation [label="{module HasOrientation|+ \#orientation [RW]\l|+ \#horizontal\?\ \:\ Boolean\l+ \#initialize\l+ \#vertical\?\ \:\ Boolean\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasOrientation {
           label = "HasOrientation"; labelloc=b;
@@ -309,10 +325,6 @@ digraph yard {
         Cura_Attributes_HasCoordinates [label="{module HasCoordinates||+ \#initialize\l+ \#x\ \:\ Integer\l+ \#x\=\ \:\ Integer\l+ \#y\ \:\ Integer\l+ \#y\=\ \:\ Integer\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasCoordinates {
           label = "HasCoordinates"; labelloc=b;
-        }
-        Cura_Attributes_HasApplication [label="{module HasApplication|+ \#application [RW]\l|}" rank=sink];
-        subgraph cluster_Cura_Attributes_HasApplication {
-          label = "HasApplication"; labelloc=b;
         }
         Cura_Attributes_HasFocusability [label="{module HasFocusability||+ \#focusable\=\ \:\ Boolean\l+ \#focusable\?\ \:\ Boolean\l+ \#initialize\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasFocusability {
@@ -325,6 +337,18 @@ digraph yard {
         Cura_Attributes_HasRelativeCoordinates [label="{module HasRelativeCoordinates||+ \#absolute_x\ \:\ Integer\l+ \#absolute_y\ \:\ Integer\l+ \#initialize\l}" rank=sink];
         subgraph cluster_Cura_Attributes_HasRelativeCoordinates {
           label = "HasRelativeCoordinates"; labelloc=b;
+        }
+      }
+      Cura_Helpers [label="{module Helpers||}" rank=sink];
+      subgraph cluster_Cura_Helpers {
+        label = "Helpers"; labelloc=b;
+        Cura_Helpers_Component [label="{module Component||}" rank=sink];
+        subgraph cluster_Cura_Helpers_Component {
+          label = "Component"; labelloc=b;
+          Cura_Helpers_Component_Drawing [label="{module Drawing||}" rank=sink];
+          subgraph cluster_Cura_Helpers_Component_Drawing {
+            label = "Drawing"; labelloc=b;
+          }
         }
       }
     }
