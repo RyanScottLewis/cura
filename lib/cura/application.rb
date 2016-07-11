@@ -32,6 +32,7 @@ if Kernel.respond_to?(:require)
   require "cura/adapter"
   require "cura/cursor"
   require "cura/pencil"
+  require "cura/tree_controller"
 end
 
 module Cura
@@ -44,6 +45,7 @@ module Cura
     end
 
     include Helpers::Validations
+
     include Attributes::HasInitialize
     include Attributes::HasAttributes
     include Attributes::HasWindows
@@ -52,11 +54,10 @@ module Cura
     def initialize(attributes={})
       super
 
-      # setup_adapter
-
-      @running = false
-      @cursor = Cursor.new(application: self)
-      @pencil = Pencil.new
+      @running         = false
+      @cursor          = Cursor.new(application: self)
+      @pencil          = Pencil.new
+      @tree_controller = TreeController.new
 
       setup_adapter
       setup_dispatcher
@@ -85,6 +86,14 @@ module Cura
     #
     # @return [Pencil]
     attr_reader :pencil
+
+    # Get the tree controller.
+    #
+    # The component view tree can be modified either through the setter attributes on the component,
+    # or through this tree controller. Both methods will have the same effect.
+    #
+    # @return [TreeController]
+    attr_reader :tree_controller
 
     # Get the event dispatcher.
     #
