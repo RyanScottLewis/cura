@@ -23,7 +23,7 @@ module Cura
       end
 
       def validate_type(value, type, exception=TypeError)
-        raise exception, "value must be a #{type}" unless value.is_a?(type)
+        raise(exception, "value must be a #{type}") unless value.is_a?(type)
 
         value
       end
@@ -56,13 +56,6 @@ module Cura
         end
 
         value
-      end
-
-      # TODO: Rename to validate_attribute_type
-      def validate_offset_attribute(value, type)
-        value ||= {}
-
-        value.is_a?(type) ? value : type.new(value)
       end
     end
   end
