@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem "cura", path: "../.."
+gem "cura-termbox", path: "../../extensions/cura-termbox"
