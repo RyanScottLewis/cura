@@ -1,7 +1,12 @@
 if Kernel.respond_to?(:require)
   require "cura/component/base"
-  require "cura/error/invalid_component"
+
+  require "cura/helpers/conversions"
   require "cura/helpers/validations"
+
+  require "cura/error/invalid_component"
+
+  require "cura/tree_controller"
 end
 
 module Cura
@@ -10,10 +15,12 @@ module Cura
     # TODO: Lots of code is the same as HasWindows
     module HasChildren
       include Enumerable
+
+      include Helpers::Conversions
       include Helpers::Validations
 
       def initialize(*arguments)
-        @children = []
+        @children = [].freeze
 
         super
       end
@@ -27,21 +34,28 @@ module Cura
 
       # Get the children of this object.
       #
-      # @param [Boolean] recursive Determines if the children should be gathered recursively to retrieve all of this object's decendants.
-      # @return [<Component>]
-      def children(recursive=false)
-        if recursive
-          @children.collect { |child| child.respond_to?(:children) ? [child] + child.children(true) : child }.flatten # TODO: Shouldn't flatten?
-        else
-          @children
-        end
+      # @return [<Component::Base>]
+      attr_reader :children
+
+      # Get all decendants of this object.
+      #
+      # @return [<Component::Base>]
+      def decendants
+        @children.collect { |child| child.respond_to?(:decendants) ? [child] + child.decendants : child }.flatten
+      end
+
+      # Set the children of this object.
+      #
+      # Usage of this method does not update any other aspects of the relationship between the child and this
+      # component and should only be used internally.
+      #
+      # @param [<Component::Base>] value
+      # @return [<Component::Base>]
+      def set_children(value)
+        @children = convert_array_instances(value, Component::Base).freeze
       end
 
       # Add a child to this group.
-      #
-      # If a Hash-like object is given, it must have the `:type` key which will be used to
-      # determine which class to initialize. The rest of the Hash will be used to set the
-      # attributes of the instance.
       #
       # @param [#to_sym, Component] component_or_type
       #   A Symbol representing the child component type or a {Component::Base} instance.
@@ -52,7 +66,7 @@ module Cura
       #   When component_or_type is a {Component::Base}, then these attributes will be used to update the child component.
       # @return [Component]
       def add_child(component_or_type, attributes={})
-        component = if component_or_type.is_a?(Class)
+        component = if component_or_type.is_a?(Class) # TODO: Refactor into method
           raise Error::InvalidComponent unless component_or_type < Component::Base
 
           component_or_type.new
@@ -71,7 +85,7 @@ module Cura
 
         component.update_attributes(attributes)
 
-        @children << component
+        @application.tree_controller.create_relation(self, component)
 
         component
       end
