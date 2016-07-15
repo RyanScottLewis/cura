@@ -107,7 +107,7 @@ module Cura
       run_event_loop
 
       self
-    ensure
+    ensure # TODO: rescue Exception?
       unless @cleaned
         @adapter.cleanup
         @cleaned = true

@@ -12,9 +12,9 @@ module Cura
       include Attributes::HasAttributes
 
       def initialize(attributes={})
-        @root = Component::Group.new(parent: self, application: @application)
-
         super
+        
+        @root = Component::Group.new(parent: self, application: @application)
       end
 
       # Get root component for this object.

@@ -67,7 +67,7 @@ class HelloWorld < Cura::Application
 
     @dispatcher.wait_time = 100 # Update every 100 milliseconds instead of waiting forever for events
 
-    window = Cura::Window.new
+    window = Cura::Window.new(application: self)
     add_window(window)
 
     pack = Cura::Component::Pack.new(width: window.width, height: window.height, fill: true)
