@@ -8,14 +8,6 @@ module Cura
     # Adds the `width` and `height` attributes.
     module HasDimensions
       include Helpers::Validations
-      include HasAttributes
-
-      def initialize(attributes={})
-        @width = :auto unless instance_variable_defined?(:@width)
-        @height = :auto unless instance_variable_defined?(:@height)
-
-        super
-      end
 
       # Get the width dimension of this object.
       #
@@ -27,7 +19,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def width=(value)
-        @width = validate_size_attribute(value)
+        @width = validate_integer(value, minimum: 0)
       end
 
       # Get the height dimension of this object.
@@ -40,7 +32,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def height=(value)
-        @height = validate_size_attribute(value)
+        @height = validate_integer(value, minimum: 0)
       end
 
       # Set one or both of the dimensions of this object.

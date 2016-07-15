@@ -28,20 +28,32 @@ module Cura
         value
       end
 
-      # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
-      # -= Attributes                                                                          =- #
-      # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
+      def validate_integer(value, options={})
+        options = options.to_h
 
-      def validate_size_attribute(value)
-        if value.is_a?(Symbol) # TODO: Use respond_to #to_sym, utilize validate_list
-          raise ArgumentError, "must be one of #{VALID_SIZE_SYMBOLS.join(', ')}" unless VALID_SIZE_SYMBOLS.include?(value)
-        else
-          value = value.to_i
-          value = 0 if value < 0
+        value = value.to_i
+
+        options[:minimum] = options.delete(:min) if options.key?(:min)
+        options[:maximum] = options.delete(:max) if options.key?(:max)
+
+        if options.key?(:minimum)
+          options[:minimum] = options[:minimum].to_i
+
+          value = options[:minimum] if value < options[:minimum]
+        end
+
+        if options.key?(:maximum)
+          options[:maximum] = options[:maximum].to_i
+
+          value = options[:maximum] if value < options[:maximum]
         end
 
         value
       end
+
+      # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
+      # -= Attributes                                                                          =- #
+      # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
       # TODO: Color class should have a helper for this in Color#initialzie
       def validate_color_attribute(value)

@@ -1,5 +1,6 @@
 if Kernel.respond_to?(:require)
   require "cura/helpers/validations"
+  
   require "cura/attributes/has_attributes"
 end
 
@@ -34,7 +35,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def top=(value)
-        @top = validate_size_attribute(value)
+        @top = validate_integer(value, minimum: 0)
       end
 
       # Get the right attribute.
@@ -47,7 +48,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def right=(value)
-        @right = validate_size_attribute(value)
+        @right = validate_integer(value, minimum: 0)
       end
 
       # Get the bottom attribute.
@@ -60,7 +61,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def bottom=(value)
-        @bottom = validate_size_attribute(value)
+        @bottom = validate_integer(value, minimum: 0)
       end
 
       # Get the left attribute.
@@ -73,7 +74,7 @@ module Cura
       # @param [#to_i] value
       # @return [Integer]
       def left=(value)
-        @left = validate_size_attribute(value)
+        @left = validate_integer(value, minimum: 0)
       end
 
       # Get the total height of the attributes.
