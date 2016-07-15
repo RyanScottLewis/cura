@@ -1,3 +1,0 @@
-[submodule "extensions/cura-termbox"]
-	path = extensions/cura-termbox
-url=git@github.com:RyanScottLewis/cura-termbox.git
