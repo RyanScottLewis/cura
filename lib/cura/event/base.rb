@@ -67,6 +67,14 @@ module Cura
         @target = value
       end
 
+      # Get whether the target this event is the given object.
+      #
+      # @param [Object] value
+      # @return [Boolean]
+      def target?(value)
+        @target == value
+      end
+
       # Get this event as a Hash.
       #
       # @return [Hash]
